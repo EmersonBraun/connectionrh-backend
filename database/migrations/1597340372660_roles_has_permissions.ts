@@ -5,8 +5,11 @@ export default class RolesHasPermissions extends BaseSchema {
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
-      table.timestamps(true)
+      table.integer('role_id').unsigned().nullable()
+      table.integer('permission_id').unsigned().nullable()
+
+      table.foreign('role_id').references('id').inTable('roles').onDelete('CASCADE')
+      table.foreign('permission_id').references('id').inTable('permissions').onDelete('CASCADE')
     })
   }
 

@@ -5,8 +5,11 @@ export default class CompanyHasAssets extends BaseSchema {
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
-      table.timestamps(true)
+      table.integer('company_id').unsigned().nullable()
+      table.integer('asset_id').unsigned().nullable()
+
+      table.foreign('company_id').references('id').inTable('companies').onDelete('CASCADE')
+      table.foreign('asset_id').references('id').inTable('assets').onDelete('CASCADE')
     })
   }
 

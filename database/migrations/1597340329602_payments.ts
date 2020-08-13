@@ -6,7 +6,12 @@ export default class Payments extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
+      table.float('payment').notNullable()
+      table.string('reason').notNullable()
+      table.integer('company_id').unsigned().nullable()
       table.timestamps(true)
+
+      table.foreign('company_id').references('id').inTable('companies').onDelete('CASCADE')
     })
   }
 

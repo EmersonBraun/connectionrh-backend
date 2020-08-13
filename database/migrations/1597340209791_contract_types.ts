@@ -6,6 +6,7 @@ export default class ContractTypes extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
+      table.string('contract_type').notNullable()
       table.timestamps(true)
     })
   }

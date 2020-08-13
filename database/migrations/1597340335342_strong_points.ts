@@ -6,7 +6,7 @@ export default class StrongPoints extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.timestamps(true)
+      table.string('content').notNullable()
     })
   }
 

@@ -6,10 +6,23 @@ export default class UsersSchema extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').primary()
+      table.string('name', 255).notNullable()
       table.string('email', 255).notNullable()
       table.string('password', 180).notNullable()
+      table.string('gender', 180).notNullable()
+      table.string('cpf', 180).notNullable()
+      table.boolean('accept_terms').defaultTo(false)
+      table.boolean('pcd').defaultTo(false)
+      table.boolean('email_confirmed').defaultTo(false)
       table.string('remember_me_token').nullable()
+      table.integer('phone_id').unsigned().nullable()
+      table.integer('address_id').unsigned().nullable()
+      table.integer('company_id').unsigned().nullable()
       table.timestamps(true)
+
+      table.foreign('phone_id').references('id').inTable('phones').onDelete('CASCADE')
+      table.foreign('address_id').references('id').inTable('addresses').onDelete('CASCADE')
+      table.foreign('company_id').references('id').inTable('companies').onDelete('CASCADE')
     })
   }
 

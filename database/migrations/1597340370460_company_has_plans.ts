@@ -5,8 +5,11 @@ export default class CompanyHasPlans extends BaseSchema {
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
-      table.timestamps(true)
+      table.integer('company_id').unsigned().nullable()
+      table.integer('plan_id').unsigned().nullable()
+
+      table.foreign('company_id').references('id').inTable('companies').onDelete('CASCADE')
+      table.foreign('plan_id').references('id').inTable('plans').onDelete('CASCADE')
     })
   }
 
