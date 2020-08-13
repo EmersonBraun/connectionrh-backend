@@ -9,7 +9,7 @@ export default class UsersHasStrongs extends BaseSchema {
       table.integer('strong_id').unsigned().nullable()
 
       table.foreign('user_id').references('id').inTable('users').onDelete('CASCADE')
-      table.foreign('strong_id').references('id').inTable('strongs').onDelete('CASCADE')
+      table.foreign('strong_id').references('id').inTable('strong_points').onDelete('CASCADE')
     })
   }
 

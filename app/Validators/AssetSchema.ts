@@ -1,6 +1,6 @@
 import { schema } from '@ioc:Adonis/Core/Validator'
 
-export const RoleSchema = schema.create({
+export const AssetSchema = schema.create({
   cep: schema.string(),
   zone: schema.string(),
   state: schema.string(),

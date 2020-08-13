@@ -12,7 +12,7 @@ export default class Applications extends BaseSchema {
 
       table.foreign('user_id').references('id').inTable('users').onDelete('CASCADE')
       table.foreign('company_id').references('id').inTable('companies').onDelete('CASCADE')
-      table.foreign('status_id').references('id').inTable('application_status').onDelete('CASCADE')
+      table.foreign('status_id').references('id').inTable('application_statuses').onDelete('CASCADE')
     })
   }
 

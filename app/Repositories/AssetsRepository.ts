@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
 import { first, all, create, findAndUpdate, find, createOrUpdate, findAndDelete } from '../Services/CRUD'
-import Address from 'App/Models/Address'
+import Asset from 'App/Models/Asset'
 
-class ContractTypesRepository {
+class AssestsRepository {
   protected model: any
 
   constructor () {
-    this.model = Address
+    this.model = Asset
   }
 
   async first () {
@@ -39,4 +39,4 @@ class ContractTypesRepository {
   }
 }
 
-export default new ContractTypesRepository()
+export default new AssestsRepository()

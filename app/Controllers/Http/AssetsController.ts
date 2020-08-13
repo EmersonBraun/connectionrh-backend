@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-import RecomendsRepository from 'App/Repositories/RecomendsRepository'
-import { RecomendSchema } from 'App/Validators/RecomendSchema'
+import AssetsRepository from 'App/Repositories/AssetsRepository'
+import { AssetSchema } from 'App/Validators/AssetSchema'
 
-export default class RecomendsController {
+export default class AssetsController {
   private readonly repository
   constructor () {
-    this.repository = RecomendsRepository
+    this.repository = AssetsRepository
   }
 
   async index ({ response }: HttpContextContract) {
@@ -23,7 +23,7 @@ export default class RecomendsController {
 
   async store ({ request, response }: HttpContextContract) {
     try {
-      await request.validate({schema: RecomendSchema})
+      await request.validate({schema: AssetSchema})
     } catch (error) {
       const msg = error.messages.errors.map(e => `${e.field} is ${e.rule}`).join(', ')
       // console.log(error.messages.errors)
@@ -58,7 +58,7 @@ export default class RecomendsController {
 
   async update ({ params, request, response }: HttpContextContract) {
     try {
-      await request.validate({schema: RecomendSchema})
+      await request.validate({schema: AssetSchema})
     } catch (error) {
       const msg = error.messages.errors.map(e => `${e.field} is ${e.rule}`).join(', ')
       return response
