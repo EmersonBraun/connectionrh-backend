@@ -4,23 +4,42 @@
   "private": true,
   "scripts": {
     "build": "node ace build",
+    "up": "docker-compose up -d",
+    "migrate": "node ace migration:run",
+    "seed": "node ace db:seed --file=_DatabaseSeeder",
     "start": "node ace serve --watch",
-    "lint": "eslint . --ext=.ts"
+    "lint": "eslint . --ext=.ts",
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test:verbose": "jest --passWithNoTests",
+    "test:unit": "npm test -- --watch -c jest-unit-config.js",
+    "test:integration": "npm test -- --watch -c jest-integration-config.js",
+    "test:staged": "npm test -- --findRelatedTests",
+    "test:ci": "npm test -- --coverage"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^2.0.0",
+    "@types/jest": "^26.0.9",
+    "@types/node": "^14.0.27",
     "adonis-preset-ts": "^1.0.4",
     "eslint": "^7.6.0",
     "eslint-plugin-adonis": "^1.0.14",
+    "husky": "^4.2.5",
+    "jest": "^26.4.0",
+    "lint-staged": "^10.2.11",
     "pino-pretty": "^4.1.0",
+    "ts-jest": "^26.2.0",
     "typescript": "^3.9.7",
     "youch": "^2.0.10",
     "youch-terminal": "^1.0.0"
   },
   "dependencies": {
     "@adonisjs/ace": "^6.0.0",
+    "@adonisjs/auth": "^4.3.1",
     "@adonisjs/core": "^5.0.0-preview-rc",
     "@adonisjs/fold": "^6.0.0",
+    "@adonisjs/lucid": "^8.3.1",
+    "git-commit-msg-linter": "^2.4.4",
+    "pg": "^8.3.0",
     "proxy-addr": "^2.0.6",
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.19"
