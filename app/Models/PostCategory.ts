@@ -10,4 +10,7 @@ export default class PostCategory extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @column()
+  public post_category: string
 }

@@ -1,7 +1,8 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
+import { CompanyFactory } from 'Database/factories'
 
 export default class CompanySeeder extends BaseSeeder {
   public async run () {
-    // Write your database queries inside the run method
+    await CompanyFactory.createMany(10)
   }
 }

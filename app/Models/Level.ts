@@ -10,4 +10,7 @@ export default class Level extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @column()
+  public level: string
 }

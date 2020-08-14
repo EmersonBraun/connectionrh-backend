@@ -10,4 +10,13 @@ export default class Phone extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @column()
+  public area_code: string
+
+  @column()
+  public phone: string
+
+  @column()
+  public type: string
 }

@@ -1,7 +1,8 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
+import { MeetingFactory } from 'Database/factories'
 
 export default class MeetingSeeder extends BaseSeeder {
   public async run () {
-    // Write your database queries inside the run method
+    await MeetingFactory.createMany(10)
   }
 }

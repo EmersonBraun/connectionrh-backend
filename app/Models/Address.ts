@@ -10,4 +10,22 @@ export default class Address extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @column()
+  public cep: string
+
+  @column()
+  public country: string
+
+  @column()
+  public state: string
+
+  @column()
+  public city: string
+
+  @column()
+  public district: string
+
+  @column()
+  public street: string
 }

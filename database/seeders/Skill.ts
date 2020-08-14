@@ -1,7 +1,8 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
+import { SkillFactory } from 'Database/factories'
 
 export default class SkillSeeder extends BaseSeeder {
   public async run () {
-    // Write your database queries inside the run method
+    await SkillFactory.createMany(10)
   }
 }

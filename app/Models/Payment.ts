@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm'
+import Company from './Company'
 
 export default class Payment extends BaseModel {
   @column({ isPrimary: true })
@@ -10,4 +11,16 @@ export default class Payment extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @column()
+  public payment: string
+
+  @column()
+  public reason: string
+
+  @column()
+  public company_id: number
+
+  @hasOne(() => Company)
+  public company: HasOne<typeof Company>
 }

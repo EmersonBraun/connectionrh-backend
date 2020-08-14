@@ -1,7 +1,8 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
+import { AssetFactory } from 'Database/factories'
 
 export default class AssestSeeder extends BaseSeeder {
   public async run () {
-    // Write your database queries inside the run method
+    await AssetFactory.createMany(10)
   }
 }

@@ -1,7 +1,8 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
+import { LevelFactory } from 'Database/factories'
 
 export default class LevelSeeder extends BaseSeeder {
   public async run () {
-    // Write your database queries inside the run method
+    await LevelFactory.createMany(10)
   }
 }

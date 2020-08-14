@@ -1,7 +1,17 @@
-import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
+import Factory from '@ioc:Adonis/Lucid/Factory'
+import Permission from 'App/Models/Permission'
 
-export default class PermissionSeeder extends BaseSeeder {
-  public async run () {
-    // Write your database queries inside the run method
+export const PermissionFactory = Factory
+  .define(Permission, ({ faker }) => ({
+    permission: faker.name.findName(),
+  }))
+  .build()
+
+export async function randomPermissionId () {
+  const req = await Permission.query().select('id')
+  if (!req) {
+    return 0
   }
+  const ids = req.map(r => r.id)
+  return ids[Math.floor(Math.random() * ids.length)]
 }

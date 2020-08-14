@@ -1,7 +1,8 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
+import { RoleFactory } from 'Database/factories'
 
 export default class RoleSeeder extends BaseSeeder {
   public async run () {
-    // Write your database queries inside the run method
+    await RoleFactory.createMany(10)
   }
 }

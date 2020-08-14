@@ -10,4 +10,7 @@ export default class RequestStatus extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @column()
+  public request_status: string
 }

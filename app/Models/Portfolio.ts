@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm'
+import User from './User'
+import Asset from './Asset'
 
 export default class Portfolio extends BaseModel {
   @column({ isPrimary: true })
@@ -10,4 +12,22 @@ export default class Portfolio extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @column()
+  public portfolio: string
+
+  @column()
+  public url: string
+
+  @column()
+  public user_id: number
+
+  @column()
+  public asset_id: number
+
+  @hasOne(() => User)
+  public user: HasOne<typeof User>
+
+  @hasOne(() => Asset)
+  public asset: HasOne<typeof Asset>
 }

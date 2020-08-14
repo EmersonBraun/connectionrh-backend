@@ -1,15 +1,12 @@
-import { schema } from '@ioc:Adonis/Core/Validator'
+import { schema, rules } from '@ioc:Adonis/Core/Validator'
 
 export const PostSchema = schema.create({
-  cep: schema.string(),
-  zone: schema.string(),
-  state: schema.string(),
-  city: schema.string(),
-  country: schema.string(),
-  district: schema.string(),
-  street: schema.string(),
-  number: schema.string(),
-  complement: schema.string(),
-  delivery: schema.boolean(),
-  inactive: schema.boolean(),
+  title: schema.string(),
+  content: schema.string(),
+  user_id: schema.number([
+    rules.exists({ table: 'users', column: 'id' }),
+  ]),
+  post_category_id: schema.number([
+    rules.exists({ table: 'post_categories', column: 'id' }),
+  ]),
 })

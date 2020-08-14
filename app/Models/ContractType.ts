@@ -10,4 +10,7 @@ export default class ContractType extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @column()
+  public contract_type: string
 }

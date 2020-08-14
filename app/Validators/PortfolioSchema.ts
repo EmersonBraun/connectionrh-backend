@@ -1,15 +1,12 @@
-import { schema } from '@ioc:Adonis/Core/Validator'
+import { schema, rules } from '@ioc:Adonis/Core/Validator'
 
 export const PortfolioSchema = schema.create({
-  cep: schema.string(),
-  zone: schema.string(),
-  state: schema.string(),
-  city: schema.string(),
-  country: schema.string(),
-  district: schema.string(),
-  street: schema.string(),
-  number: schema.string(),
-  complement: schema.string(),
-  delivery: schema.boolean(),
-  inactive: schema.boolean(),
+  portfolio: schema.string(),
+  url: schema.string(),
+  user_id: schema.number([
+    rules.exists({ table: 'users', column: 'id' }),
+  ]),
+  asset_id: schema.number([
+    rules.exists({ table: 'assets', column: 'id' }),
+  ]),
 })

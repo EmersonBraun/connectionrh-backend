@@ -1,15 +1,11 @@
-import { schema } from '@ioc:Adonis/Core/Validator'
+import { schema, rules } from '@ioc:Adonis/Core/Validator'
 
 export const MeetingSchema = schema.create({
-  cep: schema.string(),
-  zone: schema.string(),
-  state: schema.string(),
-  city: schema.string(),
-  country: schema.string(),
-  district: schema.string(),
-  street: schema.string(),
-  number: schema.string(),
-  complement: schema.string(),
-  delivery: schema.boolean(),
-  inactive: schema.boolean(),
+  user_id: schema.number([
+    rules.exists({ table: 'users', column: 'id' }),
+  ]),
+  company_id: schema.number([
+    rules.exists({ table: 'companies', column: 'id' }),
+  ]),
+  date: schema.date(),
 })

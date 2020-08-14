@@ -10,4 +10,7 @@ export default class Area extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @column()
+  public area: string
 }

@@ -1,7 +1,8 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
+import { RequestStatusFactory } from 'Database/factories'
 
 export default class RequestStatusSeeder extends BaseSeeder {
   public async run () {
-    // Write your database queries inside the run method
+    await RequestStatusFactory.createMany(10)
   }
 }

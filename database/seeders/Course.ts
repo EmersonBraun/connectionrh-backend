@@ -1,7 +1,8 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
+import { CourseFactory } from 'Database/factories'
 
 export default class CourseSeeder extends BaseSeeder {
   public async run () {
-    // Write your database queries inside the run method
+    await CourseFactory.createMany(10)
   }
 }

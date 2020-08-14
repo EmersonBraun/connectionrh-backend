@@ -1,15 +1,10 @@
 import { schema } from '@ioc:Adonis/Core/Validator'
 
 export const PlanSchema = schema.create({
-  cep: schema.string(),
-  zone: schema.string(),
-  state: schema.string(),
-  city: schema.string(),
-  country: schema.string(),
-  district: schema.string(),
-  street: schema.string(),
-  number: schema.string(),
-  complement: schema.string(),
-  delivery: schema.boolean(),
-  inactive: schema.boolean(),
+  plan: schema.string(),
+  vacancies_limit: schema.number(),
+  price: schema.number(),
+  status: schema.string(),
+  start_date: schema.date(),
+  end_date: schema.date(),
 })

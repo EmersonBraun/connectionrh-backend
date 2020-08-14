@@ -1,15 +1,13 @@
-import { schema } from '@ioc:Adonis/Core/Validator'
+import { schema, rules } from '@ioc:Adonis/Core/Validator'
 
 export const CourseSchema = schema.create({
-  cep: schema.string(),
-  zone: schema.string(),
-  state: schema.string(),
-  city: schema.string(),
-  country: schema.string(),
-  district: schema.string(),
-  street: schema.string(),
-  number: schema.string(),
-  complement: schema.string(),
-  delivery: schema.boolean(),
-  inactive: schema.boolean(),
+  course: schema.string(),
+  institution: schema.string(),
+  situation: schema.string(),
+  area_id: schema.number([
+    rules.exists({ table: 'areas', column: 'id' }),
+  ]),
+  level_id: schema.number([
+    rules.exists({ table: 'levels', column: 'id' }),
+  ]),
 })
