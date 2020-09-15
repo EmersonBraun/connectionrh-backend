@@ -17,7 +17,7 @@ export default {
   },
   update: {
     success: 'Updated',
-    'same': 'Same data without change',
+    same: 'Same data without change',
     error: 'Not updated',
   },
   delete: {
