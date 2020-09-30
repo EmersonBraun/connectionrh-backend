@@ -1,6 +1,6 @@
 {
   "name": "backend",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "build": "node ace build",
@@ -30,6 +30,7 @@
     "jest": "^26.4.2",
     "lint-staged": "^10.2.11",
     "pino-pretty": "^4.1.0",
+    "standard-version": "^9.0.0",
     "ts-jest": "^26.2.0",
     "typescript": "^3.9.7",
     "youch": "^2.0.10",
