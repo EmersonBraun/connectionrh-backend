@@ -2,6 +2,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import PaymentsRepository from 'App/Repositories/PaymentsRepository'
+import { getErrors } from 'App/Services/MessageErros'
 import { PaymentSchema } from 'App/Validators/PaymentSchema'
 
 export default class PaymentsController {
@@ -25,7 +26,7 @@ export default class PaymentsController {
     try {
       await request.validate({schema: PaymentSchema})
     } catch (error) {
-      const msg = error.messages.errors.map(e => `${e.field} is ${e.rule}`).join(', ')
+      const msg = getErrors(error)
       // console.log(error.messages.errors)
       return response
         .safeHeader('returnType', 'error')
@@ -60,7 +61,7 @@ export default class PaymentsController {
     try {
       await request.validate({schema: PaymentSchema})
     } catch (error) {
-      const msg = error.messages.errors.map(e => `${e.field} is ${e.rule}`).join(', ')
+      const msg = getErrors(error)
       return response
         .safeHeader('returnType', 'error')
         .safeHeader('message', 'Validation error')

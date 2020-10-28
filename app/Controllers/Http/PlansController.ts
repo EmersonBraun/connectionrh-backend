@@ -2,6 +2,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import PlansRepository from 'App/Repositories/PlansRepository'
+import { getErrors } from 'App/Services/MessageErros'
 import { PlanSchema } from 'App/Validators/PlanSchema'
 
 export default class PlansController {
@@ -25,7 +26,7 @@ export default class PlansController {
     try {
       await request.validate({schema: PlanSchema})
     } catch (error) {
-      const msg = error.messages.errors.map(e => `${e.field} is ${e.rule}`).join(', ')
+      const msg = getErrors(error)
       // console.log(error.messages.errors)
       return response
         .safeHeader('returnType', 'error')
@@ -60,7 +61,7 @@ export default class PlansController {
     try {
       await request.validate({schema: PlanSchema})
     } catch (error) {
-      const msg = error.messages.errors.map(e => `${e.field} is ${e.rule}`).join(', ')
+      const msg = getErrors(error)
       return response
         .safeHeader('returnType', 'error')
         .safeHeader('message', 'Validation error')

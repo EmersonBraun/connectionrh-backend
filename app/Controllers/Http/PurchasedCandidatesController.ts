@@ -2,6 +2,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import PurchasedCandidatesRepository from 'App/Repositories/PurchasedCandidatesRepository'
+import { getErrors } from 'App/Services/MessageErros'
 import { PurchasedCandidateSchema } from 'App/Validators/PurchasedCandidateSchema'
 
 export default class PurchasedCandidatesController {
@@ -25,7 +26,7 @@ export default class PurchasedCandidatesController {
     try {
       await request.validate({schema: PurchasedCandidateSchema})
     } catch (error) {
-      const msg = error.messages.errors.map(e => `${e.field} is ${e.rule}`).join(', ')
+      const msg = getErrors(error)
       // console.log(error.messages.errors)
       return response
         .safeHeader('returnType', 'error')
@@ -60,7 +61,7 @@ export default class PurchasedCandidatesController {
     try {
       await request.validate({schema: PurchasedCandidateSchema})
     } catch (error) {
-      const msg = error.messages.errors.map(e => `${e.field} is ${e.rule}`).join(', ')
+      const msg = getErrors(error)
       return response
         .safeHeader('returnType', 'error')
         .safeHeader('message', 'Validation error')

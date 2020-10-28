@@ -2,6 +2,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import ContractTypesRepository from 'App/Repositories/ContractTypesRepository'
+import { getErrors } from 'App/Services/MessageErros'
 import { ContractTypeSchema } from 'App/Validators/ContractTypeSchema'
 
 export default class ContractsController {
@@ -25,7 +26,7 @@ export default class ContractsController {
     try {
       await request.validate({schema: ContractTypeSchema})
     } catch (error) {
-      const msg = error.messages.errors.map(e => `${e.field} is ${e.rule}`).join(', ')
+      const msg = getErrors(error)
       // console.log(error.messages.errors)
       return response
         .safeHeader('returnType', 'error')
@@ -60,7 +61,7 @@ export default class ContractsController {
     try {
       await request.validate({schema: ContractTypeSchema})
     } catch (error) {
-      const msg = error.messages.errors.map(e => `${e.field} is ${e.rule}`).join(', ')
+      const msg = getErrors(error)
       return response
         .safeHeader('returnType', 'error')
         .safeHeader('message', 'Validation error')

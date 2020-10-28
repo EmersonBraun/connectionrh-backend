@@ -2,6 +2,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import AreasRepository from 'App/Repositories/AreasRepository'
+import { getErrors } from 'App/Services/MessageErros'
 import { AreaSchema } from 'App/Validators/AreaSchema'
 
 export default class AreasController {
@@ -25,7 +26,7 @@ export default class AreasController {
     try {
       await request.validate({schema: AreaSchema})
     } catch (error) {
-      const msg = error.messages.errors.map(e => `${e.field} is ${e.rule}`).join(', ')
+      const msg = getErrors(error)
       // console.log(error.messages.errors)
       return response
         .safeHeader('returnType', 'error')
@@ -60,7 +61,7 @@ export default class AreasController {
     try {
       await request.validate({schema: AreaSchema})
     } catch (error) {
-      const msg = error.messages.errors.map(e => `${e.field} is ${e.rule}`).join(', ')
+      const msg = getErrors(error)
       return response
         .safeHeader('returnType', 'error')
         .safeHeader('message', 'Validation error')

@@ -2,6 +2,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import PostCategoriesRepository from 'App/Repositories/PostCategoriesRepository'
+import { getErrors } from 'App/Services/MessageErros'
 import { PostCategorySchema } from 'App/Validators/PostCategorySchema'
 
 export default class PostCategoriesController {
@@ -25,7 +26,7 @@ export default class PostCategoriesController {
     try {
       await request.validate({schema: PostCategorySchema})
     } catch (error) {
-      const msg = error.messages.errors.map(e => `${e.field} is ${e.rule}`).join(', ')
+      const msg = getErrors(error)
       // console.log(error.messages.errors)
       return response
         .safeHeader('returnType', 'error')
@@ -60,7 +61,7 @@ export default class PostCategoriesController {
     try {
       await request.validate({schema: PostCategorySchema})
     } catch (error) {
-      const msg = error.messages.errors.map(e => `${e.field} is ${e.rule}`).join(', ')
+      const msg = getErrors(error)
       return response
         .safeHeader('returnType', 'error')
         .safeHeader('message', 'Validation error')
