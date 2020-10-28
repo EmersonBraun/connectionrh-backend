@@ -25,7 +25,8 @@ Route.get('/', async () => {
 })
 
 Route.post('api/login', 'AuthController.login')
-Route.post('/logout', 'AuthController.logout')
+Route.post('api/sign-up', 'UsersController.store')
+Route.post('api/logout', 'AuthController.logout')
 
 Route
   .group(() => {

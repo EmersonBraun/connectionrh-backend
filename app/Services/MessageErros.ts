@@ -1,5 +1,6 @@
 export const getErrors = (error: { messages: { errors: any[] } }) => {
   return error.messages.errors.map(e => {
+    console.log(e)
     const rule = getRule(e.rule)
     return `${e.field} ${rule}`
   }).join(', ')
@@ -7,6 +8,8 @@ export const getErrors = (error: { messages: { errors: any[] } }) => {
 
 const getRule = (rule: string) => {
   switch (rule) {
+    case 'required':
+      return 'é obrigatório'
     case 'alpha':
       return 'deve ser alfa'
     case 'confirmed':
