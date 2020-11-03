@@ -5,7 +5,6 @@
  * file.
  */
 
-import User from 'App/Models/User'
 import { AuthConfig } from '@ioc:Adonis/Addons/Auth'
 
 /*
@@ -41,12 +40,15 @@ const authConfig: AuthConfig = {
       | Tokens provider
       |--------------------------------------------------------------------------
       |
-      | Uses SQL database for managing tokens.
+      | Uses SQL database config for managing tokens. The foreignKey column is used
+      | to make the relationship between the user and the token. You are free to
+      | use any column name here.
       |
       */
       tokenProvider: {
         driver: 'database',
         table: 'api_tokens',
+        foreignKey: 'user_id',
       },
 
       provider: {
@@ -88,10 +90,13 @@ const authConfig: AuthConfig = {
         | Model
         |--------------------------------------------------------------------------
         |
-        | The model to use for fetching or finding users
+        | The model to use for fetching or finding users. The model is imported
+        | lazily since the config files are read way earlier in the lifecycle
+        | of booting the app and the models may not be in a usable state at
+        | that time.
         |
         */
-        model: User,
+        model: () => import('App/Models/User'),
       },
     },
   },
