@@ -6,7 +6,7 @@ export default class RequestStatuses extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.string('request_status').notNullable()
+      table.string('request_status').nullable()
       table.timestamps(true)
     })
   }

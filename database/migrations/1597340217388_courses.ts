@@ -6,9 +6,9 @@ export default class Courses extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.string('course').notNullable()
-      table.string('institution').notNullable()
-      table.string('situation').notNullable()
+      table.string('course').nullable()
+      table.string('institution').nullable()
+      table.string('situation').nullable()
       table.integer('area_id').unsigned().nullable()
       table.integer('level_id').unsigned().nullable()
       table.timestamps(true)

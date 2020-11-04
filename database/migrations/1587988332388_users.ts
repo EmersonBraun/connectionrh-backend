@@ -6,11 +6,11 @@ export default class UsersSchema extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').primary()
-      table.string('name', 255).notNullable()
-      table.string('email', 255).notNullable()
-      table.string('password', 180).notNullable()
-      table.string('gender', 180).notNullable()
-      table.string('cpf', 180).notNullable()
+      table.string('name', 255).nullable()
+      table.string('email', 255).nullable()
+      table.string('password', 180).nullable()
+      table.string('gender', 180).nullable()
+      table.string('cpf', 180).nullable()
       table.boolean('accept_terms').defaultTo(false)
       table.boolean('pcd').defaultTo(false)
       table.boolean('email_confirmed').defaultTo(false)

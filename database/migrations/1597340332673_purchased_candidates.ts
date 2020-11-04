@@ -6,7 +6,7 @@ export default class PurchasedCandidates extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.float('price').notNullable()
+      table.float('price').nullable()
       table.integer('qtd').nullable()
       table.integer('company_id').unsigned().nullable()
       table.timestamps(true)

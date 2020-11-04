@@ -6,11 +6,11 @@ export default class PurchasedRequests extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.string('title').notNullable()
-      table.string('content').notNullable()
-      table.string('payment_mode').notNullable()
-      table.string('code').notNullable()
-      table.float('price').notNullable()
+      table.string('title').nullable()
+      table.string('content').nullable()
+      table.string('payment_mode').nullable()
+      table.string('code').nullable()
+      table.float('price').nullable()
       table.integer('user_id').unsigned().nullable()
       table.integer('company_id').unsigned().nullable()
       table.integer('request_status_id').unsigned().nullable()

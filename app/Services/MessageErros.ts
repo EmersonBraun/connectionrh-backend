@@ -1,6 +1,5 @@
 export const getErrors = (error: { messages: { errors: any[] } }) => {
   return error.messages.errors.map(e => {
-    console.log(e)
     const rule = getRule(e.rule)
     return `${e.field} ${rule}`
   }).join(', ')

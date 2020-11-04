@@ -6,8 +6,8 @@ export default class Portfolios extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.string('portfolio').notNullable()
-      table.string('url').notNullable()
+      table.string('portfolio').nullable()
+      table.string('url').nullable()
       table.integer('user_id').unsigned().nullable()
       table.integer('asset_id').unsigned().nullable()
       table.timestamps(true)

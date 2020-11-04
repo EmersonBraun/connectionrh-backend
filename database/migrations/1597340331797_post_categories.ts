@@ -6,7 +6,7 @@ export default class PostCategories extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.string('post_category').notNullable()
+      table.string('post_category').nullable()
       table.timestamps(true)
     })
   }

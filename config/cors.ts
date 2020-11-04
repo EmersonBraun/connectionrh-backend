@@ -100,6 +100,9 @@ const corsConfig: CorsConfig = {
   exposeHeaders: [
     'cache-control',
     'content-language',
+    'returnType',
+    'message',
+    'contentError',
     'content-type',
     'expires',
     'last-modified',
