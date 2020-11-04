@@ -82,6 +82,7 @@ export default class AddressesController {
 
   async destroy ({ params, response }: HttpContextContract) {
     const register = await this.repository.findAndDelete(params.id)
+
     const { data, statusCode, returnType, message, contentError } = register
     return response
       .safeHeader('returnType', returnType)

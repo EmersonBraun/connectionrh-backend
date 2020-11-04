@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
 import { first, all, create, findAndUpdate, find, createOrUpdate, findAndDelete } from '../Services/CRUD'
-import Address from 'App/Models/Address'
+import PostCategory from 'App/Models/PostCategory'
 
 class PostCategoriesRepository {
   protected model: any
 
   constructor () {
-    this.model = Address
+    this.model = PostCategory
   }
 
   async first () {

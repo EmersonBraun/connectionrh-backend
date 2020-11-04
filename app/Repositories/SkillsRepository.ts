@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
 import { first, all, create, findAndUpdate, find, createOrUpdate, findAndDelete } from '../Services/CRUD'
-import Address from 'App/Models/Address'
+import Skill from 'App/Models/Skill'
 
 class SkillsRepository {
   protected model: any
 
   constructor () {
-    this.model = Address
+    this.model = Skill
   }
 
   async first () {
