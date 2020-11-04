@@ -1,4 +1,5 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
+import User from 'App/Models/User'
 import {
   AddressFactory,
   ApplicationFactory,
@@ -60,5 +61,18 @@ export default class AddressSeeder extends BaseSeeder {
     await SkillFactory.createMany(10)
     await StrongPointFactory.createMany(10)
     await VacancyFactory.createMany(10)
+
+    await User.createMany([
+      {
+        name: 'Teste 1',
+        email: 'test1@test.com',
+        password: 'secret',
+      },
+      {
+        name: 'Teste 2',
+        email: 'test2@test.com',
+        password: 'secret',
+      },
+    ])
   }
 }

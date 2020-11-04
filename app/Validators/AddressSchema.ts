@@ -2,9 +2,9 @@ import { schema } from '@ioc:Adonis/Core/Validator'
 
 export const AddressSchema = schema.create({
   cep: schema.string(),
-  country: schema.string(),
-  state: schema.string(),
-  city: schema.string(),
-  district: schema.string(),
-  street: schema.string(),
+  country: schema.string.optional(),
+  state: schema.string.optional(),
+  city: schema.string.optional(),
+  district: schema.string.optional(),
+  street: schema.string.optional(),
 })

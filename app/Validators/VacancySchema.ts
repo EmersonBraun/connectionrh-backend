@@ -8,7 +8,7 @@ export const VacancySchema = schema.create({
   course: schema.string(),
   area: schema.string(),
   role: schema.string(),
-  pcd: schema.boolean(),
+  pcd: schema.boolean.optional(),
   contract_type_id: schema.number([
     rules.exists({ table: 'contract_types', column: 'id' }),
   ]),

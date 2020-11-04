@@ -1,11 +1,11 @@
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
 
 export const PurchasedRequestSchema = schema.create({
-  title: schema.string(),
-  content: schema.string(),
-  payment_mode: schema.string(),
-  code: schema.string(),
-  price: schema.number(),
+  title: schema.string.optional(),
+  content: schema.string.optional(),
+  payment_mode: schema.string.optional(),
+  code: schema.string.optional(),
+  price: schema.number.optional(),
   user_id: schema.number([
     rules.exists({ table: 'users', column: 'id' }),
   ]),

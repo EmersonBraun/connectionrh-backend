@@ -1,8 +1,8 @@
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
 
 export const PostSchema = schema.create({
-  title: schema.string(),
-  content: schema.string(),
+  title: schema.string.optional(),
+  content: schema.string.optional(),
   user_id: schema.number([
     rules.exists({ table: 'users', column: 'id' }),
   ]),
