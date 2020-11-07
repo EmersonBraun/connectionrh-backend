@@ -24,9 +24,15 @@ Route.get('/', async () => {
   return { hello: 'world' }
 })
 
-Route.post('api/login', 'AuthController.login')
-Route.post('api/sign-up', 'UsersController.store')
-Route.post('api/logout', 'AuthController.logout')
+Route
+  .group(() => {
+    Route.post('login', 'AuthController.login')
+    Route.post('sign-up', 'UsersController.store')
+    Route.post('logout', 'AuthController.logout')
+    Route.get('vacancies','VacanciesController.index')
+    Route.get('contact-mail','MailController.contact')
+  })
+  .prefix('/api')
 
 Route
   .group(() => {
@@ -57,7 +63,7 @@ Route
     Route.resource('skills','SkillsController').apiOnly()
     Route.resource('strong-points','StrongPointsController').apiOnly()
     Route.resource('users','UsersController').apiOnly()
-    Route.resource('vacancies','VacanciesController').apiOnly()
+    Route.resource('vacancies','VacanciesController').only(['create', 'store', 'show', 'edit','destroy'])
   })
   .prefix('/api')
   // .middleware('auth')

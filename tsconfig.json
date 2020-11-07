@@ -28,7 +28,8 @@
       "@adonisjs/lucid",
       "@adonisjs/auth",
       "jest",
-      "node"
+      "node",
+      "@adonisjs/mail"
     ]
   }
 }

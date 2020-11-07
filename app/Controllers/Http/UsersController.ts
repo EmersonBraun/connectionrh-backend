@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
+import Mail from '@ioc:Adonis/Addons/Mail'
+import Env from '@ioc:Adonis/Core/Env'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
 import UsersRepository from 'App/Repositories/UsersRepository'
 import { getErrors } from 'App/Services/MessageErros'
 import { UserSchema } from 'App/Validators/UserSchema'
@@ -38,6 +39,18 @@ export default class UsersController {
 
     const register = await this.repository.create(request.all())
     const { data, statusCode, returnType, message, contentError } = register
+    const { name, email } = data
+
+    if (returnType === 'success') {
+      await Mail.sendLater((message) => {
+        message
+          .from(Env.get('SMTP_USERNAME') as string)
+          .to(email)
+          .subject('Boas Vindas')
+          .htmlView('emails/welcome', { name })
+      })
+    }
+
     return response
       .safeHeader('returnType', returnType)
       .safeHeader('message', message)
