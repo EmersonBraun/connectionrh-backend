@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.3.0...v0.4.0) (2020-11-11)
+
+
+### Features
+
+* add mail send welcome and contact ([a75a229](https://github.com/EmersonBraun/connectionrh-backend/commit/a75a229c56532a3a38fbc54586655cb940a78b69))
+* create unauthenticated routes ([5843d06](https://github.com/EmersonBraun/connectionrh-backend/commit/5843d0640acb950298bd3455ba35e9bc11eaf715))
+* finalize sing-up functions ([1017980](https://github.com/EmersonBraun/connectionrh-backend/commit/1017980ef5bf77020a246adb20224716ff78da3d))
+* update validators ([11bc54a](https://github.com/EmersonBraun/connectionrh-backend/commit/11bc54af4fbf945a7d76bae314932b7ca465411d))
+
+
+### Bug Fixes
+
+* solve models of repositories ([279dab5](https://github.com/EmersonBraun/connectionrh-backend/commit/279dab5ca94c24ad050bfad6b94cb98cb7f152c2))
+* update migrations ([d115669](https://github.com/EmersonBraun/connectionrh-backend/commit/d115669fb4b84f98ef257fe7e8d417f7cc8edfe7))
+
 ## [0.3.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.2.0...v0.3.0) (2020-11-03)
 
 ## [0.2.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.1.3...v0.2.0) (2020-10-28)
