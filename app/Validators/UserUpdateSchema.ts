@@ -1,6 +1,6 @@
 import { rules, schema } from '@ioc:Adonis/Core/Validator'
 
-export const UserSchema = schema.create({
+export const UserUpdateSchema = schema.create({
   name: schema.string.optional(),
   email: schema.string({}, [
     rules.email(),
@@ -12,4 +12,13 @@ export const UserSchema = schema.create({
   accept_terms: schema.boolean.optional(),
   pcd: schema.boolean.optional(),
   email_confirmed: schema.boolean.optional(),
+  phone_id: schema.number([
+    rules.exists({ table: 'phones', column: 'id' }),
+  ]),
+  address_id: schema.number([
+    rules.exists({ table: 'addresses', column: 'id' }),
+  ]),
+  company_id: schema.number([
+    rules.exists({ table: 'companies', column: 'id' }),
+  ]),
 })

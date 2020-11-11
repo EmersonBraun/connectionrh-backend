@@ -3,6 +3,7 @@ import Mail from '@ioc:Adonis/Addons/Mail'
 import Env from '@ioc:Adonis/Core/Env'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import UsersRepository from 'App/Repositories/UsersRepository'
+import { getToken } from 'App/Services/auth'
 import { getErrors } from 'App/Services/MessageErros'
 import { UserSchema } from 'App/Validators/UserSchema'
 
@@ -23,12 +24,11 @@ export default class UsersController {
       .json(data)
   }
 
-  async store ({ request, response }: HttpContextContract) {
+  async store ({ request, response, auth }: HttpContextContract) {
     try {
       await request.validate({schema: UserSchema})
     } catch (error) {
       const msg = getErrors(error)
-      // console.log(error.messages.errors)
       return response
         .safeHeader('returnType', 'error')
         .safeHeader('message', 'Validation error')
@@ -39,7 +39,10 @@ export default class UsersController {
 
     const register = await this.repository.create(request.all())
     const { data, statusCode, returnType, message, contentError } = register
-    const { name, email } = data
+    const { name, email, password } = request.all()
+
+    const tokenData = await getToken(email, password, auth)
+    const token = tokenData?.data?.token ? tokenData.data.token : ''
 
     if (returnType === 'success') {
       await Mail.sendLater((message) => {
@@ -56,7 +59,7 @@ export default class UsersController {
       .safeHeader('message', message)
       .safeHeader('contentError', contentError)
       .status(statusCode)
-      .json(data)
+      .json({token,...data})
   }
 
   async show ({ params, response }: HttpContextContract) {

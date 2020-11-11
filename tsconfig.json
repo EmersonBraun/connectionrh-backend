@@ -29,7 +29,8 @@
       "@adonisjs/auth",
       "jest",
       "node",
-      "@adonisjs/mail"
+      "@adonisjs/mail",
+      "@adonisjs/view"
     ]
   }
 }
