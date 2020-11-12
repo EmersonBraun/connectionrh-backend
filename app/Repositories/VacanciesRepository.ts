@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
-import { first, all, create, findAndUpdate, find, createOrUpdate, findAndDelete } from '../Services/CRUD'
+import Database from '@ioc:Adonis/Lucid/Database'
 import Vacancy from 'App/Models/Vacancy'
+import { mountResponse } from 'App/Services/ResponseUtils'
+import { create, createOrUpdate, find, findAndDelete, findAndUpdate, first } from '../Services/CRUD'
 
 class VacanciesRepository {
   protected model: any
@@ -15,7 +17,20 @@ class VacanciesRepository {
   }
 
   async all () {
-    return await all(this.model)
+    let data; let contentError = []
+    try {
+      data = await Database
+        .rawQuery(`
+          SELECT *
+          FROM vacancies 
+          RIGHT JOIN "contract_types" on "contract_types"."id" = "vacancies"."contract_type_id" 
+          RIGHT JOIN "companies" on "companies"."id" = "vacancies"."company_id" 
+          `)
+    } catch (error) {
+      contentError = error
+    }
+
+    return mountResponse(data.rows, contentError, 'load')
   }
 
   async find (id) {

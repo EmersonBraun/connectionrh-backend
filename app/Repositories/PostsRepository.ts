@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
-import { first, all, create, findAndUpdate, find, createOrUpdate, findAndDelete } from '../Services/CRUD'
+import Database from '@ioc:Adonis/Lucid/Database'
 import Post from 'App/Models/Post'
+import { mountResponse } from 'App/Services/ResponseUtils'
+import { create, createOrUpdate, find, findAndDelete, findAndUpdate, first } from '../Services/CRUD'
 
 class PostsRepository {
   protected model: any
@@ -15,7 +17,20 @@ class PostsRepository {
   }
 
   async all () {
-    return await all(this.model)
+    let data; let contentError = []
+    try {
+      data = await Database
+        .rawQuery(`
+          SELECT posts.*, users.name, users.email, post_categories.*
+          FROM posts 
+          RIGHT JOIN "users" on "users"."id" = "posts"."user_id" 
+          RIGHT JOIN "post_categories" on "post_categories"."id" = "posts"."post_category_id" 
+          `)
+    } catch (error) {
+      contentError = error
+    }
+
+    return mountResponse(data.rows, contentError, 'load')
   }
 
   async find (id) {

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
-import { first, all, create, findAndUpdate, find, createOrUpdate, findAndDelete } from '../Services/CRUD'
 import DetachedPlan from 'App/Models/DetachedPlan'
+import { all, create, createOrUpdate, find, findAndDelete, findAndUpdate, first } from '../Services/CRUD'
 
 class DetachedPlansRepository {
   protected model: any
