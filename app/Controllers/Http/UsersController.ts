@@ -6,6 +6,7 @@ import UsersRepository from 'App/Repositories/UsersRepository'
 import { getToken } from 'App/Services/auth'
 import { getErrors } from 'App/Services/MessageErros'
 import { UserSchema } from 'App/Validators/UserSchema'
+import { UserUpdateSchema } from 'App/Validators/UserUpdateSchema'
 
 export default class UsersController {
   private readonly repository
@@ -15,6 +16,17 @@ export default class UsersController {
 
   async index ({ response }: HttpContextContract) {
     const register = await this.repository.all()
+    const { data, statusCode, returnType, message, contentError } = register
+    return response
+      .safeHeader('returnType', returnType)
+      .safeHeader('message', message)
+      .safeHeader('contentError', contentError)
+      .status(statusCode)
+      .json(data)
+  }
+
+  async simple ({ response }: HttpContextContract) {
+    const register = await this.repository.simple()
     const { data, statusCode, returnType, message, contentError } = register
     return response
       .safeHeader('returnType', returnType)
@@ -37,9 +49,11 @@ export default class UsersController {
         .json({})
     }
 
-    const register = await this.repository.create(request.all())
-    const { data, statusCode, returnType, message, contentError } = register
+    await this.repository.create(request.all())
     const { name, email, password } = request.all()
+
+    const reqUser = await this.repository.findByEmail(email)
+    const { data, statusCode, returnType, message, contentError } = reqUser
 
     const tokenData = await getToken(email, password, auth)
     const token = tokenData?.data?.token ? tokenData.data.token : ''
@@ -59,7 +73,7 @@ export default class UsersController {
       .safeHeader('message', message)
       .safeHeader('contentError', contentError)
       .status(statusCode)
-      .json({token,...data})
+      .json({token, user: data})
   }
 
   async show ({ params, response }: HttpContextContract) {
@@ -75,7 +89,7 @@ export default class UsersController {
 
   async update ({ params, request, response }: HttpContextContract) {
     try {
-      await request.validate({schema: UserSchema})
+      await request.validate({schema: UserUpdateSchema})
     } catch (error) {
       const msg = getErrors(error)
       return response

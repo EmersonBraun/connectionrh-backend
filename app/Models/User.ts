@@ -1,22 +1,23 @@
-import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
 import {
-  column,
-  beforeSave,
   BaseModel,
-  hasOne,
-  HasOne,
+  beforeSave,
+  BelongsTo,
+  belongsTo,
+  column,
+
   manyToMany,
   ManyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
-import Phone from './Phone'
+import { DateTime } from 'luxon'
 import Address from './Address'
-import Company from './Company'
 import Asset from './Asset'
+import Company from './Company'
+import Course from './Course'
+import Interest from './Interest'
+import Phone from './Phone'
 import Role from './Role'
 import Skill from './Skill'
-import Interest from './Interest'
-import Course from './Course'
 import StrongPoint from './StrongPoint'
 
 export default class User extends BaseModel {
@@ -40,7 +41,7 @@ export default class User extends BaseModel {
   @column()
   public email: string
 
-  @column()
+  @column({ serializeAs: null })
   public password: string
 
   @column()
@@ -55,33 +56,34 @@ export default class User extends BaseModel {
   @column()
   public email_confirmed: boolean
 
-  @column()
-  public phone_id: number
+  @column({columnName: 'phone_id'})
+  public phoneId: number
 
-  @column()
-  public address_id: number
+  @column({columnName: 'address_id'})
+  public addressId: number
 
-  @column()
-  public company_id: number
+  @column({columnName: 'company_id'})
+  public companyId: number
 
-  @hasOne(() => Phone)
-  public phone: HasOne<typeof Phone>
+  @column({columnName: 'role_id'})
+  public roleId: number
 
-  @hasOne(() => Address)
-  public address: HasOne<typeof Address>
+  @belongsTo(() => Phone)
+  public phone: BelongsTo<typeof Phone>
 
-  @hasOne(() => Company)
-  public company: HasOne<typeof Company>
+  @belongsTo(() => Address)
+  public address: BelongsTo<typeof Address>
+
+  @belongsTo(() => Company)
+  public company: BelongsTo<typeof Company>
+
+  @belongsTo(() => Role)
+  public roles: BelongsTo<typeof Role>
 
   @manyToMany(() => Asset, {
     pivotTable: 'users_has_assets',
   })
   public assets: ManyToMany<typeof Asset>
-
-  @manyToMany(() => Role, {
-    pivotTable: 'users_has_roles',
-  })
-  public roles: ManyToMany<typeof Role>
 
   @manyToMany(() => Skill, {
     pivotTable: 'users_has_skills',

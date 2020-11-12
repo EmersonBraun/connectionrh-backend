@@ -1,7 +1,8 @@
-import { DateTime } from 'luxon'
 import { BaseModel, column, hasOne, HasOne, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { DateTime } from 'luxon'
 import Asset from './Asset'
 import Plan from './Plan'
+import User from './User'
 
 export default class Company extends BaseModel {
   @column({ isPrimary: true })
@@ -40,4 +41,7 @@ export default class Company extends BaseModel {
     pivotTable: 'company_has_assets',
   })
   public assets: ManyToMany<typeof Asset>
+
+  @hasOne(() => User)
+  public user: HasOne<typeof User>
 }

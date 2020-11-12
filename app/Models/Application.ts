@@ -1,9 +1,9 @@
-import { DateTime } from 'luxon'
 import { BaseModel, column, HasOne, hasOne, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
-import User from './User'
+import { DateTime } from 'luxon'
+import Asset from './Asset'
 import Company from './Company'
 import RequestStatus from './RequestStatus'
-import Asset from './Asset'
+import User from './User'
 
 export default class Application extends BaseModel {
   @column({ isPrimary: true })
@@ -17,6 +17,9 @@ export default class Application extends BaseModel {
 
   @column()
   public user_id: number
+
+  // @column()
+  // public vacancy_id: number
 
   @column()
   public company_id: number

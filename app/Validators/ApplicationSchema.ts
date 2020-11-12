@@ -1,4 +1,4 @@
-import { schema, rules } from '@ioc:Adonis/Core/Validator'
+import { rules, schema } from '@ioc:Adonis/Core/Validator'
 
 export const ApplicationSchema = schema.create({
   user_id: schema.number([
@@ -8,6 +8,6 @@ export const ApplicationSchema = schema.create({
     rules.exists({ table: 'companies', column: 'id' }),
   ]),
   status_id: schema.number([
-    rules.exists({ table: 'status', column: 'id' }),
+    rules.exists({ table: 'application_statuses', column: 'id' }),
   ]),
 })

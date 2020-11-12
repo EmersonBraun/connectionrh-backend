@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
 import VacanciesRepository from 'App/Repositories/VacanciesRepository'
 import { getErrors } from 'App/Services/MessageErros'
 import { VacancySchema } from 'App/Validators/VacancySchema'
@@ -62,6 +61,7 @@ export default class VacanciesController {
       await request.validate({schema: VacancySchema})
     } catch (error) {
       const msg = getErrors(error)
+      console.log(error.messages.errors)
       return response
         .safeHeader('returnType', 'error')
         .safeHeader('message', 'Validation error')

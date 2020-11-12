@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
 import PortfoliosRepository from 'App/Repositories/PortfoliosRepository'
 import { getErrors } from 'App/Services/MessageErros'
 import { PortfolioSchema } from 'App/Validators/PortfolioSchema'
@@ -36,7 +35,12 @@ export default class PortfoliosController {
         .json({})
     }
 
-    const register = await this.repository.create(request.all())
+    const req = request.all()
+    if (!req.asset_id instanceof Number) {
+      delete req.asset_id
+    }
+    const register = await this.repository.create(req)
+
     const { data, statusCode, returnType, message, contentError } = register
     return response
       .safeHeader('returnType', returnType)

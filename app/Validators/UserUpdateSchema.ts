@@ -4,7 +4,6 @@ export const UserUpdateSchema = schema.create({
   name: schema.string.optional(),
   email: schema.string({}, [
     rules.email(),
-    rules.unique({ table: 'users', column: 'email' }),
   ]),
   password: schema.string.optional(),
   gender: schema.string.optional(),

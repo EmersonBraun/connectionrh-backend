@@ -21,7 +21,7 @@ class CompaniesRepository {
     try {
       data = await Database
         .rawQuery(`
-          SELECT *
+          SELECT companies.*, assets.path, assets.mime
           FROM companies 
           RIGHT JOIN "assets" on "assets"."id" = "companies"."avatar_id" 
           `)

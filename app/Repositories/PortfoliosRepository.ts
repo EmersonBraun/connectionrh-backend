@@ -21,7 +21,7 @@ class PortfoliosRepository {
     try {
       data = await Database
         .rawQuery(`
-          SELECT *
+          SELECT portfolios.*, users.name, users.email, assets.path, assets.mime
           FROM portfolios 
           RIGHT JOIN "users" on "users"."id" = "portfolios"."user_id" 
           RIGHT JOIN "assets" on "assets"."id" = "portfolios"."asset_id" 

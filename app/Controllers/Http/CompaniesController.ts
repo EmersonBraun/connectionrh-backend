@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
 import CompaniesRepository from 'App/Repositories/CompaniesRepository'
 import { getErrors } from 'App/Services/MessageErros'
 import { CompanySchema } from 'App/Validators/CompanySchema'
@@ -36,7 +35,11 @@ export default class CompaniesController {
         .json({})
     }
 
-    const register = await this.repository.create(request.all())
+    const req = request.all()
+    if (!req.avatar_id instanceof Number) {
+      delete req.avatar_id
+    }
+    const register = await this.repository.create(req)
     const { data, statusCode, returnType, message, contentError } = register
     return response
       .safeHeader('returnType', returnType)

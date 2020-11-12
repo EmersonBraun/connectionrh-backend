@@ -1,9 +1,9 @@
-import { schema, rules } from '@ioc:Adonis/Core/Validator'
+import { rules, schema } from '@ioc:Adonis/Core/Validator'
 
 export const VacancySchema = schema.create({
   title: schema.string(),
   description: schema.string(),
-  salary: schema.string(),
+  salary: schema.string.optional(),
   experience: schema.string(),
   course: schema.string(),
   area: schema.string(),
