@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.2](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.6.1...v0.6.2) (2020-11-14)
+
+
+### Bug Fixes
+
+* solve api error withouth data - vacancies ([f3bc22b](https://github.com/EmersonBraun/connectionrh-backend/commit/f3bc22bb60f0efe16f4713484cdeadf4a1d2a0ca))
+
 ### [0.6.1](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.6.0...v0.6.1) (2020-11-14)
 
 
