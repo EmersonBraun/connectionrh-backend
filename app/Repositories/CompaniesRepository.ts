@@ -28,8 +28,8 @@ class CompaniesRepository {
     } catch (error) {
       contentError = error
     }
-
-    return mountResponse(data.rows, contentError, 'load')
+    const retunData = data.rows ? data.rows : []
+    return mountResponse(retunData, contentError, 'load')
   }
 
   async find (id) {

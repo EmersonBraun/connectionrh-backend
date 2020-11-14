@@ -73,9 +73,9 @@ class UsersRepository {
       // .preload('strongs')
       .where('email', email)
       .first()
-    console.log(data.serialize())
-    // return await find(this.model, id)
-    return mountResponse(data.serialize(), '', 'load')
+
+    const retunData = data?.serialize ? data.serialize() : []
+    return mountResponse(retunData, '', 'load')
   }
 
   async create (data: any) {
