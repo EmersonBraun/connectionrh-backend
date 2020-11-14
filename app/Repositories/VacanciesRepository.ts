@@ -29,7 +29,7 @@ class VacanciesRepository {
     } catch (error) {
       contentError = error
     }
-    const retunData = data.rows ? data.rows : []
+    const retunData = data?.rows ? data.rows : []
     return mountResponse(retunData, contentError, 'load')
   }
 
