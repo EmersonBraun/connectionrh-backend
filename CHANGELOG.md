@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.6.2...v0.7.0) (2020-11-25)
+
+
+### Features
+
+* create production seeders ([0f01c2e](https://github.com/EmersonBraun/connectionrh-backend/commit/0f01c2ec099f400fc043bd431684fd5d5af3afa5))
+
+
+### Bug Fixes
+
+* change Env.getOrFail to Env.get ([bb792c7](https://github.com/EmersonBraun/connectionrh-backend/commit/bb792c764c3372ec8669257cb18f80cde9c236ed))
+* solve compatibity of instace in portfolio and companies controllers ([722f488](https://github.com/EmersonBraun/connectionrh-backend/commit/722f488e4f37a6926374263b7ca3a6cd374e4b6e))
+
 ### [0.6.2](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.6.1...v0.6.2) (2020-11-14)
 
 
