@@ -43,7 +43,7 @@ export default class DatabaseSeeder extends BaseSeeder {
   public async run () {
     const state = Env.get('NODE_ENV') as String
     console.log({state})
-    if (state && state !== 'development') {
+    if (!state || state !== 'development') {
       await this.prodution()
     } else {
       await this.inTests()
