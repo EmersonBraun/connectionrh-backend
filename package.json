@@ -5,8 +5,9 @@
   "scripts": {
     "build": "node ace build",
     "up": "docker-compose up -d",
+    "down": "docker-compose down",
     "migrate": "node ace migration:run",
-    "seed": "node ace db:seed --file=_DatabaseSeeder",
+    "seed": "node ace db:seed --files=database/seeders/_DatabaseSeeder",
     "start": "node ace serve",
     "lint": "eslint . --ext=.ts",
     "release:major": "standard-version --release-as major",
