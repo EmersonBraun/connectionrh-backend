@@ -53,6 +53,7 @@ Route
     Route.get('recomends','RecomendsController.index')
     Route.get('request-statuses','RequestStatusesController.index')
     Route.get('roles','RolesController.index')
+    Route.get('roles-notadmin','RolesController.notAdmin')
     Route.get('skills','SkillsController.index')
     Route.get('strong-points','StrongPointsController.index')
     Route.get('users','UsersController.index')

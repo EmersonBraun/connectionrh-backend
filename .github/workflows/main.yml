@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       - uses: actions/checkout@v2
       
       - name: Setup Node.js enviroment

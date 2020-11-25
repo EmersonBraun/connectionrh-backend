@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
 import RolesRepository from 'App/Repositories/RolesRepository'
 import { getErrors } from 'App/Services/MessageErros'
 import { RoleSchema } from 'App/Validators/RoleSchema'
@@ -13,6 +12,17 @@ export default class RolesController {
 
   async index ({ response }: HttpContextContract) {
     const register = await this.repository.all()
+    const { data, statusCode, returnType, message, contentError } = register
+    return response
+      .safeHeader('returnType', returnType)
+      .safeHeader('message', message)
+      .safeHeader('contentError', contentError)
+      .status(statusCode)
+      .json(data)
+  }
+
+  async notAdmin ({ response }: HttpContextContract) {
+    const register = await this.repository.notAdmin()
     const { data, statusCode, returnType, message, contentError } = register
     return response
       .safeHeader('returnType', returnType)
