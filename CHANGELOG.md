@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.3](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.8.2...v0.8.3) (2020-11-25)
+
+
+### Bug Fixes
+
+* add variable in workflow ([3dfc17e](https://github.com/EmersonBraun/connectionrh-backend/commit/3dfc17ef135f14bd6bcf1bb11a95cccabc45abbd))
+
 ### [0.8.2](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.8.1...v0.8.2) (2020-11-25)
 
 
