@@ -45,6 +45,7 @@ jobs:
             cd ~/app/connectionrh-backend
             yarn
             yarn migration
+            yarn seed
             pm2 restart rhconnection-api
             
       
