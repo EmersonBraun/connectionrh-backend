@@ -5,12 +5,12 @@
  * file.
  */
 
-import proxyAddr from 'proxy-addr'
 import Env from '@ioc:Adonis/Core/Env'
 import { LoggerConfig } from '@ioc:Adonis/Core/Logger'
+import { ProfilerConfig } from '@ioc:Adonis/Core/Profiler'
 import { RequestConfig } from '@ioc:Adonis/Core/Request'
 import { ResponseConfig } from '@ioc:Adonis/Core/Response'
-import { ProfilerConfig } from '@ioc:Adonis/Core/Profiler'
+import proxyAddr from 'proxy-addr'
 
 type HttpConfig = RequestConfig & ResponseConfig
 
@@ -27,7 +27,7 @@ type HttpConfig = RequestConfig & ResponseConfig
 | be decrypted.
 |
 */
-export const appKey: string = Env.getOrFail('APP_KEY') as string
+export const appKey: string = Env.get('APP_KEY') as string
 
 /*
 |--------------------------------------------------------------------------
