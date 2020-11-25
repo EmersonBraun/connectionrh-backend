@@ -36,7 +36,7 @@ export default class PortfoliosController {
     }
 
     const req = request.all()
-    if (!req.asset_id instanceof Number) {
+    if (!(req.asset_id instanceof Number)) {
       delete req.asset_id
     }
     const register = await this.repository.create(req)
