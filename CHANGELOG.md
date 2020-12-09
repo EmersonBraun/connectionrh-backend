@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.8.3...v0.9.0) (2020-12-09)
+
+
+### Features
+
+* add module to create institutions and courses_db ([27660ea](https://github.com/EmersonBraun/connectionrh-backend/commit/27660ea4f94d50e7c29c7a040176172053330bff))
+
 ### [0.8.3](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.8.2...v0.8.3) (2020-11-25)
 
 
