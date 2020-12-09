@@ -2,6 +2,7 @@
 import Mail from '@ioc:Adonis/Addons/Mail'
 import Env from '@ioc:Adonis/Core/Env'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import CompaniesRepository from 'App/Repositories/CompaniesRepository'
 import UsersRepository from 'App/Repositories/UsersRepository'
 import { getToken } from 'App/Services/auth'
 import { getErrors } from 'App/Services/MessageErros'
@@ -10,8 +11,10 @@ import { UserUpdateSchema } from 'App/Validators/UserUpdateSchema'
 
 export default class UsersController {
   private readonly repository
+  private readonly repositoryCompany
   constructor () {
     this.repository = UsersRepository
+    this.repositoryCompany = CompaniesRepository
   }
 
   async index ({ response }: HttpContextContract) {
@@ -36,7 +39,37 @@ export default class UsersController {
       .json(data)
   }
 
-  async store ({ request, response, auth }: HttpContextContract) {
+  async storeCompany ({ request, response, auth }: HttpContextContract) {
+    const { user, company } = request.all()
+    await this.repository.create(user)
+    await this.repositoryCompany.create(company)
+    const { name, email, password } = user
+
+    const reqUser = await this.repository.findByEmail(email)
+    const { data, statusCode, returnType, message, contentError } = reqUser
+
+    const tokenData = await getToken(email, password, auth)
+    const token = tokenData?.data?.token ? tokenData.data.token : ''
+
+    if (returnType === 'success') {
+      await Mail.sendLater((message) => {
+        message
+          .from(Env.get('SMTP_USERNAME') as string)
+          .to(email)
+          .subject('Boas Vindas')
+          .htmlView('emails/welcome-company', { name })
+      })
+    }
+
+    return response
+      .safeHeader('returnType', returnType)
+      .safeHeader('message', message)
+      .safeHeader('contentError', contentError)
+      .status(statusCode)
+      .json({token, user: data})
+  }
+
+  async storeCandidate ({ request, response, auth }: HttpContextContract) {
     try {
       await request.validate({schema: UserSchema})
     } catch (error) {
@@ -64,7 +97,7 @@ export default class UsersController {
           .from(Env.get('SMTP_USERNAME') as string)
           .to(email)
           .subject('Boas Vindas')
-          .htmlView('emails/welcome', { name })
+          .htmlView('emails/welcome-candidate', { name })
       })
     }
 

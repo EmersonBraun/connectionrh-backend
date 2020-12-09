@@ -27,7 +27,9 @@ Route.get('/', async () => {
 Route
   .group(() => {
     Route.post('login', 'AuthController.login')
-    Route.post('sign-up', 'UsersController.store')
+    Route.post('sign-up-company', 'UsersController.storeCompany')
+    Route.post('sign-up-candidate', 'UsersController.storeCandidate')
+    Route.post('finalize-registration', 'UsersController.finalizeCandidate')
     Route.post('logout', 'AuthController.logout')
     Route.get('addresses','AddressesController.index')
     Route.get('applications','ApplicationsController.index')
