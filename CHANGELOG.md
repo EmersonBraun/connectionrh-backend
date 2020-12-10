@@ -2,6 +2,54 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.8.3...v0.9.0) (2020-12-09)
+
+
+### Features
+
+* add module to create institutions and courses_db ([27660ea](https://github.com/EmersonBraun/connectionrh-backend/commit/27660ea4f94d50e7c29c7a040176172053330bff))
+
+### [0.8.3](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.8.2...v0.8.3) (2020-11-25)
+
+
+### Bug Fixes
+
+* add variable in workflow ([3dfc17e](https://github.com/EmersonBraun/connectionrh-backend/commit/3dfc17ef135f14bd6bcf1bb11a95cccabc45abbd))
+
+### [0.8.2](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.8.1...v0.8.2) (2020-11-25)
+
+
+### Bug Fixes
+
+* add variable in workflow ([aef9cdc](https://github.com/EmersonBraun/connectionrh-backend/commit/aef9cdc2f2088b8fe67d9da5924b90d7cee42306))
+
+### [0.8.1](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.8.0...v0.8.1) (2020-11-25)
+
+
+### Bug Fixes
+
+* solve seed in prodution ([91a1194](https://github.com/EmersonBraun/connectionrh-backend/commit/91a11942d43a0c2b634febdf88a193a2b6844d66))
+
+## [0.8.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.7.0...v0.8.0) (2020-11-25)
+
+
+### Features
+
+* add seed in workflow ([ee824c4](https://github.com/EmersonBraun/connectionrh-backend/commit/ee824c4c7a89c4fa82a531f79b6966ef969fbda7))
+
+## [0.7.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.6.2...v0.7.0) (2020-11-25)
+
+
+### Features
+
+* create production seeders ([0f01c2e](https://github.com/EmersonBraun/connectionrh-backend/commit/0f01c2ec099f400fc043bd431684fd5d5af3afa5))
+
+
+### Bug Fixes
+
+* change Env.getOrFail to Env.get ([bb792c7](https://github.com/EmersonBraun/connectionrh-backend/commit/bb792c764c3372ec8669257cb18f80cde9c236ed))
+* solve compatibity of instace in portfolio and companies controllers ([722f488](https://github.com/EmersonBraun/connectionrh-backend/commit/722f488e4f37a6926374263b7ca3a6cd374e4b6e))
+
 ### [0.6.2](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.6.1...v0.6.2) (2020-11-14)
 
 

@@ -36,7 +36,7 @@ export default class CompaniesController {
     }
 
     const req = request.all()
-    if (!req.avatar_id instanceof Number) {
+    if (!(req.avatar_id instanceof Number)) {
       delete req.avatar_id
     }
     const register = await this.repository.create(req)

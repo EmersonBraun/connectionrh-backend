@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
-import Role from 'App/Models/Role'
-import { mountResponse } from 'App/Services/ResponseUtils'
+import Institutions from 'App/Models/Institutions'
 import { all, create, createOrUpdate, find, findAndDelete, findAndUpdate, first } from '../Services/CRUD'
 
-class RolesRepository {
+class InstitutionsRepository {
   protected model: any
 
   constructor () {
-    this.model = Role
+    this.model = Institutions
   }
 
   async first () {
@@ -17,17 +16,6 @@ class RolesRepository {
 
   async all () {
     return await all(this.model)
-  }
-
-  async notAdmin () {
-    let data; let contentError = []
-    try {
-      data = await Role.query().where('role', '<>' ,'Admin')
-    } catch (error) {
-      contentError = error
-    }
-    const retunData = data ? data : []
-    return mountResponse(retunData, contentError, 'load')
   }
 
   async find (id) {
@@ -51,4 +39,4 @@ class RolesRepository {
   }
 }
 
-export default new RolesRepository()
+export default new InstitutionsRepository()

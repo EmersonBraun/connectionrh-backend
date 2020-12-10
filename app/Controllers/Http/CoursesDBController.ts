@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import RolesRepository from 'App/Repositories/RolesRepository'
+import CoursesDBRepository from 'App/Repositories/CoursesDBRepository'
 import { getErrors } from 'App/Services/MessageErros'
-import { RoleSchema } from 'App/Validators/RoleSchema'
+import { CourseDBSchema } from 'App/Validators/CourseDBSchema'
 
-export default class RolesController {
+export default class CoursesDBController {
   private readonly repository
   constructor () {
-    this.repository = RolesRepository
+    this.repository = CoursesDBRepository
   }
 
   async index ({ response }: HttpContextContract) {
@@ -21,20 +21,9 @@ export default class RolesController {
       .json(data)
   }
 
-  async notAdmin ({ response }: HttpContextContract) {
-    const register = await this.repository.notAdmin()
-    const { data, statusCode, returnType, message, contentError } = register
-    return response
-      .safeHeader('returnType', returnType)
-      .safeHeader('message', message)
-      .safeHeader('contentError', contentError)
-      .status(statusCode)
-      .json(data)
-  }
-
   async store ({ request, response }: HttpContextContract) {
     try {
-      await request.validate({schema: RoleSchema})
+      await request.validate({schema: CourseDBSchema})
     } catch (error) {
       const msg = getErrors(error)
       // console.log(error.messages.errors)
@@ -69,7 +58,7 @@ export default class RolesController {
 
   async update ({ params, request, response }: HttpContextContract) {
     try {
-      await request.validate({schema: RoleSchema})
+      await request.validate({schema: CourseDBSchema})
     } catch (error) {
       const msg = getErrors(error)
       return response
@@ -92,6 +81,7 @@ export default class RolesController {
 
   async destroy ({ params, response }: HttpContextContract) {
     const register = await this.repository.findAndDelete(params.id)
+
     const { data, statusCode, returnType, message, contentError } = register
     return response
       .safeHeader('returnType', returnType)
