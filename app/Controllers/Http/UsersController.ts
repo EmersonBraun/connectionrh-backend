@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
-import Mail from '@ioc:Adonis/Addons/Mail'
-import Env from '@ioc:Adonis/Core/Env'
+//import Mail from '@ioc:Adonis/Addons/Mail'
+//import Env from '@ioc:Adonis/Core/Env'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import UsersRepository from 'App/Repositories/UsersRepository'
 import { getToken } from 'App/Services/auth'
@@ -8,9 +8,17 @@ import { getErrors } from 'App/Services/MessageErros'
 import { UserSchema } from 'App/Validators/UserSchema'
 import { UserUpdateSchema } from 'App/Validators/UserUpdateSchema'
 
+import { injectable, inject } from 'tsyringe'
+import path from 'path'
+import MailProvider from 'providers/MailProvider/models/MailProvider'
+
+@injectable()
 export default class UsersController {
   private readonly repository
-  constructor () {
+  constructor (
+    @inject('MailProvider')
+    private mailProvider: MailProvider,
+  ) {
     this.repository = UsersRepository
   }
 
@@ -50,7 +58,7 @@ export default class UsersController {
     }
 
     await this.repository.create(request.all())
-    const { name, email, password } = request.all()
+    const { email, password, name} = request.all()
 
     const reqUser = await this.repository.findByEmail(email)
     const { data, statusCode, returnType, message, contentError } = reqUser
@@ -58,15 +66,37 @@ export default class UsersController {
     const tokenData = await getToken(email, password, auth)
     const token = tokenData?.data?.token ? tokenData.data.token : ''
 
-    if (returnType === 'success') {
-      await Mail.sendLater((message) => {
-        message
-          .from(Env.get('SMTP_USERNAME') as string)
-          .to(email)
-          .subject('Boas Vindas')
-          .htmlView('emails/welcome', { name })
-      })
-    }
+    const forgotPasswordTemplate = path.resolve(
+      __dirname,
+      './../Services/',
+      'views',
+      'welcome.hbs',
+    )
+
+    await this.mailProvider.sendMail({
+      to: {
+        name: name,
+        email: email,
+      },
+      subject: '[Connectionrh] Recuperação de senha',
+      templateData: {
+        file: forgotPasswordTemplate,
+        variables: {
+          name: name,
+          link: `${process.env.APP_WEB_URL}/reset-password?token=${token}`,
+        },
+      },
+    })
+
+    // if (returnType === 'success') {
+    //   await Mail.sendLater((message) => {
+    //     message
+    //       .from(Env.get('SMTP_USERNAME') as string)
+    //       .to(email)
+    //       .subject('Boas Vindas')
+    //       .htmlView('emails/welcome', { name })
+    //   })
+    // }
 
     return response
       .safeHeader('returnType', returnType)

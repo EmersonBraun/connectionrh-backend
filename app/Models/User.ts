@@ -19,6 +19,9 @@ import Phone from './Phone'
 import Role from './Role'
 import Skill from './Skill'
 import StrongPoint from './StrongPoint'
+import uploadConfig from '../../config/upload'
+
+import { Exclude, Expose } from 'class-transformer'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -42,6 +45,7 @@ export default class User extends BaseModel {
   public email: string
 
   @column({ serializeAs: null })
+  @Exclude()
   public password: string
 
   @column()
@@ -55,6 +59,25 @@ export default class User extends BaseModel {
 
   @column()
   public email_confirmed: boolean
+
+  @column()
+  public avatar: string
+
+  @Expose({ name: 'avatar_url' })
+  public getAvatar_url (): string | null | undefined {
+    if (!this.avatar) {
+      return null
+    }
+
+    switch (uploadConfig.driver) {
+      case 'disk':
+        return `${process.env.APP_API_URL}/files/${this.avatar}`
+      case 's3':
+        return `https://${uploadConfig.config.aws.bucket}.s3.amazonaws.com/${this.avatar}`
+      default:
+        return null
+    }
+  }
 
   @column({columnName: 'phone_id'})
   public phoneId: number
