@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.1](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.9.0...v0.9.1) (2020-12-15)
+
+
+### Features
+
+* add singup company e candidate ([06c707e](https://github.com/EmersonBraun/connectionrh-backend/commit/06c707ea4b0ee434d16ae55e7454a667e80280b0))
+* sendMail and upload ([27c545d](https://github.com/EmersonBraun/connectionrh-backend/commit/27c545dea20b36c7a1bb5b8d18e50559c45ab83a))
+
+
+### Bug Fixes
+
+* solve conflicts ([e47259d](https://github.com/EmersonBraun/connectionrh-backend/commit/e47259d71caab7b76913005cff4e4e958dd0051c))
+* test commit ([47e9056](https://github.com/EmersonBraun/connectionrh-backend/commit/47e9056b8e01dcbd38fa47c0295750b05c3605de))
+
 ## [0.9.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.8.3...v0.9.0) (2020-12-09)
 
 
