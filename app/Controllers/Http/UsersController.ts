@@ -50,13 +50,37 @@ export default class UsersController {
     const { user, company } = request.all()
     await this.repository.create(user)
     await this.repositoryCompany.create(company)
-    const { /*name,*/ email, password } = user
+    const { name, email, password } = user
 
     const reqUser = await this.repository.findByEmail(email)
     const { data, statusCode, returnType, message, contentError } = reqUser
 
     const tokenData = await getToken(email, password, auth)
     const token = tokenData?.data?.token ? tokenData.data.token : ''
+
+    const welcomeCompanyTemplate = path.resolve(
+      __dirname,
+      './../Services/',
+      'views',
+      'welcome_company_email.hbs',
+    )
+
+    if (returnType === 'success') {
+      await this.mailProvider.sendMail({
+        to: {
+          name: name,
+          email: email,
+        },
+        subject: '[Connectionrh] Bem vindo!',
+        templateData: {
+          file: welcomeCompanyTemplate,
+          variables: {
+            name: name,
+            link: `${process.env.APP_WEB_URL}/sign-up-activate?token=${token}`,
+          },
+        },
+      })
+    }
 
     // if (returnType === 'success') {
     //   await Mail.sendLater((message) => {
@@ -98,37 +122,30 @@ export default class UsersController {
     const tokenData = await getToken(email, password, auth)
     const token = tokenData?.data?.token ? tokenData.data.token : ''
 
-    const forgotPasswordTemplate = path.resolve(
+    const welcomeUserTemplate = path.resolve(
       __dirname,
       './../Services/',
       'views',
-      'forgot_password.hbs',
+      'welcome_user_email.hbs',
     )
 
-    await this.mailProvider.sendMail({
-      to: {
-        name: name,
-        email: email,
-      },
-      subject: '[Connectionrh] Recuperação de senha',
-      templateData: {
-        file: forgotPasswordTemplate,
-        variables: {
+    if (returnType === 'success') {
+      await this.mailProvider.sendMail({
+        to: {
           name: name,
-          link: `${process.env.APP_WEB_URL}/forgot?token=${token}`,
+          email: email,
         },
-      },
-    })
+        subject: '[Connectionrh] Bem vindo!',
+        templateData: {
+          file: welcomeUserTemplate,
+          variables: {
+            name: name,
+            link: `${process.env.APP_WEB_URL}/sign-up-activate?token=${token}`,
+          },
+        },
+      })
+    }
 
-    // if (returnType === 'success') {
-    //   await Mail.sendLater((message) => {
-    //     message
-    //       .from(Env.get('SMTP_USERNAME') as string)
-    //       .to(email)
-    //       .subject('Boas Vindas')
-    //       .htmlView('emails/welcome', { name })
-    //   })
-    // }
     return response
       .safeHeader('returnType', returnType)
       .safeHeader('message', message)
