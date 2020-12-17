@@ -115,7 +115,7 @@ export default class UsersController {
         file: forgotPasswordTemplate,
         variables: {
           name: name,
-          link: `${process.env.APP_WEB_URL}/reset-password?token=${token}`,
+          link: `${process.env.APP_WEB_URL}/forgot?token=${token}`,
         },
       },
     })
