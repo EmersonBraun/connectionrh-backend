@@ -102,7 +102,7 @@ export default class UsersController {
       __dirname,
       './../Services/',
       'views',
-      'welcome.hbs',
+      'forgot_password.hbs',
     )
 
     await this.mailProvider.sendMail({
