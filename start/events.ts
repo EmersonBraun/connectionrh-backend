@@ -7,7 +7,7 @@
 | boot.
 |
 */
-//import Mail from '@ioc:Adonis/Addons/Mail'
-//import Event from '@ioc:Adonis/Core/Event'
+import Mail from '@ioc:Adonis/Addons/Mail'
+import Event from '@ioc:Adonis/Core/Event'
 
-//Event.on('adonis:mail:sent', Mail.prettyPrint)
+Event.on('adonis:mail:sent', Mail.prettyPrint)

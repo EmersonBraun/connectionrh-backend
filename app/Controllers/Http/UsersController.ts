@@ -1,25 +1,18 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
-//import Mail from '@ioc:Adonis/Addons/Mail'
-//import Env from '@ioc:Adonis/Core/Env'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import CompaniesRepository from 'App/Repositories/CompaniesRepository'
 import UsersRepository from 'App/Repositories/UsersRepository'
 import { getToken } from 'App/Services/auth'
+import { sendWelcomeMailCandidate, sendWelcomeMailCompany } from 'App/Services/emails/MailService'
 import { getErrors } from 'App/Services/MessageErros'
+import { CompanyCreate } from 'App/Validators/CompanyCreate'
 import { UserSchema } from 'App/Validators/UserSchema'
 import { UserUpdateSchema } from 'App/Validators/UserUpdateSchema'
-import path from 'path'
-import MailProvider from 'providers/MailProvider/models/MailProvider'
-import { inject, injectable } from 'tsyringe'
 
-@injectable()
 export default class UsersController {
   private readonly repository
   private readonly repositoryCompany
-  constructor (
-    @inject('MailProvider')
-    private mailProvider: MailProvider,
-  ) {
+  constructor () {
     this.repository = UsersRepository
     this.repositoryCompany = CompaniesRepository
   }
@@ -47,6 +40,17 @@ export default class UsersController {
   }
 
   async storeCompany ({ request, response, auth }: HttpContextContract) {
+    try {
+      await request.validate({schema: CompanyCreate})
+    } catch (error) {
+      const msg = getErrors(error)
+      return response
+        .safeHeader('returnType', 'error')
+        .safeHeader('message', 'Validation error')
+        .safeHeader('contentError', msg)
+        .status(422)
+        .json({})
+    }
     const { user, company } = request.all()
     await this.repository.create(user)
     await this.repositoryCompany.create(company)
@@ -58,39 +62,9 @@ export default class UsersController {
     const tokenData = await getToken(email, password, auth)
     const token = tokenData?.data?.token ? tokenData.data.token : ''
 
-    const welcomeCompanyTemplate = path.resolve(
-      __dirname,
-      './../Services/',
-      'views',
-      'welcome_company_email.hbs',
-    )
-
     if (returnType === 'success') {
-      await this.mailProvider.sendMail({
-        to: {
-          name: name,
-          email: email,
-        },
-        subject: '[Connectionrh] Bem vindo!',
-        templateData: {
-          file: welcomeCompanyTemplate,
-          variables: {
-            name: name,
-            link: `${process.env.APP_WEB_URL}/sign-up-activate?token=${token}`,
-          },
-        },
-      })
+      await sendWelcomeMailCompany(name, email, token)
     }
-
-    // if (returnType === 'success') {
-    //   await Mail.sendLater((message) => {
-    //     message
-    //       .from(Env.get('SMTP_USERNAME') as string)
-    //       .to(email)
-    //       .subject('Boas Vindas')
-    //       .htmlView('emails/welcome-company', { name })
-    //   })
-    // }
 
     return response
       .safeHeader('returnType', returnType)
@@ -122,28 +96,8 @@ export default class UsersController {
     const tokenData = await getToken(email, password, auth)
     const token = tokenData?.data?.token ? tokenData.data.token : ''
 
-    const welcomeUserTemplate = path.resolve(
-      __dirname,
-      './../Services/',
-      'views',
-      'welcome_user_email.hbs',
-    )
-
     if (returnType === 'success') {
-      await this.mailProvider.sendMail({
-        to: {
-          name: name,
-          email: email,
-        },
-        subject: '[Connectionrh] Bem vindo!',
-        templateData: {
-          file: welcomeUserTemplate,
-          variables: {
-            name: name,
-            link: `${process.env.APP_WEB_URL}/sign-up-activate?token=${token}`,
-          },
-        },
-      })
+      await sendWelcomeMailCandidate(name, email, token)
     }
 
     return response
