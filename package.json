@@ -8,7 +8,7 @@
     "down": "docker-compose down",
     "migrate": "node ace migration:run",
     "seed": "node ace db:seed --files=database/seeders/_DatabaseSeeder",
-    "start": "node ace serve",
+    "start": "node ace serve -w -i='.docker'",
     "lint": "eslint . --ext=.ts",
     "release:major": "standard-version --release-as major",
     "release:minor": "standard-version --release-as minor",
