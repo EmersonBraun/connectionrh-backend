@@ -102,3 +102,4 @@ Route
   })
   .prefix('/api')
   // .middleware('auth')
+Route.resource('experiences','ExperiencesController').apiOnly()

@@ -1,5 +1,5 @@
 import Logger from '@ioc:Adonis/Core/Logger'
-import { getSatusCode, getHappen, getMessage } from './ResponseUtils'
+import { getHappen, getMessage, getSatusCode } from './ResponseUtils'
 
 let data = []
 let statusCode = 400
