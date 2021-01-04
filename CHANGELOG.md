@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.10.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.9.1...v0.10.0) (2021-01-04)
+
+
+### Bug Fixes
+
+* solve main mail functions ([e419a6c](https://github.com/EmersonBraun/connectionrh-backend/commit/e419a6c857a9fe0a99ad4c8c9d8822c209ce712e))
+* update email template ([6c5fc9a](https://github.com/EmersonBraun/connectionrh-backend/commit/6c5fc9a1e5adda9582189f3d081c922753531a46))
+* update templates and configurations in the email ([a5d0a86](https://github.com/EmersonBraun/connectionrh-backend/commit/a5d0a86855e05c27909d3f9767c4f994da10e74c))
+
 ### [0.9.1](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.9.0...v0.9.1) (2020-12-15)
 
 
