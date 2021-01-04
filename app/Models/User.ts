@@ -7,6 +7,8 @@ import {
   column,
   HasMany,
   hasMany,
+  HasOne,
+  hasOne,
   manyToMany,
   ManyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
@@ -17,8 +19,10 @@ import Address from './Address'
 import Asset from './Asset'
 import Company from './Company'
 import Course from './Course'
+import Experience from './Experience'
 import Interest from './Interest'
 import Meeting from './Meeting'
+import Objective from './Objective'
 import Phone from './Phone'
 import Portfolio from './Portfolio'
 import Post from './Post'
@@ -109,6 +113,12 @@ export default class User extends BaseModel {
 
   @hasMany(() => Portfolio)
   public portforios: HasMany<typeof Portfolio>
+
+  @hasMany(() => Experience)
+  public experience: HasMany<typeof Experience>
+
+  @hasOne(() => Objective)
+  public objective: HasOne<typeof Objective>
 
   @hasMany(() => Meeting)
   public meetings: HasMany<typeof Meeting>
