@@ -1,5 +1,6 @@
+import { BaseModel, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import Course from './Course'
 
 export default class Area extends BaseModel {
   @column({ isPrimary: true })
@@ -13,4 +14,7 @@ export default class Area extends BaseModel {
 
   @column()
   public area: string
+
+  @hasMany(() => Course)
+  public status: HasMany<typeof Course>
 }

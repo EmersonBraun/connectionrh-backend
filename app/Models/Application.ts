@@ -1,8 +1,8 @@
 import { BaseModel, column, HasOne, hasOne, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
+import ApplicationStatus from './ApplicationStatus'
 import Asset from './Asset'
 import Company from './Company'
-import RequestStatus from './RequestStatus'
 import User from './User'
 
 export default class Application extends BaseModel {
@@ -33,8 +33,11 @@ export default class Application extends BaseModel {
   @hasOne(() => Company)
   public company: HasOne<typeof Company>
 
-  @hasOne(() => RequestStatus)
-  public status: HasOne<typeof RequestStatus>
+  @hasOne(() => ApplicationStatus)
+  public status: HasOne<typeof ApplicationStatus>
+
+  // @hasOne(() => RequestStatus)
+  // public status: HasOne<typeof RequestStatus>
 
   @manyToMany(() => Asset, {
     pivotTable: 'applications_has_assets',
