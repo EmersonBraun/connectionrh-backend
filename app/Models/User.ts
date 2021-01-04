@@ -5,23 +5,27 @@ import {
   BelongsTo,
   belongsTo,
   column,
-
+  HasMany,
+  hasMany,
   manyToMany,
   ManyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
+import { Exclude, Expose } from 'class-transformer'
 import { DateTime } from 'luxon'
+import uploadConfig from '../../config/upload'
 import Address from './Address'
 import Asset from './Asset'
 import Company from './Company'
 import Course from './Course'
 import Interest from './Interest'
+import Meeting from './Meeting'
 import Phone from './Phone'
+import Portfolio from './Portfolio'
+import Post from './Post'
+import Recomend from './Recomend'
 import Role from './Role'
 import Skill from './Skill'
 import StrongPoint from './StrongPoint'
-import uploadConfig from '../../config/upload'
-
-import { Exclude, Expose } from 'class-transformer'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -102,6 +106,18 @@ export default class User extends BaseModel {
 
   @belongsTo(() => Role)
   public roles: BelongsTo<typeof Role>
+
+  @hasMany(() => Portfolio)
+  public portforios: HasMany<typeof Portfolio>
+
+  @hasMany(() => Meeting)
+  public meetings: HasMany<typeof Meeting>
+
+  @hasMany(() => Recomend)
+  public recomends: HasMany<typeof Recomend>
+
+  @hasMany(() => Post)
+  public posts: HasMany<typeof Post>
 
   @manyToMany(() => Asset, {
     pivotTable: 'users_has_assets',
