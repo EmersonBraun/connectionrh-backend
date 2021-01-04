@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.11.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.10.0...v0.11.0) (2021-01-04)
+
+
+### Features
+
+* add module experiences ([892424d](https://github.com/EmersonBraun/connectionrh-backend/commit/892424de655df4e2ab6c8e7fd08c908ff13a7a43))
+* add module objectives ([7fef7b2](https://github.com/EmersonBraun/connectionrh-backend/commit/7fef7b2eba6a4d76410941c639004e2d03f0ca4a))
+* add type in skills ([ac2bc84](https://github.com/EmersonBraun/connectionrh-backend/commit/ac2bc84e43b1fb38fb6721d0135a32b2507287ca))
+
 ## [0.10.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.9.1...v0.10.0) (2021-01-04)
 
 
