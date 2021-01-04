@@ -1,5 +1,4 @@
 import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
-
 import User from './User'
 
 export default class Experience extends BaseModel {
@@ -21,8 +20,8 @@ export default class Experience extends BaseModel {
   @column()
   public description: string
 
-  @column()
-  public user_id: number
+  @column({columnName: 'user_id'})
+  public userId: number
 
   @hasOne(() => User)
   public user: HasOne<typeof User>

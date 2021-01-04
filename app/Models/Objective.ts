@@ -8,8 +8,8 @@ export default class Objective extends BaseModel {
   @column()
   public objective: string
 
-  @column()
-  public user_id: number
+  @column({columnName: 'user_id'})
+  public userId: number
 
   @hasOne(() => User)
   public user: HasOne<typeof User>

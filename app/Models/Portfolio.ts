@@ -1,7 +1,7 @@
-import { DateTime } from 'luxon'
 import { BaseModel, column, hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm'
-import User from './User'
+import { DateTime } from 'luxon'
 import Asset from './Asset'
+import User from './User'
 
 export default class Portfolio extends BaseModel {
   @column({ isPrimary: true })
@@ -19,8 +19,8 @@ export default class Portfolio extends BaseModel {
   @column()
   public url: string
 
-  @column()
-  public user_id: number
+  @column({columnName: 'user_id'})
+  public userId: number
 
   @column()
   public asset_id: number
