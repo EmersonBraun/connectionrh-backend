@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.12.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.11.0...v0.12.0) (2021-01-04)
+
+
+### Features
+
+* add relations in models ([c074bbd](https://github.com/EmersonBraun/connectionrh-backend/commit/c074bbd8e3d9dd24fc94a7badf4a8460cf4afdf0))
+* add relations in models ([f251f8a](https://github.com/EmersonBraun/connectionrh-backend/commit/f251f8a37d15a48d1cc5172805487d3481912f6d))
+
 ## [0.11.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.10.0...v0.11.0) (2021-01-04)
 
 
