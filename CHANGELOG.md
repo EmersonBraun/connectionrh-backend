@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.2](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.12.1...v0.12.2) (2021-01-05)
+
+
+### Features
+
+* create contact module ([399e3fa](https://github.com/EmersonBraun/connectionrh-backend/commit/399e3fadde8f57d44e6810c547708c6fcfa0f2b6))
+
+
+### Bug Fixes
+
+* solve route unconsistenses and contactShcema ([1e11ff6](https://github.com/EmersonBraun/connectionrh-backend/commit/1e11ff6edbab6c3769990d54e5f3b8dffb999c2b))
+
 ### [0.12.1](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.12.0...v0.12.1) (2021-01-04)
 
 
