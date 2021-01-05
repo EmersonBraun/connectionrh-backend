@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
+import Env from '@ioc:Adonis/Core/Env'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import CompaniesRepository from 'App/Repositories/CompaniesRepository'
 import UsersRepository from 'App/Repositories/UsersRepository'
 import { getToken } from 'App/Services/auth'
-import { sendWelcomeMailCandidate, sendWelcomeMailCompany } from 'App/Services/emails/MailService'
+import { sendMail } from 'App/Services/emails/MailService'
 import { getErrors } from 'App/Services/MessageErros'
 import { CompanyCreate } from 'App/Validators/CompanyCreate'
 import { UserSchema } from 'App/Validators/UserSchema'
@@ -63,7 +64,17 @@ export default class UsersController {
     const token = tokenData?.data?.token ? tokenData.data.token : ''
 
     if (returnType === 'success') {
-      await sendWelcomeMailCompany(name, email, token)
+      const baseUrl = Env.get('APP_WEB_URL') as string
+      const link = `${baseUrl}/sign-up-activate?token=${token}`
+      await sendMail({
+        to: email,
+        subject: '[Connectionrh] Bem vindo!',
+        view: 'emails/welcome-company',
+        data: {
+          name,
+          link,
+        },
+      })
     }
 
     return response
@@ -97,7 +108,17 @@ export default class UsersController {
     const token = tokenData?.data?.token ? tokenData.data.token : ''
 
     if (returnType === 'success') {
-      await sendWelcomeMailCandidate(name, email, token)
+      const baseUrl = Env.get('APP_WEB_URL') as string
+      const link = `${baseUrl}/sign-up-activate?token=${token}`
+      await sendMail({
+        to: email,
+        subject: '[Connectionrh] Bem vindo!',
+        view: 'emails/welcome-candidate',
+        data: {
+          name,
+          link,
+        },
+      })
     }
 
     return response
