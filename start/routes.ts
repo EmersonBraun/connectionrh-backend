@@ -104,3 +104,4 @@ Route
   // .middleware('auth')
 Route.resource('experiences','ExperiencesController').apiOnly()
 Route.resource('objectives','ObjectivesController').apiOnly()
+Route.resource('contacts','ContactsController').apiOnly()
