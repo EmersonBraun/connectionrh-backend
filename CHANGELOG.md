@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.13.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.12.2...v0.13.0) (2021-01-06)
+
+
+### Features
+
+* create module userContacts ([9ec691a](https://github.com/EmersonBraun/connectionrh-backend/commit/9ec691a2a69585b90d093e473ffd0a4414f7c159))
+
 ### [0.12.2](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.12.1...v0.12.2) (2021-01-05)
 
 
