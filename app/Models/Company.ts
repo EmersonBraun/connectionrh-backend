@@ -14,23 +14,13 @@ export default class Company extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @column()
-  public company: string
+  @column() public company: string
+  @column() public cnpj: string
+  @column() public branch: string
+  @column() public application_status: string
+  @column() public avatar_id: number
 
-  @column()
-  public cnpj: string
-
-  @column()
-  public branch: string
-
-  @column()
-  public application_status: string
-
-  @column()
-  public avatar_id: number
-
-  @hasOne(() => Asset)
-  public avatar: HasOne<typeof Asset>
+  @hasOne(() => Asset) public avatar: HasOne<typeof Asset>
 
   @manyToMany(() => Plan, {
     pivotTable: 'company_has_plans',

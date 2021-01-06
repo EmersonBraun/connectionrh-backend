@@ -4,20 +4,12 @@ import Permission from './Permission'
 import User from './User'
 
 export default class Role extends BaseModel {
-  @column({ isPrimary: true })
-  public id: number
+  @column({ isPrimary: true }) public id: number
+  @column.dateTime({ autoCreate: true }) public createdAt: DateTime
+  @column.dateTime({ autoCreate: true, autoUpdate: true }) public updatedAt: DateTime
+  @column() public role: string
 
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
-
-  @column()
-  public role: string
-
-  @hasMany(() => User)
-  public user: HasMany<typeof User>
+  @hasMany(() => User) public user: HasMany<typeof User>
 
   @manyToMany(() => Permission, {
     pivotTable: 'roles_has_permissions',

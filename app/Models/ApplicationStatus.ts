@@ -12,8 +12,7 @@ export default class ApplicationStatus extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @column()
-  public application_status: string
+  @column() public application_status: string
 
   @hasMany(() => Application)
   public status: HasMany<typeof Application>

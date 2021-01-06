@@ -6,36 +6,17 @@ import Company from './Company'
 import User from './User'
 
 export default class Application extends BaseModel {
-  @column({ isPrimary: true })
-  public id: number
+  @column({ isPrimary: true }) public id: number
+  @column.dateTime({ autoCreate: true }) public createdAt: DateTime
+  @column.dateTime({ autoCreate: true, autoUpdate: true }) public updatedAt: DateTime
+  @column() public user_id: number
+  // @column() public vacancy_id: number
 
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
-
-  @column()
-  public user_id: number
-
-  // @column()
-  // public vacancy_id: number
-
-  @column()
-  public company_id: number
-
-  @column()
-  public status_id: number
-
-  @hasOne(() => User)
-  public user: HasOne<typeof User>
-
-  @hasOne(() => Company)
-  public company: HasOne<typeof Company>
-
-  @hasOne(() => ApplicationStatus)
-  public status: HasOne<typeof ApplicationStatus>
-
+  @column() public company_id: number
+  @column() public status_id: number
+  @hasOne(() => User) public user: HasOne<typeof User>
+  @hasOne(() => Company) public company: HasOne<typeof Company>
+  @hasOne(() => ApplicationStatus) public status: HasOne<typeof ApplicationStatus>
   // @hasOne(() => RequestStatus)
   // public status: HasOne<typeof RequestStatus>
 

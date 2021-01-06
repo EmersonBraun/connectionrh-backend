@@ -4,23 +4,12 @@ import Company from './Company'
 import User from './User'
 
 export default class Meeting extends BaseModel {
-  @column({ isPrimary: true })
-  public id: number
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
-
-  @column()
-  public date: Date
-
-  @column({columnName: 'user_id'})
-  public userId: number
-
-  @column()
-  public company_id: number
+  @column({ isPrimary: true }) public id: number
+  @column.dateTime({ autoCreate: true }) public createdAt: DateTime
+  @column.dateTime({ autoCreate: true, autoUpdate: true }) public updatedAt: DateTime
+  @column() public date: Date
+  @column({columnName: 'user_id'}) public userId: number
+  @column() public company_id: number
 
   @hasOne(() => User)
   public user: HasOne<typeof User>

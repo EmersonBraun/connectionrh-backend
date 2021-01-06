@@ -102,6 +102,7 @@ Route
     Route.resource('vacancies','VacanciesController').except(['index'])
     Route.resource('experiences','ExperiencesController').apiOnly()
     Route.resource('objectives','ObjectivesController').apiOnly()
+    Route.resource('user-contacts','UserContactsController').apiOnly()
   })
   .prefix('/api')
   // .middleware('auth')

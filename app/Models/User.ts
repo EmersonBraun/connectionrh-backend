@@ -32,45 +32,24 @@ import Skill from './Skill'
 import StrongPoint from './StrongPoint'
 
 export default class User extends BaseModel {
-  @column({ isPrimary: true })
-  public id: number
-  @column()
-  public rememberMeToken?: string
+  @column({ isPrimary: true }) public id: number
+  @column() public rememberMeToken?: string
+  @column.dateTime({ autoCreate: true }) public createdAt: DateTime
+  @column.dateTime({ autoCreate: true, autoUpdate: true }) public updatedAt: DateTime
+  @column() public name: string
+  @column() public gender: string
+  @column() public email: string
+  @column({ serializeAs: null }) @Exclude() public password: string
+  @column() public cpf: string
+  @column() public accept_terms: boolean
+  @column() public pcd: boolean
+  @column() public email_confirmed: boolean
+  @column({columnName: 'phone_id'}) public phoneId: number
+  @column({columnName: 'address_id'}) public addressId: number
+  @column({columnName: 'company_id'}) public companyId: number
+  @column({columnName: 'role_id'}) public roleId: number
 
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
-
-  @column()
-  public name: string
-
-  @column()
-  public gender: string
-
-  @column()
-  public email: string
-
-  @column({ serializeAs: null })
-  @Exclude()
-  public password: string
-
-  @column()
-  public cpf: string
-
-  @column()
-  public accept_terms: boolean
-
-  @column()
-  public pcd: boolean
-
-  @column()
-  public email_confirmed: boolean
-
-  @column()
-  public avatar: string
-
+  @column() public avatar: string
   @Expose({ name: 'avatar_url' })
   public getAvatar_url (): string | null | undefined {
     if (!this.avatar) {
@@ -86,18 +65,6 @@ export default class User extends BaseModel {
         return null
     }
   }
-
-  @column({columnName: 'phone_id'})
-  public phoneId: number
-
-  @column({columnName: 'address_id'})
-  public addressId: number
-
-  @column({columnName: 'company_id'})
-  public companyId: number
-
-  @column({columnName: 'role_id'})
-  public roleId: number
 
   @belongsTo(() => Phone)
   public phone: BelongsTo<typeof Phone>
