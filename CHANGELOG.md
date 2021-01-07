@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.14.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.13.0...v0.14.0) (2021-01-07)
+
+
+### Features
+
+* create search functions in repositories ([0956253](https://github.com/EmersonBraun/connectionrh-backend/commit/0956253dc3b4501c8ad47ac4dd7988157e0468f3))
+* create serach validators ([26c667a](https://github.com/EmersonBraun/connectionrh-backend/commit/26c667a24fa7e568758ca3c5771d5e06b39c68a2))
+
+
+### Bug Fixes
+
+* solve validator search names ([07c19fb](https://github.com/EmersonBraun/connectionrh-backend/commit/07c19fb4ba2c8b80364806448bbadf1e0383d064))
+* solve validators in controllers ([9736203](https://github.com/EmersonBraun/connectionrh-backend/commit/97362037c3310ad352eef1d8b2dd11d0b19aba2f))
+
 ## [0.13.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.12.2...v0.13.0) (2021-01-06)
 
 
