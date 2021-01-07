@@ -9,6 +9,7 @@ export default class Phone extends BaseModel {
   @column() public area_code: string
   @column() public phone: string
   @column() public type: string
+  @column({columnName: 'user_id'}) public userId: number
 
   @hasOne(() => User)
   public user: HasOne<typeof User>

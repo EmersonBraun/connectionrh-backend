@@ -1,4 +1,4 @@
-import { BaseModel, column, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
 import User from './User'
 
@@ -8,8 +8,8 @@ export default class StrongPoint extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true }) public updatedAt: DateTime
   @column() public content: string
 
-  @manyToMany(() => User, {
-    pivotTable: 'users_has_strongs',
-  })
-  public strongs: ManyToMany<typeof User>
+  @column({columnName: 'user_id'}) public userId: number
+
+  @hasOne(() => User)
+  public user: HasOne<typeof User>
 }

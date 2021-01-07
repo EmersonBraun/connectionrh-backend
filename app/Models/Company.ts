@@ -32,6 +32,8 @@ export default class Company extends BaseModel {
   })
   public assets: ManyToMany<typeof Asset>
 
+  @column({columnName: 'user_id'}) public userId: number
+
   @hasOne(() => User)
   public user: HasOne<typeof User>
 }

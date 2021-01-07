@@ -5,9 +5,10 @@ export const CompanyCreate = schema.create({
     name: schema.string.optional(),
     email: schema.string({}, [
       rules.email(),
-      // rules.unique({ table: 'users', column: 'email' }),
+      rules.unique({ table: 'users', column: 'email' }),
     ]),
     password: schema.string.optional(),
+    phone: schema.string(),
     gender: schema.string.optional(),
     cpf: schema.string.optional(),
     accept_terms: schema.boolean.optional(),

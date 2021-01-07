@@ -18,6 +18,8 @@ export default class Address extends BaseModel {
   @column() public city: string
   @column() public district: string
   @column() public street: string
+  @column({columnName: 'user_id'}) public userId: number
+
   @hasOne(() => User)
   public user: HasOne<typeof User>
 }

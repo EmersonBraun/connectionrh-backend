@@ -44,9 +44,6 @@ export default class User extends BaseModel {
   @column() public accept_terms: boolean
   @column() public pcd: boolean
   @column() public email_confirmed: boolean
-  @column({columnName: 'phone_id'}) public phoneId: number
-  @column({columnName: 'address_id'}) public addressId: number
-  @column({columnName: 'company_id'}) public companyId: number
   @column({columnName: 'role_id'}) public roleId: number
 
   @column() public avatar: string
@@ -66,14 +63,14 @@ export default class User extends BaseModel {
     }
   }
 
-  @belongsTo(() => Phone)
-  public phone: BelongsTo<typeof Phone>
+  @hasOne(() => Phone)
+  public phone: HasOne<typeof Phone>
 
-  @belongsTo(() => Address)
-  public address: BelongsTo<typeof Address>
+  @hasMany(() => Address)
+  public addresses: HasMany<typeof Address>
 
-  @belongsTo(() => Company)
-  public company: BelongsTo<typeof Company>
+  @hasOne(() => Company)
+  public company: HasOne<typeof Company>
 
   @belongsTo(() => Role)
   public roles: BelongsTo<typeof Role>
@@ -101,25 +98,17 @@ export default class User extends BaseModel {
   })
   public assets: ManyToMany<typeof Asset>
 
-  @manyToMany(() => Skill, {
-    pivotTable: 'users_has_skills',
-  })
-  public skills: ManyToMany<typeof Skill>
+  @hasMany(() => Skill)
+  public skills: HasMany<typeof Skill>
 
-  @manyToMany(() => Interest, {
-    pivotTable: 'users_has_interests',
-  })
-  public interests: ManyToMany<typeof Interest>
+  @hasMany(() => Interest)
+  public interests: HasMany<typeof Interest>
 
-  @manyToMany(() => Course, {
-    pivotTable: 'users_has_courses',
-  })
-  public courses: ManyToMany<typeof Course>
+  @hasMany(() => Course)
+  public courses: HasMany<typeof Course>
 
-  @manyToMany(() => StrongPoint, {
-    pivotTable: 'users_has_strongs',
-  })
-  public strongs: ManyToMany<typeof StrongPoint>
+  @hasMany(() => StrongPoint)
+  public strongs: HasMany<typeof StrongPoint>
 
   @beforeSave()
   public static async hashPassword (user: User) {

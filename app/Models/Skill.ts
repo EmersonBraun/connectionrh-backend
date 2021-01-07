@@ -1,4 +1,4 @@
-import { BaseModel, column, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
 import User from './User'
 
@@ -12,8 +12,8 @@ export default class Skill extends BaseModel {
   @column() public description: string
   @column() public institution: string
 
-  @manyToMany(() => User, {
-    pivotTable: 'users_has_skills',
-  })
-  public user: ManyToMany<typeof User>
+  @column({columnName: 'user_id'}) public userId: number
+
+  @hasOne(() => User)
+  public user: HasOne<typeof User>
 }

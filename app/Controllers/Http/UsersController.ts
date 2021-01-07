@@ -2,6 +2,7 @@
 import Env from '@ioc:Adonis/Core/Env'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import CompaniesRepository from 'App/Repositories/CompaniesRepository'
+import PhonesRepository from 'App/Repositories/PhonesRepository'
 import UsersRepository from 'App/Repositories/UsersRepository'
 import { getToken } from 'App/Services/auth'
 import { sendMail } from 'App/Services/emails/MailService'
@@ -13,9 +14,11 @@ import { UserUpdateSchema } from 'App/Validators/UserUpdateSchema'
 export default class UsersController {
   private readonly repository
   private readonly repositoryCompany
+  private readonly repositoryPhone
   constructor () {
     this.repository = UsersRepository
     this.repositoryCompany = CompaniesRepository
+    this.repositoryPhone = PhonesRepository
   }
 
   async index ({ response }: HttpContextContract) {
@@ -53,8 +56,10 @@ export default class UsersController {
         .json({})
     }
     const { user, company } = request.all()
-    await this.repository.create(user)
-    await this.repositoryCompany.create(company)
+    const dataUser = await this.repository.create(user)
+    await this.repositoryCompany.create({user_id: dataUser.data.id, ...company})
+    const { phone } = user
+    await this.repositoryPhone.create({user_id: dataUser.data.id, phone})
     const { name, email, password } = user
 
     const reqUser = await this.repository.findByEmail(email)
@@ -98,7 +103,9 @@ export default class UsersController {
         .json({})
     }
 
-    await this.repository.create(request.all())
+    const userData = await this.repository.create(request.all())
+    const { phone } = request.all()
+    await this.repositoryPhone.create({user_id: userData.data.id, phone})
     const { email, password, name} = request.all()
 
     const reqUser = await this.repository.findByEmail(email)
