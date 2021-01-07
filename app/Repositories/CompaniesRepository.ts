@@ -16,6 +16,19 @@ class CompaniesRepository {
     return await first(this.model)
   }
 
+  async search (query) {
+    let contentError = ''
+    let data: any
+    try{
+      data = await this.model.query().where(query)
+    } catch(error) {
+      console.log(error)
+      contentError = error
+    }
+
+    return mountResponse(data, contentError, 'load')
+  }
+
   async all () {
     let data; let contentError = []
     try {

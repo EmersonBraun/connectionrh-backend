@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
-import { first, all, create, findAndUpdate, find, createOrUpdate, findAndDelete } from '../Services/CRUD'
 import Area from 'App/Models/Area'
+import { mountResponse } from 'App/Services/ResponseUtils'
+import { all, create, createOrUpdate, find, findAndDelete, findAndUpdate, first } from '../Services/CRUD'
 
 class AreasRepository {
   protected model: any
@@ -12,6 +13,19 @@ class AreasRepository {
 
   async first () {
     return await first(this.model)
+  }
+
+  async search (query) {
+    let contentError = ''
+    let data: any
+    try{
+      data = await this.model.query().where(query)
+    } catch(error) {
+      console.log(error)
+      contentError = error
+    }
+
+    return mountResponse(data, contentError, 'load')
   }
 
   async all () {

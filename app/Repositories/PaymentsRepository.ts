@@ -36,6 +36,19 @@ class PaymentsRepository {
     return await find(this.model, id)
   }
 
+  async search (query) {
+    let contentError = ''
+    let data: any
+    try{
+      data = await this.model.query().where(query)
+    } catch(error) {
+      console.log(error)
+      contentError = error
+    }
+
+    return mountResponse(data, contentError, 'load')
+  }
+
   async create (data: any) {
     return await create(this.model, data)
   }

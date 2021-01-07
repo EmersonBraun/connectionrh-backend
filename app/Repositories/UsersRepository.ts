@@ -60,6 +60,19 @@ class UsersRepository {
     return await find(this.model, id)
   }
 
+  async search (query) {
+    let contentError = ''
+    let data: any
+    try{
+      data = await this.model.query().where(query)
+    } catch(error) {
+      console.log(error)
+      contentError = error
+    }
+
+    return mountResponse(data, contentError, 'load')
+  }
+
   async findByEmail (email: string) {
     const data = await User.query()
       .preload('address')

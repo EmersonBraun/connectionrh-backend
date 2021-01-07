@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
 import Institutions from 'App/Models/Institutions'
+import { mountResponse } from 'App/Services/ResponseUtils'
 import { all, create, createOrUpdate, find, findAndDelete, findAndUpdate, first } from '../Services/CRUD'
 
 class InstitutionsRepository {
@@ -20,6 +21,19 @@ class InstitutionsRepository {
 
   async find (id) {
     return await find(this.model, id)
+  }
+
+  async search (query) {
+    let contentError = ''
+    let data: any
+    try{
+      data = await this.model.query().where(query)
+    } catch(error) {
+      console.log(error)
+      contentError = error
+    }
+
+    return mountResponse(data, contentError, 'load')
   }
 
   async create (data: any) {
