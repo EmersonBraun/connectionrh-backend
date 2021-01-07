@@ -2,7 +2,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { sendMail } from 'App/Services/emails/MailService'
 import ContactsRepository from '../../Repositories/ContactsRepository'
-import { ContactSchema } from '../../Validators/ContactSchema'
+import { ContactSchema, ContactSearchSchema } from '../../Validators'
 
 export default class ContactsController {
   private readonly repository
@@ -48,6 +48,30 @@ export default class ContactsController {
         },
       })
     }
+    return response
+      .safeHeader('returnType', returnType)
+      .safeHeader('message', message)
+      .safeHeader('contentError', contentError)
+      .status(statusCode)
+      .json(data)
+  }
+
+  async search ({ request, response }: HttpContextContract) {
+    try {
+      await request.validate({schema: ContactSearchSchema})
+    } catch (error) {
+      const msg = error.messages.errors.map(e => `${e.field} is ${e.rule}`).join(', ')
+      // console.log(error.messages.errors)
+      return response
+        .safeHeader('returnType', 'error')
+        .safeHeader('message', 'Validation error')
+        .safeHeader('contentError', msg)
+        .status(422)
+        .json({})
+    }
+
+    const register = await this.repository.search(request.all())
+    const { data, statusCode, returnType, message, contentError } = register
     return response
       .safeHeader('returnType', returnType)
       .safeHeader('message', message)

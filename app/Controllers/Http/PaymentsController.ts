@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
 import PaymentsRepository from 'App/Repositories/PaymentsRepository'
 import { getErrors } from 'App/Services/MessageErros'
+import { PaymentSearchSchema } from 'App/Validators'
 import { PaymentSchema } from 'App/Validators/PaymentSchema'
 
 export default class PaymentsController {
@@ -37,6 +37,30 @@ export default class PaymentsController {
     }
 
     const register = await this.repository.create(request.all())
+    const { data, statusCode, returnType, message, contentError } = register
+    return response
+      .safeHeader('returnType', returnType)
+      .safeHeader('message', message)
+      .safeHeader('contentError', contentError)
+      .status(statusCode)
+      .json(data)
+  }
+
+  async search ({ request, response }: HttpContextContract) {
+    try {
+      await request.validate({schema: PaymentSearchSchema})
+    } catch (error) {
+      const msg = getErrors(error)
+      // console.log(error.messages.errors)
+      return response
+        .safeHeader('returnType', 'error')
+        .safeHeader('message', 'Validation error')
+        .safeHeader('contentError', msg)
+        .status(422)
+        .json({})
+    }
+
+    const register = await this.repository.search(request.all())
     const { data, statusCode, returnType, message, contentError } = register
     return response
       .safeHeader('returnType', returnType)

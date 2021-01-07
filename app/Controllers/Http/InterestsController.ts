@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
 import InterestsRepository from 'App/Repositories/InterestsRepository'
 import { getErrors } from 'App/Services/MessageErros'
-import { InterestSchema } from 'App/Validators/InterestSchema'
+import { InterestSchema, InterestSearchSchema } from 'App/Validators'
 
 export default class InterestsController {
   private readonly repository
@@ -37,6 +36,30 @@ export default class InterestsController {
     }
 
     const register = await this.repository.create(request.all())
+    const { data, statusCode, returnType, message, contentError } = register
+    return response
+      .safeHeader('returnType', returnType)
+      .safeHeader('message', message)
+      .safeHeader('contentError', contentError)
+      .status(statusCode)
+      .json(data)
+  }
+
+  async search ({ request, response }: HttpContextContract) {
+    try {
+      await request.validate({schema: InterestSearchSchema})
+    } catch (error) {
+      const msg = getErrors(error)
+      // console.log(error.messages.errors)
+      return response
+        .safeHeader('returnType', 'error')
+        .safeHeader('message', 'Validation error')
+        .safeHeader('contentError', msg)
+        .status(422)
+        .json({})
+    }
+
+    const register = await this.repository.search(request.all())
     const { data, statusCode, returnType, message, contentError } = register
     return response
       .safeHeader('returnType', returnType)

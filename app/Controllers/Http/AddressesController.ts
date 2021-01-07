@@ -2,7 +2,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import AddressesRepository from 'App/Repositories/AddressesRepository'
 import { getErrors } from 'App/Services/MessageErros'
-import { AddressSchema } from 'App/Validators/AddressSchema'
+import { AddressSchema, AddressSearchSchema } from 'App/Validators'
 
 export default class AddressesController {
   private readonly repository
@@ -47,7 +47,7 @@ export default class AddressesController {
 
   async search ({ request, response }: HttpContextContract) {
     try {
-      await request.validate({schema: AddressSchema})
+      await request.validate({schema: AddressSearchSchema})
     } catch (error) {
       const msg = getErrors(error)
       // console.log(error.messages.errors)

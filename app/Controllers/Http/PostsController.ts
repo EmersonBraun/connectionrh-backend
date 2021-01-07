@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
 import PostsRepository from 'App/Repositories/PostsRepository'
 import { getErrors } from 'App/Services/MessageErros'
-import { PostSchema } from 'App/Validators/PostSchema'
+import { PostSchema, PostSearchSchema } from 'App/Validators'
 
 export default class PostsController {
   private readonly repository
@@ -37,6 +36,30 @@ export default class PostsController {
     }
 
     const register = await this.repository.create(request.all())
+    const { data, statusCode, returnType, message, contentError } = register
+    return response
+      .safeHeader('returnType', returnType)
+      .safeHeader('message', message)
+      .safeHeader('contentError', contentError)
+      .status(statusCode)
+      .json(data)
+  }
+
+  async search ({ request, response }: HttpContextContract) {
+    try {
+      await request.validate({schema: PostSearchSchema})
+    } catch (error) {
+      const msg = getErrors(error)
+      // console.log(error.messages.errors)
+      return response
+        .safeHeader('returnType', 'error')
+        .safeHeader('message', 'Validation error')
+        .safeHeader('contentError', msg)
+        .status(422)
+        .json({})
+    }
+
+    const register = await this.repository.search(request.all())
     const { data, statusCode, returnType, message, contentError } = register
     return response
       .safeHeader('returnType', returnType)

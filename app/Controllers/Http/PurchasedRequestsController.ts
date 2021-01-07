@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
 import PurchasedRequestsRepository from 'App/Repositories/PurchasedRequestsRepository'
 import { getErrors } from 'App/Services/MessageErros'
-import { PurchasedRequestSchema } from 'App/Validators/PurchasedRequestSchema'
+import { PurchasedRequestSchema, PurchasedRequestSearchSchema } from 'App/Validators'
 
 export default class PurchasedRequestsController {
   private readonly repository
@@ -37,6 +36,30 @@ export default class PurchasedRequestsController {
     }
 
     const register = await this.repository.create(request.all())
+    const { data, statusCode, returnType, message, contentError } = register
+    return response
+      .safeHeader('returnType', returnType)
+      .safeHeader('message', message)
+      .safeHeader('contentError', contentError)
+      .status(statusCode)
+      .json(data)
+  }
+
+  async search ({ request, response }: HttpContextContract) {
+    try {
+      await request.validate({schema: PurchasedRequestSearchSchema})
+    } catch (error) {
+      const msg = getErrors(error)
+      // console.log(error.messages.errors)
+      return response
+        .safeHeader('returnType', 'error')
+        .safeHeader('message', 'Validation error')
+        .safeHeader('contentError', msg)
+        .status(422)
+        .json({})
+    }
+
+    const register = await this.repository.search(request.all())
     const { data, statusCode, returnType, message, contentError } = register
     return response
       .safeHeader('returnType', returnType)

@@ -2,7 +2,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import CompaniesRepository from 'App/Repositories/CompaniesRepository'
 import { getErrors } from 'App/Services/MessageErros'
-import { CompanySchema } from 'App/Validators/CompanySchema'
+import { CompanySchema, CompanySearchSchema } from 'App/Validators'
 
 export default class CompaniesController {
   private readonly repository
@@ -40,6 +40,30 @@ export default class CompaniesController {
       delete req.avatar_id
     }
     const register = await this.repository.create(req)
+    const { data, statusCode, returnType, message, contentError } = register
+    return response
+      .safeHeader('returnType', returnType)
+      .safeHeader('message', message)
+      .safeHeader('contentError', contentError)
+      .status(statusCode)
+      .json(data)
+  }
+
+  async search ({ request, response }: HttpContextContract) {
+    try {
+      await request.validate({schema: CompanySearchSchema})
+    } catch (error) {
+      const msg = getErrors(error)
+      // console.log(error.messages.errors)
+      return response
+        .safeHeader('returnType', 'error')
+        .safeHeader('message', 'Validation error')
+        .safeHeader('contentError', msg)
+        .status(422)
+        .json({})
+    }
+
+    const register = await this.repository.search(request.all())
     const { data, statusCode, returnType, message, contentError } = register
     return response
       .safeHeader('returnType', returnType)

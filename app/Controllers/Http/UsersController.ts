@@ -6,8 +6,8 @@ import UsersRepository from 'App/Repositories/UsersRepository'
 import { getToken } from 'App/Services/auth'
 import { sendMail } from 'App/Services/emails/MailService'
 import { getErrors } from 'App/Services/MessageErros'
+import { UserSchema, UserSearchSchema } from 'App/Validators'
 import { CompanyCreate } from 'App/Validators/CompanyCreate'
-import { UserSchema } from 'App/Validators/UserSchema'
 import { UserUpdateSchema } from 'App/Validators/UserUpdateSchema'
 
 export default class UsersController {
@@ -154,6 +154,29 @@ export default class UsersController {
     }
 
     const register = await this.repository.findAndUpdate(params.id, request.all())
+    const { data, statusCode, returnType, message, contentError } = register
+    return response
+      .safeHeader('returnType', returnType)
+      .safeHeader('message', message)
+      .safeHeader('contentError', contentError)
+      .status(statusCode)
+      .json(data)
+  }
+
+  async search ({ request, response }: HttpContextContract) {
+    try {
+      await request.validate({schema: UserSearchSchema})
+    } catch (error) {
+      const msg = getErrors(error)
+      return response
+        .safeHeader('returnType', 'error')
+        .safeHeader('message', 'Validation error')
+        .safeHeader('contentError', msg)
+        .status(422)
+        .json({})
+    }
+
+    const register = await this.repository.search(request.all())
     const { data, statusCode, returnType, message, contentError } = register
     return response
       .safeHeader('returnType', returnType)
