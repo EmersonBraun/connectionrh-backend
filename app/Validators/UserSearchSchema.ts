@@ -1,6 +1,6 @@
 import { rules, schema } from '@ioc:Adonis/Core/Validator'
 
-export const UserSchema = schema.create({
+export const UserSearchSchema = schema.create({
   name: schema.string.optional(),
   email: schema.string.optional({}, [
     rules.email(),

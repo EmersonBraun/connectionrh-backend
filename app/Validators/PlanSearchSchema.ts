@@ -1,6 +1,6 @@
 import { schema } from '@ioc:Adonis/Core/Validator'
 
-export const PlanSchema = schema.create({
+export const PlanSearchSchema = schema.create({
   plan: schema.string.optional(),
   vacancies_limit: schema.number.optional(),
   price: schema.number.optional(),

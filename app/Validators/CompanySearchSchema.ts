@@ -1,6 +1,6 @@
 import { schema } from '@ioc:Adonis/Core/Validator'
 
-export const CompanySchema = schema.create({
+export const CompanySearchSchema = schema.create({
   company: schema.string.optional(),
   cnpj: schema.string.optional(),
   branch: schema.string.optional(),

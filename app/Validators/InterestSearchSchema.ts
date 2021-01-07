@@ -1,6 +1,6 @@
 import { schema } from '@ioc:Adonis/Core/Validator'
 
-export const InterestSchema = schema.create({
+export const InterestSearchSchema = schema.create({
   title: schema.string.optional(),
   content: schema.string.optional(),
 })

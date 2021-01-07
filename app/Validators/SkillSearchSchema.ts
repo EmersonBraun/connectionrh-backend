@@ -1,6 +1,6 @@
 import { schema } from '@ioc:Adonis/Core/Validator'
 
-export const SkillSchema = schema.create({
+export const SkillSearchSchema = schema.create({
   percentage: schema.string.optional(),
   title: schema.string.optional(),
   type: schema.string.optional(),

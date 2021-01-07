@@ -1,6 +1,6 @@
 import { rules, schema } from '@ioc:Adonis/Core/Validator'
 
-export const ContactMailSchema = schema.create({
+export const ContactMailSearchSchema = schema.create({
   email: schema.string.optional({}, [
     rules.email(),
   ]),

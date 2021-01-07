@@ -1,6 +1,6 @@
 import { rules, schema } from '@ioc:Adonis/Core/Validator'
 
-export const PurchasedCandidateSchema = schema.create({
+export const PurchasedCandidateSearchSchema = schema.create({
   price: schema.number.optional(),
   qtd: schema.number.optional(),
   company_id: schema.number.optional([

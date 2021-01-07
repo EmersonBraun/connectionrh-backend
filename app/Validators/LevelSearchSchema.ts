@@ -1,5 +1,5 @@
 import { schema } from '@ioc:Adonis/Core/Validator'
 
-export const LevelSchema = schema.create({
+export const LevelSearchSchema = schema.create({
   level: schema.string.optional(),
 })

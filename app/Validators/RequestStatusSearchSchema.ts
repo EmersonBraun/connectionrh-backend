@@ -1,5 +1,5 @@
 import { schema } from '@ioc:Adonis/Core/Validator'
 
-export const RequestStatusSchema = schema.create({
+export const RequestStatusSearchSchema = schema.create({
   request_status: schema.string.optional(),
 })

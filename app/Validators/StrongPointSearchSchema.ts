@@ -1,5 +1,5 @@
 import { schema } from '@ioc:Adonis/Core/Validator'
 
-export const StrongPointSchema = schema.create({
+export const StrongPointSearchSchema = schema.create({
   content: schema.string.optional(),
 })

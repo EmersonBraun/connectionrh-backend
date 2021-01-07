@@ -1,6 +1,6 @@
 import { rules, schema } from '@ioc:Adonis/Core/Validator'
 
-export const PortfolioSchema = schema.create({
+export const PortfolioSearchSchema = schema.create({
   portfolio: schema.string.optional(),
   url: schema.string.optional(),
   user_id: schema.number.optional([

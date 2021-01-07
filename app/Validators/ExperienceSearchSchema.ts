@@ -1,6 +1,6 @@
 import { rules, schema } from '@ioc:Adonis/Core/Validator'
 
-export const ExperienceSchema = schema.create({
+export const ExperienceSearchSchema = schema.create({
   company: schema.string.optional(),
   start_date: schema.date.optional(),
   end_date: schema.date.optional(),

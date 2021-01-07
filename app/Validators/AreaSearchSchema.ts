@@ -1,5 +1,5 @@
 import { schema } from '@ioc:Adonis/Core/Validator'
 
-export const AreaSchema = schema.create({
+export const AreaSearchSchema = schema.create({
   area: schema.string.optional(),
 })
