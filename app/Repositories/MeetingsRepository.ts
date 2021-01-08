@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
-import Database from '@ioc:Adonis/Lucid/Database'
 import Meeting from 'App/Models/Meeting'
 import { mountResponse } from 'App/Services/ResponseUtils'
 import { create, createOrUpdate, find, findAndDelete, findAndUpdate, first } from '../Services/CRUD'
@@ -19,22 +18,32 @@ class MeetingsRepository {
   async all () {
     let data; let contentError = []
     try {
-      data = await Database
-        .rawQuery(`
-          SELECT 
-            users.name, users.email, users.gender, users.cpf, 
-            users.accept_terms, users.pcd, users.email_confirmed, 
-            companies.*, meetings.*
-          FROM meetings 
-          RIGHT JOIN "users" on "users"."id" = "meetings"."user_id" 
-          RIGHT JOIN "companies" on "companies"."id" = "meetings"."company_id" 
-          `)
+      data = await this.model.query().preload('user').preload('company')
     } catch (error) {
       contentError = error
     }
-    const retunData = data.rows ? data.rows : []
-    return mountResponse(retunData, contentError, 'load')
+    return mountResponse(data, contentError, 'load')
   }
+
+  // async all () {
+  //   let data; let contentError = []
+  //   try {
+  //     data = await Database
+  //       .rawQuery(`
+  //         SELECT 
+  //           users.name, users.email, users.gender, users.cpf, 
+  //           users.accept_terms, users.pcd, users.email_confirmed, 
+  //           companies.*, meetings.*
+  //         FROM meetings 
+  //         RIGHT JOIN "users" on "users"."id" = "meetings"."user_id" 
+  //         RIGHT JOIN "companies" on "companies"."id" = "meetings"."company_id" 
+  //         `)
+  //   } catch (error) {
+  //     contentError = error
+  //   }
+  //   const retunData = data.rows ? data.rows : []
+  //   return mountResponse(retunData, contentError, 'load')
+  // }
 
   async find (id) {
     return await find(this.model, id)

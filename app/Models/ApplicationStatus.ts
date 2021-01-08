@@ -1,4 +1,4 @@
-import { BaseModel, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
 import Application from './Application'
 
@@ -14,6 +14,6 @@ export default class ApplicationStatus extends BaseModel {
 
   @column() public application_status: string
 
-  @hasMany(() => Application)
-  public status: HasMany<typeof Application>
+  @belongsTo(() => Application)
+  public status: BelongsTo<typeof Application>
 }

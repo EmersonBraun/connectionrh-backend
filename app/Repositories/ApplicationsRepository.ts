@@ -20,7 +20,13 @@ class ApplicationsRepository {
     let contentError = ''
     let data: any
     try{
-      data = await this.model.query().where(query)
+      data = await Application
+        .query()
+        .preload('company')
+        // .preload('status')
+        .preload('user')
+        .preload('vacancy')
+        .where(query)
     } catch(error) {
       console.log(error)
       contentError = error
