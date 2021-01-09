@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
+import Application from '@ioc:Adonis/Core/Application'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import AssetsRepository from 'App/Repositories/AssetsRepository'
 import { getErrors } from 'App/Services/MessageErros'
-import { AssetSchema, AssetSearchSchema } from 'App/Validators'
+import { AssetSchema } from 'App/Validators'
 
 export default class AssetsController {
   private readonly repository
@@ -22,20 +24,42 @@ export default class AssetsController {
   }
 
   async store ({ request, response }: HttpContextContract) {
-    try {
-      await request.validate({schema: AssetSchema})
-    } catch (error) {
-      const msg = getErrors(error)
-      // console.log(error.messages.errors)
+    // try {
+    //   await request.validate({schema: AssetSchema})
+    // } catch (error) {
+    //   const msg = getErrors(error)
+    //   return response
+    //     .safeHeader('returnType', 'error')
+    //     .safeHeader('message', 'Validation error')
+    //     .safeHeader('contentError', msg)
+    //     .status(422)
+    //     .json({})
+    // }
+    const {owner, owner_id} = request.all()
+    const file = request.file('file')
+    if (!file) {
       return response
         .safeHeader('returnType', 'error')
         .safeHeader('message', 'Validation error')
-        .safeHeader('contentError', msg)
+        .safeHeader('contentError', 'File not found')
         .status(422)
         .json({})
     }
 
-    const register = await this.repository.create(request.all())
+    const path = `${new Date().getTime()}.${file.extname}`
+    const fileData = {
+      asset: file.clientName,
+      mime: file.extname,
+      path,
+      owner,
+      owner_id,
+    }
+
+    await file.move(Application.tmpPath('uploads'), {
+      name: path,
+    })
+
+    const register = await this.repository.create(fileData)
     const { data, statusCode, returnType, message, contentError } = register
     return response
       .safeHeader('returnType', returnType)
@@ -46,18 +70,18 @@ export default class AssetsController {
   }
 
   async search ({ request, response }: HttpContextContract) {
-    try {
-      await request.validate({schema: AssetSearchSchema})
-    } catch (error) {
-      const msg = getErrors(error)
-      // console.log(error.messages.errors)
-      return response
-        .safeHeader('returnType', 'error')
-        .safeHeader('message', 'Validation error')
-        .safeHeader('contentError', msg)
-        .status(422)
-        .json({})
-    }
+    // try {
+    //   await request.validate({schema: CompanySearchSchema})
+    // } catch (error) {
+    //   const msg = getErrors(error)
+    //   // console.log(error.messages.errors)
+    //   return response
+    //     .safeHeader('returnType', 'error')
+    //     .safeHeader('message', 'Validation error')
+    //     .safeHeader('contentError', msg)
+    //     .status(422)
+    //     .json({})
+    // }
 
     const register = await this.repository.search(request.all())
     const { data, statusCode, returnType, message, contentError } = register
@@ -72,12 +96,14 @@ export default class AssetsController {
   async show ({ params, response }: HttpContextContract) {
     const register = await this.repository.find(params.id)
     const { data, statusCode, returnType, message, contentError } = register
+    const path = `${Application.tmpPath('uploads')}/${data.path}`
+
     return response
       .safeHeader('returnType', returnType)
       .safeHeader('message', message)
       .safeHeader('contentError', contentError)
       .status(statusCode)
-      .json(data)
+      .attachment(path)
   }
 
   async update ({ params, request, response }: HttpContextContract) {
