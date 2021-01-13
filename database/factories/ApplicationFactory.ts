@@ -1,14 +1,15 @@
 import Factory from '@ioc:Adonis/Lucid/Factory'
 import Application from 'App/Models/Application'
-import { randomUserId } from './UserFactory'
-import { randomApplicationStatusId } from './ApplicationStatusFactory'
 import { randomCompanyId } from './CompanyFactory'
+import { randomUserId } from './UserFactory'
+import { randomVacancyId } from './VacancyFactory'
 
 export const ApplicationFactory = Factory
-  .define(Application, async () => ({
-    user_id: await randomUserId(),
-    company_id: await randomCompanyId(),
-    status_id: await randomApplicationStatusId(),
+  .define(Application, async ({ faker }) => ({
+    userId: await randomUserId(),
+    companyId: await randomCompanyId(),
+    vacancyId: await randomVacancyId(),
+    status: faker.random.arrayElement(['aberto','fechado']),
   }))
   .build()
 

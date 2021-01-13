@@ -11,7 +11,8 @@ export default class StrongPoints extends BaseSchema {
 
   public async down () {
     this.schema.table(this.tableName, (table) => {
-      table.timestamps(false)
+      table.dropColumn('created_at')
+      table.dropColumn('updated_at')
     })
   }
 }

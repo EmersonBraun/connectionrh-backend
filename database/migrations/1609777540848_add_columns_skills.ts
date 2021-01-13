@@ -11,7 +11,7 @@ export default class Skills extends BaseSchema {
 
   public async down () {
     this.schema.table(this.tableName, (table) => {
-      table.string('type')
+      table.dropColumn('type')
     })
   }
 }

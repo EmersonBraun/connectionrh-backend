@@ -11,7 +11,7 @@ export default class User extends BaseSchema {
 
   public async down () {
     this.schema.table(this.tableName, (table) => {
-      table.dropColumns('users')
+      table.dropColumns('avatar')
     })
   }
 }

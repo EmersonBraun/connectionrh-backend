@@ -1,8 +1,5 @@
 import Factory from '@ioc:Adonis/Lucid/Factory'
 import User from 'App/Models/User'
-import { randomAddressId } from './AddressFactory'
-import { randomCompanyId } from './CompanyFactory'
-import { randomPhoneId } from './PhoneFactory'
 import { randomRoleId } from './RoleFactory'
 
 export const UserFactory = Factory
@@ -15,9 +12,6 @@ export const UserFactory = Factory
     accept_terms: faker.random.boolean(),
     pcd: faker.random.boolean(),
     email_confirmed: faker.random.boolean(),
-    phone_id: await randomPhoneId(),
-    address_id: await randomAddressId(),
-    company_id: await randomCompanyId(),
     role_id: await randomRoleId(),
   }))
   .build()

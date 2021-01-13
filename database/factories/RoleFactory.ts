@@ -3,7 +3,7 @@ import Role from 'App/Models/Role'
 
 export const RoleFactory = Factory
   .define(Role, ({ faker }) => ({
-    role: faker.random.arrayElement(['Admin', 'Gerente', 'Candidato']),
+    role: faker.random.arrayElement(['Admin', 'Companhia', 'Candidato']),
   }))
   .build()
 

@@ -82,7 +82,7 @@ export default class DatabaseSeeder extends BaseSeeder {
   }
 
   public async prodution () {
-    const roles =await Role.updateOrCreateMany('role',[
+    const roles = await Role.updateOrCreateMany('role',[
       {role: 'Admin'},
       {role: 'Candidato'},
       {role: 'Empresa'},
