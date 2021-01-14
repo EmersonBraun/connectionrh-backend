@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
-import Database from '@ioc:Adonis/Lucid/Database'
 import PurchasedRequest from 'App/Models/PurchasedRequest'
 import { mountResponse } from 'App/Services/ResponseUtils'
-import { create, createOrUpdate, find, findAndDelete, findAndUpdate, first } from '../Services/CRUD'
+import { all, create, createOrUpdate, find, findAndDelete, findAndUpdate, first } from '../Services/CRUD'
 
 class PurchasedRequestsRepository {
   protected model: any
@@ -17,21 +16,22 @@ class PurchasedRequestsRepository {
   }
 
   async all () {
-    let data; let contentError = []
-    try {
-      data = await Database
-        .rawQuery(`
-          SELECT purchased_requests.*, users.name, users.email, users.pcd, users.cpf, companies.*, request_statuses.*
-          FROM purchased_requests 
-          RIGHT JOIN "users" on "users"."id" = "purchased_requests"."user_id" 
-          RIGHT JOIN "companies" on "companies"."id" = "purchased_requests"."company_id" 
-          RIGHT JOIN "request_statuses" on "request_statuses"."id" = "purchased_requests"."request_status_id" 
-          `)
-    } catch (error) {
-      contentError = error
-    }
-    const retunData = data.rows ? data.rows : []
-    return mountResponse(retunData, contentError, 'load')
+    // let data; let contentError = []
+    // try {
+    //   data = await Database
+    //     .rawQuery(`
+    //       SELECT purchased_requests.*, users.name, users.email, users.pcd, users.cpf, companies.*, request_statuses.*
+    //       FROM purchased_requests 
+    //       RIGHT JOIN "users" on "users"."id" = "purchased_requests"."user_id" 
+    //       RIGHT JOIN "companies" on "companies"."id" = "purchased_requests"."company_id" 
+    //       RIGHT JOIN "request_statuses" on "request_statuses"."id" = "purchased_requests"."request_status_id" 
+    //       `)
+    // } catch (error) {
+    //   contentError = error
+    // }
+    // const retunData = data.rows ? data.rows : []
+    // return mountResponse(retunData, contentError, 'load')
+    return all(this.model)
   }
 
   async find (id) {

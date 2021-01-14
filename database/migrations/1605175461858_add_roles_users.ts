@@ -6,8 +6,6 @@ export default class Users extends BaseSchema {
   public async up () {
     this.schema.table(this.tableName, (table) => {
       table.integer('role_id').unsigned().nullable()
-
-      table.foreign('role_id').references('id').inTable('roles').onDelete('CASCADE')
     })
   }
 

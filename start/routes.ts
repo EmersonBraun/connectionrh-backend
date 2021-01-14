@@ -90,6 +90,7 @@ Route
     Route.get('skills','SkillsController.index')
     Route.post('skills/search','SkillsController.search')
     Route.get('strong-points','StrongPointsController.index')
+    Route.post('strong-points/search','StrongPointsController.search')
     Route.get('users','UsersController.index')
     Route.post('users/search','UsersController.search')
     Route.get('users-simple','UsersController.simple')

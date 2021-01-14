@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
-import Database from '@ioc:Adonis/Lucid/Database'
 import User from 'App/Models/User'
 import { mountResponse } from 'App/Services/ResponseUtils'
 import { all, create, createOrUpdate, find, findAndDelete, findAndUpdate, first } from '../Services/CRUD'
@@ -21,25 +20,26 @@ class UsersRepository {
   }
 
   async all () {
-    let data; let contentError = []
-    try {
-      data = await Database
-        .rawQuery(`
-          SELECT 
-            users.name, users.email, users.gender, users.cpf, 
-            users.accept_terms, users.pcd, users.email_confirmed, 
-            phones.*, addresses.*, companies.*, roles.*
-          FROM users 
-          RIGHT JOIN "phones" on "phones"."id" = "users"."phone_id" 
-          RIGHT JOIN "addresses" on "addresses"."id" = "users"."address_id" 
-          RIGHT JOIN "companies" on "companies"."id" = "users"."company_id" 
-          RIGHT JOIN "roles" on "roles"."id" = "users"."role_id" 
-          `)
-    } catch (error) {
-      contentError = error
-    }
+    // let data; let contentError = []
+    // try {
+    //   data = await Database
+    //     .rawQuery(`
+    //       SELECT 
+    //         users.name, users.email, users.gender, users.cpf, 
+    //         users.accept_terms, users.pcd, users.email_confirmed, 
+    //         phones.*, addresses.*, companies.*, roles.*
+    //       FROM users 
+    //       RIGHT JOIN "phones" on "phones"."id" = "users"."phone_id" 
+    //       RIGHT JOIN "addresses" on "addresses"."id" = "users"."address_id" 
+    //       RIGHT JOIN "companies" on "companies"."id" = "users"."company_id" 
+    //       RIGHT JOIN "roles" on "roles"."id" = "users"."role_id" 
+    //       `)
+    // } catch (error) {
+    //   contentError = error
+    // }
 
-    return mountResponse(data.rows, contentError, 'load')
+    // return mountResponse(data.rows, contentError, 'load')
+    return await all(this.model)
   }
 
   async find (id: number) {

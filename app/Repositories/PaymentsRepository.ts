@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
-import Database from '@ioc:Adonis/Lucid/Database'
 import Payment from 'App/Models/Payment'
 import { mountResponse } from 'App/Services/ResponseUtils'
-import { create, createOrUpdate, find, findAndDelete, findAndUpdate, first } from '../Services/CRUD'
+import { all, create, createOrUpdate, find, findAndDelete, findAndUpdate, first } from '../Services/CRUD'
 
 class PaymentsRepository {
   protected model: any
@@ -17,19 +16,20 @@ class PaymentsRepository {
   }
 
   async all () {
-    let data; let contentError = []
-    try {
-      data = await Database
-        .rawQuery(`
-          SELECT *
-          FROM payments 
-          RIGHT JOIN "companies" on "companies"."id" = "payments"."company_id" 
-          `)
-    } catch (error) {
-      contentError = error
-    }
-    const retunData = data.rows ? data.rows : []
-    return mountResponse(retunData, contentError, 'load')
+    // let data; let contentError = []
+    // try {
+    //   data = await Database
+    //     .rawQuery(`
+    //       SELECT *
+    //       FROM payments 
+    //       RIGHT JOIN "companies" on "companies"."id" = "payments"."company_id" 
+    //       `)
+    // } catch (error) {
+    //   contentError = error
+    // }
+    // const retunData = data.rows ? data.rows : []
+    // return mountResponse(retunData, contentError, 'load')
+    return all(this.model)
   }
 
   async find (id) {

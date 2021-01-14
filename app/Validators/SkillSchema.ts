@@ -1,9 +1,12 @@
-import { schema } from '@ioc:Adonis/Core/Validator'
+import { rules, schema } from '@ioc:Adonis/Core/Validator'
 
 export const SkillSchema = schema.create({
-  percentage: schema.string.optional(),
-  title: schema.string.optional(),
-  type: schema.string.optional(),
-  description: schema.string.optional(),
-  institution: schema.string.optional(),
+  percentage: schema.string(),
+  title: schema.string(),
+  type: schema.string(),
+  description: schema.string(),
+  institution: schema.string(),
+  user_id: schema.number([
+    rules.exists({ table: 'users', column: 'id' }),
+  ]),
 })

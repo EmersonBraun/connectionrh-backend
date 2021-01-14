@@ -1,6 +1,7 @@
 import { BaseModel, column, hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
 import Company from './Company'
+import User from './User'
 
 export default class PurchasedCandidate extends BaseModel {
   @column({ isPrimary: true }) public id: number
@@ -9,7 +10,11 @@ export default class PurchasedCandidate extends BaseModel {
   @column() public price: number
   @column() public qtd: number
   @column() public purchased_date: Date
-  @column() public company_id: number
+  @column({columnName: 'company_id'}) public companyId: number
+  @column({columnName: 'user_id'}) public userId: number
+
+  @hasOne(() => User)
+  public user: HasOne<typeof User>
 
   @hasOne(() => Company)
   public company: HasOne<typeof Company>
