@@ -56,7 +56,7 @@ export default class UsersController {
         .json({})
     }
     const { user, company } = request.all()
-    const dataUser = await this.repository.create(user)
+    const dataUser = await this.repository.firstOrCreate(user.email, user)
     await this.repositoryCompany.create({user_id: dataUser.data.id, ...company})
     const { phone } = user
     await this.repositoryPhone.create({user_id: dataUser.data.id, phone})
@@ -102,11 +102,10 @@ export default class UsersController {
         .status(422)
         .json({})
     }
-
-    const userData = await this.repository.create(request.all())
+    const { email, password, name} = request.all()
+    const userData = await this.repository.firstOrCreate(email, request.all())
     const { phone } = request.all()
     await this.repositoryPhone.create({user_id: userData.data.id, phone})
-    const { email, password, name} = request.all()
 
     const reqUser = await this.repository.findByEmail(email)
     const { data, statusCode, returnType, message, contentError } = reqUser

@@ -101,6 +101,19 @@ class UsersRepository {
     return await create(this.model, data)
   }
 
+  async firstOrCreate (email, user: any) {
+    let contentError = ''
+    let data: any
+    try{
+      data = await User.firstOrCreate({ email }, user)
+    } catch(error) {
+      console.log(error)
+      contentError = error
+    }
+
+    return mountResponse(data, contentError, 'load')
+  }
+
   async createOrUpdate (id: any, data: any) {
     return await createOrUpdate(this.model, id, data)
   }
