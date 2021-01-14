@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.2](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.16.1...v0.16.2) (2021-01-14)
+
+
+### Bug Fixes
+
+* solve many compatibilities ([91d1fbd](https://github.com/EmersonBraun/connectionrh-backend/commit/91d1fbdb0e2d9e4c8b238b5c5c08a834a23f7e6a))
+* validation users ([46bad78](https://github.com/EmersonBraun/connectionrh-backend/commit/46bad782406398c958d67f8d22c59283c3af3e5e))
+
 ### [0.16.1](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.16.0...v0.16.1) (2021-01-13)
 
 
