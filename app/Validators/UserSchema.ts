@@ -1,11 +1,8 @@
-import { rules, schema } from '@ioc:Adonis/Core/Validator'
+import { schema } from '@ioc:Adonis/Core/Validator'
 
 export const UserSchema = schema.create({
   name: schema.string.optional(),
-  email: schema.string({}, [
-    rules.email(),
-    rules.unique({ table: 'users', column: 'email' }),
-  ]),
+  email: schema.string.optional(),
   password: schema.string.optional(),
   gender: schema.string.optional(),
   cpf: schema.string.optional(),
