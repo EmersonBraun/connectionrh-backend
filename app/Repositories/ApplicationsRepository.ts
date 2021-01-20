@@ -45,8 +45,8 @@ class ApplicationsRepository {
             users.accept_terms, users.pcd, users.email_confirmed, 
             companies.*, applications.*
           FROM applications 
-          RIGHT JOIN "users" on "users"."id" = "applications"."user_id" 
-          RIGHT JOIN "companies" on "companies"."id" = "applications"."company_id" 
+          INNER JOIN "users" on "users"."id" = "applications"."user_id" 
+          INNER JOIN "companies" on "companies"."id" = "applications"."company_id" 
           `)
     } catch (error) {
       contentError = error

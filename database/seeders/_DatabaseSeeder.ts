@@ -95,10 +95,10 @@ export default class DatabaseSeeder extends BaseSeeder {
     ])
     applicationStatus.map(aplication => console.info(aplication.serialize()))
     const areas = await Area.updateOrCreateMany('area',[
-      {area: 'TI'},
-      {area: 'ADM'},
-      {area: 'Contábeis'},
-      {area: 'Saúde'},
+      {area: 'ONG'},
+      {area: 'Governo'},
+      {area: 'Comercial'},
+      {area: 'Educacional'},
     ])
     areas.map(area => console.info(area.serialize()))
     const contractTypes = await ContractType.updateOrCreateMany('contract_type',[

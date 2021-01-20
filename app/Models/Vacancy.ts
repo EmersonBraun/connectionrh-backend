@@ -17,6 +17,7 @@ export default class Vacancy extends BaseModel {
   @column() public pcd: boolean
   @column() public contract_type_id: number
   @column() public company_id: number
+  @column({ columnName: 'is_closed'}) public isClosed: boolean
 
   @hasOne(() => ContractType)
   public contractType: HasOne<typeof ContractType>
