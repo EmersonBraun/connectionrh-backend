@@ -1,10 +1,8 @@
-import nodemailer, { Transporter } from 'nodemailer'
 import aws from 'aws-sdk'
-import mailConfig from 'config/mail'
-import { inject, injectable } from 'tsyringe'
-
-import MailTemplateProvider from 'providers/MailTemplateProvider/models/MailTemplateProvider'
+import nodemailer, { Transporter } from 'nodemailer'
 import MailProvider from 'providers/MailProvider/models/MailProvider'
+import MailTemplateProvider from 'providers/MailTemplateProvider/models/MailTemplateProvider'
+import { inject, injectable } from 'tsyringe'
 import SendMailDTO from '../dtos/SendMailDTO'
 
 @injectable()
@@ -29,7 +27,9 @@ export default class SESMailProvider implements MailProvider {
     subject,
     templateData,
   }: SendMailDTO): Promise<void> {
-    const { name, email } = mailConfig.defaults.from
+    const name = ''
+    const email = ''
+    // const { name, email } = mailConfig.defaults.from
     await this.client.sendMail({
       from: {
         name: from?.name || name,
