@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.18.1](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.18.0...v0.18.1) (2021-01-21)
+
+
+### Bug Fixes
+
+* solve erros in mail provider ([8f1b39d](https://github.com/EmersonBraun/connectionrh-backend/commit/8f1b39d40f3d11bc2f5415d24c3c9e98a3d59384))
+
 ## [0.18.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.17.0...v0.18.0) (2021-01-21)
 
 
