@@ -3,6 +3,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import ApplicationsRepository from 'App/Repositories/ApplicationsRepository'
 import { getErrors } from 'App/Services/MessageErros'
 import { ApplicationSchema, ApplicationSearchSchema } from 'App/Validators'
+import { ApplicationUpdateSchema } from 'App/Validators/ApplicationUpdateSchema'
 
 export default class ApplicationsController {
   private readonly repository
@@ -35,6 +36,8 @@ export default class ApplicationsController {
         .json({})
     }
 
+    const reqData = request.all()
+    reqData.status = reqData.status ?? 'Candidatura'
     const register = await this.repository.create(request.all())
     const { data, statusCode, returnType, message, contentError } = register
     return response
@@ -82,7 +85,7 @@ export default class ApplicationsController {
 
   async update ({ params, request, response }: HttpContextContract) {
     try {
-      await request.validate({schema: ApplicationSchema})
+      await request.validate({schema: ApplicationUpdateSchema})
     } catch (error) {
       const msg = getErrors(error)
       return response
