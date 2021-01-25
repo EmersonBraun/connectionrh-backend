@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.19.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.18.1...v0.19.0) (2021-01-25)
+
+
+### Features
+
+* change pass and confirmation email ([fab1093](https://github.com/EmersonBraun/connectionrh-backend/commit/fab10934c2856342bf34a31594d00a3c40b650f7))
+* teste CI ([6c9e691](https://github.com/EmersonBraun/connectionrh-backend/commit/6c9e6913b6336232cd4d1fba8995fb50655f85ad))
+
 ### [0.18.1](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.18.0...v0.18.1) (2021-01-21)
 
 
