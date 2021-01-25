@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
+import ConfirmationToken from 'App/Models/ConfirmationToken'
 import User from 'App/Models/User'
 import { mountResponse } from 'App/Services/ResponseUtils'
 import { all, create, createOrUpdate, find, findAndDelete, findAndUpdate, first } from '../Services/CRUD'
@@ -99,6 +100,20 @@ class UsersRepository {
 
   async create (data: any) {
     return await create(this.model, data)
+  }
+
+  async getUserByToken (token: any) {
+    let contentError = ''
+    let data: any
+    try {
+      data = await ConfirmationToken.query().where({ token })
+    } catch (error) {
+      console.log(error)
+      contentError = error
+    }
+    console.log(data)
+    const retunData = data?.serialize ? data.serialize() : []
+    return mountResponse(retunData, '', 'load')
   }
 
   async firstOrCreate (email, user: any) {

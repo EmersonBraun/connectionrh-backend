@@ -1,27 +1,20 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import Env from '@ioc:Adonis/Core/Env'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import CompaniesRepository from 'App/Repositories/CompaniesRepository'
 import ConfirmationTokenRepository from 'App/Repositories/ConfirmationTokenRepository'
-import PhonesRepository from 'App/Repositories/PhonesRepository'
 import UsersRepository from 'App/Repositories/UsersRepository'
 import { createRandomToken } from 'App/Services/auth'
 import { sendMail } from 'App/Services/emails/MailService'
 import { getErrors } from 'App/Services/MessageErros'
-import { UserSchema, UserSearchSchema } from 'App/Validators'
-import { CompanyCreate } from 'App/Validators/CompanyCreate'
-import { UserUpdateSchema } from 'App/Validators/UserUpdateSchema'
+import { ConfirmationTokenResendSchema, ConfirmationTokenSchema, ConfirmationTokenSearchSchema } from 'App/Validators'
 
-export default class UsersController {
+export default class ConfirmationTokenController {
   private readonly repository
-  private readonly repositoryCompany
-  private readonly repositoryPhone
-  private readonly repositoryConfirmationToken
+  private readonly repositoryUser
   constructor () {
-    this.repository = UsersRepository
-    this.repositoryConfirmationToken = ConfirmationTokenRepository
-    this.repositoryCompany = CompaniesRepository
-    this.repositoryPhone = PhonesRepository
+    this.repository = ConfirmationTokenRepository
+    this.repositoryUser = UsersRepository
   }
 
   async index ({ response }: HttpContextContract) {
@@ -35,8 +28,21 @@ export default class UsersController {
       .json(data)
   }
 
-  async simple ({ response }: HttpContextContract) {
-    const register = await this.repository.simple()
+  async store ({ request, response }: HttpContextContract) {
+    try {
+      await request.validate({schema: ConfirmationTokenSchema})
+    } catch (error) {
+      const msg = getErrors(error)
+      // console.log(error.messages.errors)
+      return response
+        .safeHeader('returnType', 'error')
+        .safeHeader('message', 'Validation error')
+        .safeHeader('contentError', msg)
+        .status(422)
+        .json({})
+    }
+
+    const register = await this.repository.create(request.all())
     const { data, statusCode, returnType, message, contentError } = register
     return response
       .safeHeader('returnType', returnType)
@@ -46,11 +52,12 @@ export default class UsersController {
       .json(data)
   }
 
-  async storeCompany ({ request, response }: HttpContextContract) {
+  async search ({ request, response }: HttpContextContract) {
     try {
-      await request.validate({schema: CompanyCreate})
+      await request.validate({schema: ConfirmationTokenSearchSchema})
     } catch (error) {
       const msg = getErrors(error)
+      // console.log(error.messages.errors)
       return response
         .safeHeader('returnType', 'error')
         .safeHeader('message', 'Validation error')
@@ -58,50 +65,23 @@ export default class UsersController {
         .status(422)
         .json({})
     }
-    const { user, company } = request.all()
-    // save user data
-    const dataUser = await this.repository.firstOrCreate(user.email, user)
-    // save company data
-    await this.repositoryCompany.create({user_id: dataUser.data.id, ...company})
-    // Save phone data
-    const { phone } = user
-    await this.repositoryPhone.create({user_id: dataUser.data.id, phone})
 
-    const { name, email } = user
-    const reqUser = await this.repository.findByEmail(email)
-    const { data, statusCode, returnType, message, contentError } = reqUser
-
-    const token = createRandomToken()
-    // save token
-    await this.repositoryConfirmationToken.create({ user_id: dataUser.data.id, token })
-
-    if (returnType === 'success') {
-      const baseUrl = Env.get('APP_WEB_URL') as string
-      const link = `${baseUrl}/sign-up-activate?token=${token}`
-      await sendMail({
-        to: email,
-        subject: '[Connectionrh] Bem vindo!',
-        view: 'emails/welcome-company',
-        data: {
-          name,
-          link,
-        },
-      })
-    }
-
+    const register = await this.repository.search(request.all())
+    const { data, statusCode, returnType, message, contentError } = register
     return response
       .safeHeader('returnType', returnType)
       .safeHeader('message', message)
       .safeHeader('contentError', contentError)
       .status(statusCode)
-      .json({token, user: data})
+      .json(data)
   }
 
-  async storeCandidate ({ request, response }: HttpContextContract) {
+  async resend ({ request, response }: HttpContextContract) {
     try {
-      await request.validate({schema: UserSchema})
+      await request.validate({schema: ConfirmationTokenResendSchema})
     } catch (error) {
       const msg = getErrors(error)
+      // console.log(error.messages.errors)
       return response
         .safeHeader('returnType', 'error')
         .safeHeader('message', 'Validation error')
@@ -109,18 +89,10 @@ export default class UsersController {
         .status(422)
         .json({})
     }
-    const { email, name} = request.all()
-    // save user data
-    const userData = await this.repository.firstOrCreate(email, request.all())
-    // save phone data
-    const { phone } = request.all()
-    await this.repositoryPhone.create({user_id: userData.data.id, phone})
-    const reqUser = await this.repository.findByEmail(email)
-    const { data, statusCode, returnType, message, contentError } = reqUser
 
+    const { data, statusCode, returnType, message, contentError } = await this.repositoryUser.findByEmail(request.all())
+    const { email, name, role_id } = data
     const token = createRandomToken()
-    // save token
-    await this.repositoryConfirmationToken.create({ user_id: data.id, token })
 
     if (returnType === 'success') {
       const baseUrl = Env.get('APP_WEB_URL') as string
@@ -128,7 +100,7 @@ export default class UsersController {
       await sendMail({
         to: email,
         subject: '[Connectionrh] Bem vindo!',
-        view: 'emails/welcome-candidate',
+        view: role_id === 1 ? 'emails/welcome-candidate' : 'emails/welcome-company',
         data: {
           name,
           link,
@@ -141,7 +113,47 @@ export default class UsersController {
       .safeHeader('message', message)
       .safeHeader('contentError', contentError)
       .status(statusCode)
-      .json({token, user: data})
+      .json(data)
+  }
+
+  async forgot ({ request, response }: HttpContextContract) {
+    try {
+      await request.validate({schema: ConfirmationTokenResendSchema})
+    } catch (error) {
+      const msg = getErrors(error)
+      // console.log(error.messages.errors)
+      return response
+        .safeHeader('returnType', 'error')
+        .safeHeader('message', 'Validation error')
+        .safeHeader('contentError', msg)
+        .status(422)
+        .json({})
+    }
+
+    const { data, statusCode, returnType, message, contentError } = await this.repositoryUser.findByEmail(request.all())
+    const { email, name } = data
+    const token = createRandomToken()
+
+    if (returnType === 'success') {
+      const baseUrl = Env.get('APP_WEB_URL') as string
+      const link = `${baseUrl}/change-pass?token=${token}`
+      await sendMail({
+        to: email,
+        subject: '[Connectionrh] Resetar a senha!',
+        view: 'emails/forgot-password',
+        data: {
+          name,
+          link,
+        },
+      })
+    }
+
+    return response
+      .safeHeader('returnType', returnType)
+      .safeHeader('message', message)
+      .safeHeader('contentError', contentError)
+      .status(statusCode)
+      .json(data)
   }
 
   async show ({ params, response }: HttpContextContract) {
@@ -157,7 +169,7 @@ export default class UsersController {
 
   async update ({ params, request, response }: HttpContextContract) {
     try {
-      await request.validate({schema: UserUpdateSchema})
+      await request.validate({schema: ConfirmationTokenSchema})
     } catch (error) {
       const msg = getErrors(error)
       return response
@@ -178,31 +190,9 @@ export default class UsersController {
       .json(data)
   }
 
-  async search ({ request, response }: HttpContextContract) {
-    try {
-      await request.validate({schema: UserSearchSchema})
-    } catch (error) {
-      const msg = getErrors(error)
-      return response
-        .safeHeader('returnType', 'error')
-        .safeHeader('message', 'Validation error')
-        .safeHeader('contentError', msg)
-        .status(422)
-        .json({})
-    }
-
-    const register = await this.repository.search(request.all())
-    const { data, statusCode, returnType, message, contentError } = register
-    return response
-      .safeHeader('returnType', returnType)
-      .safeHeader('message', message)
-      .safeHeader('contentError', contentError)
-      .status(statusCode)
-      .json(data)
-  }
-
   async destroy ({ params, response }: HttpContextContract) {
     const register = await this.repository.findAndDelete(params.id)
+
     const { data, statusCode, returnType, message, contentError } = register
     return response
       .safeHeader('returnType', returnType)
