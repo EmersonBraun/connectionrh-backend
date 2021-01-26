@@ -48,6 +48,7 @@ export default class AssetsController {
 
     const path = `${new Date().getTime()}.${file.extname}`
     const fileData = {
+      vimeo_url: null,
       asset: file.clientName,
       mime: file.extname,
       path,
@@ -55,9 +56,8 @@ export default class AssetsController {
       owner_id,
     }
 
-    await file.move(Application.tmpPath('uploads'), {
-      name: path,
-    })
+    await file.move(Application.tmpPath('uploads'), { name: path })
+    fileData.vimeo_url = await this.repository.createVimeoUrl(fileData, Application.tmpPath('uploads'))
 
     const register = await this.repository.create(fileData)
     const { data, statusCode, returnType, message, contentError } = register
