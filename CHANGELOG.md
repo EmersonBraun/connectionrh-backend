@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.19.1](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.19.0...v0.19.1) (2021-01-27)
+
+
+### Features
+
+* add temp vimeo tokens to env example and add vimeo do dependency ([f289d23](https://github.com/EmersonBraun/connectionrh-backend/commit/f289d2356d59cc700a6f9e14a5fee4238bd017d7))
+* create vimeo start service ([a114c67](https://github.com/EmersonBraun/connectionrh-backend/commit/a114c672a0d67954dfa96096197254ac1c61b363))
+* fix vimeo video integration after upload/create asset ([404eff5](https://github.com/EmersonBraun/connectionrh-backend/commit/404eff500677ec00182c60331b669fdd14c1dcbf))
+
+
+### Bug Fixes
+
+* remove unused consoles in confirmation token ([2ee5a33](https://github.com/EmersonBraun/connectionrh-backend/commit/2ee5a33e8a51647e2988fb58be40cb8be68af798))
+
 ## [0.19.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.18.1...v0.19.0) (2021-01-25)
 
 
