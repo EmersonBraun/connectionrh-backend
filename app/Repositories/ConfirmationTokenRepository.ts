@@ -41,7 +41,6 @@ class ConfirmationTokenRepository {
   }
 
   async create (data: any) {
-    console.log(data)
     let contentError = ''
     let response
     try {
@@ -50,9 +49,8 @@ class ConfirmationTokenRepository {
       console.log(error)
       contentError = error
     }
-    console.log(response)
     const retunresponse = response?.serialize ? response.serialize() : []
-    return mountResponse(retunresponse, '', 'load')
+    return mountResponse(retunresponse, contentError, 'load')
   }
 
   async getUserByToken (token: any) {
@@ -66,7 +64,7 @@ class ConfirmationTokenRepository {
     }
     console.log(data)
     const retunData = data?.serialize ? data.serialize() : []
-    return mountResponse(retunData, '', 'load')
+    return mountResponse(retunData, contentError, 'load')
   }
 
   async firstOrCreate (userId, dataVal: any) {
