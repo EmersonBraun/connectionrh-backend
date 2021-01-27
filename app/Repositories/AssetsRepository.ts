@@ -48,21 +48,25 @@ class AssestsRepository {
 
   async createVimeoUrl (file: any, path: any) {
     var client = new Vimeo(CLIENT_ID, CLIENT_SECRET, ACCESS_TOKEN)
-    client.upload(
-      `${path}/${file.path}`,
-      function (uri) {
-        var res = `${VIMEO_URL}/${uri.replace('/videos/', '')}`
-        console.log('File upload completed. Your Vimeo URI is:', res)
-        return res
-      },
-      function (bytesUploaded, bytesTotal) {
-        var percentage = (bytesUploaded / bytesTotal * 100).toFixed(2)
-        console.log(bytesUploaded, bytesTotal, percentage + '%')
-      },
-      function (error) {
-        console.log('Failed because: ' + error)
-      }
-    )
+    const promise = new Promise((resolve, reject) => {
+      client.upload(
+        `${path}/${file.path}`,
+        function (uri) {
+          var res = `${VIMEO_URL}/${uri.replace('/videos/', '')}`
+          console.log('File upload completed. Your Vimeo URI is:', res)
+          resolve(res)
+        },
+        function (bytesUploaded, bytesTotal) {
+          var percentage = (bytesUploaded / bytesTotal * 100).toFixed(2)
+          console.log(bytesUploaded, bytesTotal, percentage + '%')
+        },
+        function (error) {
+          console.log('Failed because: ' + error)
+          reject(new Error('Failed because: ' + error))
+        }
+      )
+    })
+    return promise
   }
 
   async createOrUpdate (id: any, data: any) {
