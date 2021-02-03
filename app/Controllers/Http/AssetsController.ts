@@ -96,28 +96,27 @@ export default class AssetsController {
   async show ({ params, response }: HttpContextContract) {
     const register = await this.repository.find(params.id)
     const { data, statusCode, returnType, message, contentError } = register
-    const path = `${Application.tmpPath('uploads')}/${data.path}`
-
     return response
       .safeHeader('returnType', returnType)
       .safeHeader('message', message)
       .safeHeader('contentError', contentError)
       .status(statusCode)
-      .attachment(path)
+      .json(data)
   }
 
   async update ({ params, request, response }: HttpContextContract) {
-    try {
+    /*try {
       await request.validate({schema: AssetSchema})
     } catch (error) {
       const msg = getErrors(error)
+      console.log(msg)
       return response
         .safeHeader('returnType', 'error')
         .safeHeader('message', 'Validation error')
         .safeHeader('contentError', msg)
         .status(422)
         .json({})
-    }
+    }*/
 
     const register = await this.repository.findAndUpdate(params.id, request.all())
     const { data, statusCode, returnType, message, contentError } = register
