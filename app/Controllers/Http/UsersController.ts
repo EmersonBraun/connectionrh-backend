@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { BASE_URL } from 'App/constants/app'
+import { BASE_URL } from 'App/constants'
 import CompaniesRepository from 'App/Repositories/CompaniesRepository'
 import ConfirmationTokenRepository from 'App/Repositories/ConfirmationTokenRepository'
 import PhonesRepository from 'App/Repositories/PhonesRepository'

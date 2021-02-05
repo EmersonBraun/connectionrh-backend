@@ -1,5 +1,5 @@
 import Mail from '@ioc:Adonis/Addons/Mail'
-import { FROM_MAIL } from 'App/constants/app'
+import { FROM_MAIL } from 'App/constants'
 type MailData = {
   to: string,
   subject: string,

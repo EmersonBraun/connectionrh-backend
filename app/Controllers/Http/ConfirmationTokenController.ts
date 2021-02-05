@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { BASE_URL } from 'App/constants/app'
+import { BASE_URL } from 'App/constants'
 import ConfirmationTokenRepository from 'App/Repositories/ConfirmationTokenRepository'
 import UsersRepository from 'App/Repositories/UsersRepository'
 import { createRandomToken } from 'App/Services/auth'

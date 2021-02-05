@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import Mail from '@ioc:Adonis/Addons/Mail'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { FROM_MAIL } from 'App/constants/app'
+import { FROM_MAIL } from 'App/constants'
 import { getErrors } from 'App/Services/MessageErros'
 import { ContactMailSchema } from 'App/Validators/ContactMailSchema'
 
