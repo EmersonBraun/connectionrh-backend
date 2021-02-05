@@ -65,7 +65,24 @@ class UsersRepository {
     let contentError = ''
     let data: any
     try{
-      data = await this.model.query().where(query)
+      data = await this.model
+        .query()
+        .preload('company')
+        .preload('phone')
+        .preload('roles')
+        .preload('addresses')
+        .preload('assets')
+        .preload('courses')
+        .preload('experience')
+        .preload('interests')
+        .preload('meetings')
+        .preload('objective')
+        .preload('portforios')
+        .preload('posts')
+        .preload('recomends')
+        .preload('skills')
+      // .preload('strongs')
+        .where(query)
     } catch(error) {
       console.log(error)
       contentError = error
@@ -113,7 +130,7 @@ class UsersRepository {
     }
     console.log(data)
     const retunData = data?.serialize ? data.serialize() : []
-    return mountResponse(retunData, '', 'load')
+    return mountResponse(retunData, contentError, 'load')
   }
 
   async firstOrCreate (email, user: any) {
