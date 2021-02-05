@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.21.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.20.0...v0.21.0) (2021-02-05)
+
+
+### Features
+
+* add relations in search user ([8d849ff](https://github.com/EmersonBraun/connectionrh-backend/commit/8d849ff44930d9f56bf8dc4b792e4f8f0c870a2a))
+
 ## [0.20.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.19.3...v0.20.0) (2021-02-05)
 
 
