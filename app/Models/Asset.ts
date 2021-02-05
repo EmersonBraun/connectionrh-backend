@@ -17,4 +17,5 @@ export default class Asset extends BaseModel {
   @column() public owner: string
   @column() public owner_id: number
   @column() public vimeo_url: string
+  @column() public description: string
 }

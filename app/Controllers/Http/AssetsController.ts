@@ -117,8 +117,20 @@ export default class AssetsController {
         .status(422)
         .json({})
     }*/
-
-    const register = await this.repository.findAndUpdate(params.id, request.all())
+    let url = null
+    const { asset, description } = request.all()
+    const file = request.file('file')
+    if (file) {
+      const path = `${new Date().getTime()}.${file.extname}`
+      const fileData = { asset: file.clientName, mime: file.extname, path }
+      await file.move(Application.tmpPath('uploads'), { name: path })
+      url = await this.repository.createVimeoUrl(fileData, Application.tmpPath('uploads'))
+    }
+    let bodyData = { asset: asset, description: description }
+    if (url) {
+      bodyData = { asset: asset, description: description, vimeo_url: url }
+    }
+    const register = await this.repository.findAndUpdate(params.id, bodyData)
     const { data, statusCode, returnType, message, contentError } = register
     return response
       .safeHeader('returnType', returnType)
