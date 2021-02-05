@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
-import Mail from '@ioc:Adonis/Addons/Mail'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { FROM_MAIL } from 'App/constants'
+import { sendMail } from 'App/Services/emails/MailService'
 import { getErrors } from 'App/Services/MessageErros'
 import { ContactMailSchema } from 'App/Validators/ContactMailSchema'
 
@@ -24,12 +24,11 @@ export default class MailController {
 
     const { email, description } = request.all()
 
-    await Mail.sendLater((message) => {
-      message
-        .from(FROM_MAIL)
-        .to(FROM_MAIL)
-        .subject('Contato recebido')
-        .htmlView('emails/contact', { email, description })
+    const data = await sendMail({
+      to: FROM_MAIL,
+      subject: '[Connectionrh] Contato recebido!',
+      view: 'emails/contact',
+      data: { email, description },
     })
 
     return response
@@ -37,6 +36,6 @@ export default class MailController {
       .safeHeader('message', 'send mail')
       .safeHeader('contentError', '')
       .status(200)
-      .json({})
+      .json(data)
   }
 }

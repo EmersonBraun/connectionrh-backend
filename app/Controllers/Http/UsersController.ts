@@ -75,9 +75,10 @@ export default class UsersController {
     // save token
     await this.repositoryConfirmationToken.create({ user_id: dataUser.data.id, token })
 
+    let mailData = {}
     if (returnType === 'success') {
       const link = `${BASE_URL}/sign-up-activate?token=${token}`
-      await sendMail({
+      mailData = await sendMail({
         to: email,
         subject: '[Connectionrh] Bem vindo!',
         view: 'emails/welcome-company',
@@ -93,7 +94,7 @@ export default class UsersController {
       .safeHeader('message', message)
       .safeHeader('contentError', contentError)
       .status(statusCode)
-      .json({token, user: data})
+      .json({token, user: data, debug: mailData})
   }
 
   async storeCandidate ({ request, response }: HttpContextContract) {
@@ -121,9 +122,10 @@ export default class UsersController {
     // save token
     await this.repositoryConfirmationToken.create({ user_id: data.id, token })
 
+    let mailData = {}
     if (returnType === 'success') {
       const link = `${BASE_URL}/sign-up-activate?token=${token}`
-      await sendMail({
+      mailData = await sendMail({
         to: email,
         subject: '[Connectionrh] Bem vindo!',
         view: 'emails/welcome-candidate',
@@ -131,6 +133,7 @@ export default class UsersController {
           name,
           link,
         },
+        debug: true,
       })
     }
 
@@ -139,7 +142,7 @@ export default class UsersController {
       .safeHeader('message', message)
       .safeHeader('contentError', contentError)
       .status(statusCode)
-      .json({token, user: data})
+      .json({token, user: data, debug: mailData})
   }
 
   async show ({ params, response }: HttpContextContract) {

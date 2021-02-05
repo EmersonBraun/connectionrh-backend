@@ -6,9 +6,9 @@ type MailData = {
   view: string,
   data: object,
   from?: string,
-  preview?: boolean
+  debug?: boolean
 }
-export async function sendMail ({ to, subject, view, data, from, preview }:MailData) {
+export async function sendMail ({ to, subject, view, data, from, debug }:MailData) {
   const fromMail = from ?? FROM_MAIL
   await Mail.sendLater((message) => {
     message
@@ -18,15 +18,9 @@ export async function sendMail ({ to, subject, view, data, from, preview }:MailD
       .htmlView(view, data)
   })
 
-  if (preview) {
-    const { url } = await Mail.preview((message) => {
-      message
-        .from(fromMail)
-        .to(to)
-        .subject(subject)
-        .htmlView(view, data)
-    })
-
-    console.log(`Preview url: ${url}`)
+  if (debug) {
+    console.table({ to, subject, view, data: JSON.stringify(data), from: fromMail })
   }
+
+  return { to, subject, view, data, from: fromMail }
 }

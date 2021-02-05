@@ -94,9 +94,10 @@ export default class ConfirmationTokenController {
     const { email, name, role_id } = data
     const token = createRandomToken()
 
+    let mailData = {}
     if (returnType === 'success') {
       const link = `${BASE_URL}/sign-up-activate?token=${token}`
-      await sendMail({
+      mailData = await sendMail({
         to: email,
         subject: '[Connectionrh] Bem vindo!',
         view: role_id === 1 ? 'emails/welcome-candidate' : 'emails/welcome-company',
@@ -112,7 +113,7 @@ export default class ConfirmationTokenController {
       .safeHeader('message', message)
       .safeHeader('contentError', contentError)
       .status(statusCode)
-      .json(data)
+      .json({...data, debug: mailData})
   }
 
   async forgot ({ request, response }: HttpContextContract) {
@@ -133,9 +134,10 @@ export default class ConfirmationTokenController {
     const { email, name } = data
     const token = createRandomToken()
 
+    let mailData = {}
     if (returnType === 'success') {
       const link = `${BASE_URL}/change-pass?token=${token}`
-      await sendMail({
+      mailData = await sendMail({
         to: email,
         subject: '[Connectionrh] Resetar a senha!',
         view: 'emails/forgot-password',
@@ -151,7 +153,7 @@ export default class ConfirmationTokenController {
       .safeHeader('message', message)
       .safeHeader('contentError', contentError)
       .status(statusCode)
-      .json(data)
+      .json({...data, debug: mailData})
   }
 
   async show ({ params, response }: HttpContextContract) {
