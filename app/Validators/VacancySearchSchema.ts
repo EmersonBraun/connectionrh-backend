@@ -3,7 +3,7 @@ import { rules, schema } from '@ioc:Adonis/Core/Validator'
 export const VacancySearchSchema = schema.create({
   title: schema.string.optional(),
   description: schema.string.optional(),
-  salary: schema.string.optional(),
+  salary: schema.number.optional(),
   experience: schema.string.optional(),
   course: schema.string.optional(),
   area: schema.string.optional(),

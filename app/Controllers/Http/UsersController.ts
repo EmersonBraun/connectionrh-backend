@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
-import Env from '@ioc:Adonis/Core/Env'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import { BASE_URL } from 'App/constants/app'
 import CompaniesRepository from 'App/Repositories/CompaniesRepository'
 import ConfirmationTokenRepository from 'App/Repositories/ConfirmationTokenRepository'
 import PhonesRepository from 'App/Repositories/PhonesRepository'
@@ -76,8 +76,7 @@ export default class UsersController {
     await this.repositoryConfirmationToken.create({ user_id: dataUser.data.id, token })
 
     if (returnType === 'success') {
-      const baseUrl = Env.get('APP_WEB_URL') as string
-      const link = `${baseUrl}/sign-up-activate?token=${token}`
+      const link = `${BASE_URL}/sign-up-activate?token=${token}`
       await sendMail({
         to: email,
         subject: '[Connectionrh] Bem vindo!',
@@ -123,8 +122,7 @@ export default class UsersController {
     await this.repositoryConfirmationToken.create({ user_id: data.id, token })
 
     if (returnType === 'success') {
-      const baseUrl = Env.get('APP_WEB_URL') as string
-      const link = `${baseUrl}/sign-up-activate?token=${token}`
+      const link = `${BASE_URL}/sign-up-activate?token=${token}`
       await sendMail({
         to: email,
         subject: '[Connectionrh] Bem vindo!',

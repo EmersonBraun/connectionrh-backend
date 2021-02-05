@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import Mail from '@ioc:Adonis/Addons/Mail'
-import Env from '@ioc:Adonis/Core/Env'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import { FROM_MAIL } from 'App/constants/app'
 import { getErrors } from 'App/Services/MessageErros'
 import { ContactMailSchema } from 'App/Validators/ContactMailSchema'
 
@@ -26,8 +26,8 @@ export default class MailController {
 
     await Mail.sendLater((message) => {
       message
-        .from(Env.get('SMTP_USERNAME') as string)
-        .to(Env.get('SMTP_USERNAME') as string)
+        .from(FROM_MAIL)
+        .to(FROM_MAIL)
         .subject('Contato recebido')
         .htmlView('emails/contact', { email, description })
     })

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
-import Env from '@ioc:Adonis/Core/Env'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import { BASE_URL } from 'App/constants/app'
 import ConfirmationTokenRepository from 'App/Repositories/ConfirmationTokenRepository'
 import UsersRepository from 'App/Repositories/UsersRepository'
 import { createRandomToken } from 'App/Services/auth'
@@ -95,8 +95,7 @@ export default class ConfirmationTokenController {
     const token = createRandomToken()
 
     if (returnType === 'success') {
-      const baseUrl = Env.get('APP_WEB_URL') as string
-      const link = `${baseUrl}/sign-up-activate?token=${token}`
+      const link = `${BASE_URL}/sign-up-activate?token=${token}`
       await sendMail({
         to: email,
         subject: '[Connectionrh] Bem vindo!',
@@ -135,8 +134,7 @@ export default class ConfirmationTokenController {
     const token = createRandomToken()
 
     if (returnType === 'success') {
-      const baseUrl = Env.get('APP_WEB_URL') as string
-      const link = `${baseUrl}/change-pass?token=${token}`
+      const link = `${BASE_URL}/change-pass?token=${token}`
       await sendMail({
         to: email,
         subject: '[Connectionrh] Resetar a senha!',

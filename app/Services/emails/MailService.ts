@@ -1,5 +1,5 @@
 import Mail from '@ioc:Adonis/Addons/Mail'
-import Env from '@ioc:Adonis/Core/Env'
+import { FROM_MAIL } from 'App/constants/app'
 type MailData = {
   to: string,
   subject: string,
@@ -9,7 +9,7 @@ type MailData = {
   preview?: boolean
 }
 export async function sendMail ({ to, subject, view, data, from, preview }:MailData) {
-  const fromMail = from ?? Env.get('FROM_MAIL') as string
+  const fromMail = from ?? FROM_MAIL
   await Mail.sendLater((message) => {
     message
       .from(fromMail)
