@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { BASE_URL } from 'App/constants'
+// import { BASE_URL } from 'App/constants'
 import CompaniesRepository from 'App/Repositories/CompaniesRepository'
 import ConfirmationTokenRepository from 'App/Repositories/ConfirmationTokenRepository'
 import PhonesRepository from 'App/Repositories/PhonesRepository'
@@ -77,11 +77,13 @@ export default class UsersController {
 
     let mailData = {}
     if (returnType === 'success') {
-      const link = `${BASE_URL}/sign-up-activate?token=${token}`
+      // const link = `${BASE_URL}/sign-up-activate?token=${token}`
+      const link = `/sign-up-activate?token=${token}`
       mailData = await sendMail({
         to: email,
         subject: '[Connectionrh] Bem vindo!',
-        view: 'emails/welcome-company',
+        // view: 'emails/welcome-company',
+        view: 'emails/welcome-company-fix',
         data: {
           name,
           link,
@@ -124,11 +126,13 @@ export default class UsersController {
 
     let mailData = {}
     if (returnType === 'success') {
-      const link = `${BASE_URL}/sign-up-activate?token=${token}`
+      // const link = `${BASE_URL}/sign-up-activate?token=${token}`
+      const link = `/sign-up-activate?token=${token}`
       mailData = await sendMail({
         to: email,
         subject: '[Connectionrh] Bem vindo!',
-        view: 'emails/welcome-candidate',
+        // view: 'emails/welcome-candidate',
+        view: 'emails/welcome-candidate-fix',
         data: {
           name,
           link,
