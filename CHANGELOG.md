@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.20.0](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.19.3...v0.20.0) (2021-02-05)
+
+
+### Features
+
+* add debug in mail ([b926b46](https://github.com/EmersonBraun/connectionrh-backend/commit/b926b466672cad54d69892c51ba33614164cc09d))
+
 ### [0.19.3](https://github.com/EmersonBraun/connectionrh-backend/compare/v0.19.2...v0.19.3) (2021-02-05)
 
 
