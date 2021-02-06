@@ -105,8 +105,28 @@ export default class AssetsController {
   }
 
   async update ({ params, request, response }: HttpContextContract) {
-    /*try {
-      await request.validate({schema: AssetSchema})
+    try {
+      let url = null
+      const file = request.file('file')
+      const { asset, description } = request.all()
+      let bodyData = { asset: asset, description: description }
+      if (file) {
+        const path = `${new Date().getTime()}.${file.extname}`
+        const fileData = { asset: file.clientName, mime: file.extname, path }
+        await file.move(Application.tmpPath('uploads'), { name: path })
+        url = await this.repository.createVimeoUrl(fileData, Application.tmpPath('uploads'))
+        if (url) {
+          bodyData = { ...bodyData, vimeo_url: url }
+        }
+      }
+      const register = await this.repository.findAndUpdate(params.id, bodyData)
+      const { data, statusCode, returnType, message, contentError } = register
+      return response
+        .safeHeader('message', message)
+        .safeHeader('returnType', returnType)
+        .safeHeader('contentError', contentError)
+        .status(statusCode)
+        .json(data)
     } catch (error) {
       const msg = getErrors(error)
       console.log(msg)
@@ -116,28 +136,7 @@ export default class AssetsController {
         .safeHeader('contentError', msg)
         .status(422)
         .json({})
-    }*/
-    let url = null
-    const { asset, description } = request.all()
-    const file = request.file('file')
-    if (file) {
-      const path = `${new Date().getTime()}.${file.extname}`
-      const fileData = { asset: file.clientName, mime: file.extname, path }
-      await file.move(Application.tmpPath('uploads'), { name: path })
-      url = await this.repository.createVimeoUrl(fileData, Application.tmpPath('uploads'))
     }
-    let bodyData = { asset: asset, description: description }
-    if (url) {
-      bodyData = { asset: asset, description: description, vimeo_url: url }
-    }
-    const register = await this.repository.findAndUpdate(params.id, bodyData)
-    const { data, statusCode, returnType, message, contentError } = register
-    return response
-      .safeHeader('returnType', returnType)
-      .safeHeader('message', message)
-      .safeHeader('contentError', contentError)
-      .status(statusCode)
-      .json(data)
   }
 
   async destroy ({ params, response }: HttpContextContract) {
