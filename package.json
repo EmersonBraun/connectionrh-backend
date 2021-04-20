@@ -45,7 +45,7 @@
   "dependencies": {
     "@adonisjs/ace": "^7.1.5",
     "@adonisjs/auth": "^5.0.1",
-    "@adonisjs/core": "^5.0.1",
+    "@adonisjs/core": "5.0.4-preview-rc-2.1",
     "@adonisjs/fold": "^7.0.7",
     "@adonisjs/lucid": "^9.0.1",
     "@adonisjs/mail": "^5.2.3",
