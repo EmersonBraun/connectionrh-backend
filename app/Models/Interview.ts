@@ -1,25 +1,24 @@
-import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column, beforeSave } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
-import Company from './Company'
-import User from './User'
+import Application from './Application'
 
 export default class Interview extends BaseModel {
   @column({ isPrimary: true }) public id: number
-  @column({columnName: 'manager_id'}) public managerId: number
-  @column({columnName: 'user_id'}) public userId: number
-  @column({columnName: 'company_id'}) public companyId: number
+  @column({columnName: 'application_id'}) public applicationId: number
 
-  @column() public date: Date
-  @column({columnName: 'title'}) public title: number
-  @column({columnName: 'description'}) public description: number
-  @column({columnName: 'room_id'}) public roomId: number
+  @column() public date: DateTime
+  @column({columnName: 'status'}) public status: string
+  @column({columnName: 'room_id'}) public roomId: string
 
   @column.dateTime({ autoCreate: true }) public createdAt: DateTime
   @column.dateTime({ autoCreate: true, autoUpdate: true }) public updatedAt: DateTime
 
-  @belongsTo(() => User)
-  public user: BelongsTo<typeof User>
+  @belongsTo(() => Application)
+  public application: BelongsTo<typeof Application>
 
-  @belongsTo(() => Company)
-  public company: BelongsTo<typeof Company>
+  @beforeSave()
+  public static async createRoomIdAndEmail (interview: Interview) {
+    interview.roomId = 'teste'
+    // Send email with room link to company and user
+  }
 }

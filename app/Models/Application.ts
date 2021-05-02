@@ -1,9 +1,12 @@
-import { BaseModel, BelongsTo, belongsTo, column, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel, BelongsTo, belongsTo, column, manyToMany, ManyToMany, hasMany, HasMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
 import Asset from './Asset'
 import Company from './Company'
 import User from './User'
 import Vacancy from './Vacancy'
+import Interview from './Interview'
 
 export default class Application extends BaseModel {
   @column({ isPrimary: true }) public id: number
@@ -19,6 +22,9 @@ export default class Application extends BaseModel {
   @belongsTo(() => Company) public company: BelongsTo<typeof Company>
   // @hasOne(() => RequestStatus)
   // public status: HasOne<typeof RequestStatus>
+
+  @hasMany(() => Interview)
+  public interviews: HasMany<typeof Interview>
 
   @manyToMany(() => Asset, {
     pivotTable: 'applications_has_assets',
