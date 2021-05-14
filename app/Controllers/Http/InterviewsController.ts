@@ -1,15 +1,14 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import MeetingsRepository from 'App/Repositories/MeetingsRepository'
+import InterviewsRepository from 'App/Repositories/InterviewsRepository'
 import { getErrors } from 'App/Services/MessageErros'
-import { MeetingSearchSchema } from 'App/Validators'
-import Interview from 'App/Models/Interview'
-import { MeetingSchema } from 'App/Validators/MeetingSchema'
+import { InterviewSearchSchema } from 'App/Validators'
+import { InterviewSchema } from 'App/Validators/InterviewSchema'
 
-export default class MeetingsController {
+export default class InterviewsController {
   private readonly repository
   constructor () {
-    this.repository = MeetingsRepository
+    this.repository = InterviewsRepository
   }
 
   async index ({ response }: HttpContextContract) {
@@ -25,7 +24,40 @@ export default class MeetingsController {
 
   async store ({ request, response }: HttpContextContract) {
     try {
-      await request.validate({schema: MeetingSchema})
+      await request.validate({schema: InterviewSchema})
+      const { companyId, managerId, userId, title, description, date } = request.all()
+      const content = {
+        companyId: companyId,
+        managerId: managerId,
+        userId: userId,
+        date: date,
+        title: title,
+        description: description,
+        roomId: await this.repository.createHash(),
+      }
+      const register = await this.repository.create(content)
+      const { data, statusCode, returnType, message, contentError } = register
+      return response
+        .safeHeader('returnType', returnType)
+        .safeHeader('message', message)
+        .safeHeader('contentError', contentError)
+        .status(statusCode)
+        .json(data)
+    } catch (error) {
+      const msg = getErrors(error)
+      // console.log(error.messages.errors)
+      return response
+        .safeHeader('returnType', 'error')
+        .safeHeader('message', 'Validation error')
+        .safeHeader('contentError', msg)
+        .status(422)
+        .json({})
+    }
+  }
+
+  async search ({ request, response }: HttpContextContract) {
+    try {
+      await request.validate({schema: InterviewSearchSchema})
     } catch (error) {
       const msg = getErrors(error)
       // console.log(error.messages.errors)
@@ -37,7 +69,7 @@ export default class MeetingsController {
         .json({})
     }
 
-    const register = await this.repository.create(request.all())
+    const register = await this.repository.search(request.all())
     const { data, statusCode, returnType, message, contentError } = register
     return response
       .safeHeader('returnType', returnType)
@@ -45,34 +77,6 @@ export default class MeetingsController {
       .safeHeader('contentError', contentError)
       .status(statusCode)
       .json(data)
-  }
-
-  async search ({ request, response }: HttpContextContract) {
-    try {
-      await request.validate({schema: MeetingSearchSchema})
-      const register = await this.repository.search(request.all())
-      const { data, statusCode, returnType, message, contentError } = register
-      /* eslint-disable */
-      const { user_id } = request.all()
-      const interviews = await Interview.query().where('user_id', user_id)
-      /* eslint-disable */
-      return response
-        .safeHeader('returnType', returnType)
-        .safeHeader('message', message)
-        .safeHeader('contentError', contentError)
-        .status(statusCode)
-        .json({ meetings: data, interviews: interviews })
-    } catch (error) {
-      console.log(error)
-      const msg = getErrors(error)
-      // console.log(error.messages.errors)
-      return response
-        .safeHeader('returnType', 'error')
-        .safeHeader('message', 'Validation error')
-        .safeHeader('contentError', msg)
-        .status(422)
-        .json({})
-    }
   }
 
   async show ({ params, response }: HttpContextContract) {
@@ -88,7 +92,7 @@ export default class MeetingsController {
 
   async update ({ params, request, response }: HttpContextContract) {
     try {
-      await request.validate({schema: MeetingSchema})
+      await request.validate({schema: InterviewSchema})
     } catch (error) {
       const msg = getErrors(error)
       return response

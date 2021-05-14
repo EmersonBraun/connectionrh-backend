@@ -69,4 +69,6 @@ export * from './UserSchema'
 export * from './UserSearchSchema'
 export * from './VacancySchema'
 export * from './VacancySearchSchema'
+export * from './InterviewSchema'
+export * from './InterviewSearchSchema'
 

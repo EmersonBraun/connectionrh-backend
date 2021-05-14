@@ -2,6 +2,8 @@
 
 import Database from '@ioc:Adonis/Lucid/Database'
 import Application from 'App/Models/Application'
+import Interview from 'App/Models/Interview'
+import { DateTime } from 'luxon'
 import { mountResponse } from 'App/Services/ResponseUtils'
 import { create, createOrUpdate, find, findAndDelete, findAndUpdate, first } from '../Services/CRUD'
 
@@ -26,6 +28,7 @@ class ApplicationsRepository {
         // .preload('status')
         .preload('user')
         .preload('vacancy')
+        .preload('interviews')
         .where(query)
     } catch(error) {
       console.log(error)
@@ -68,6 +71,16 @@ class ApplicationsRepository {
   }
 
   async findAndUpdate (id: any, data: any) {
+    if (data.status) {
+      if (data.status === 'Entrevistas GA' || data.status === 'Entrevistas RH') {
+        await Interview.create({
+          applicationId: id,
+          status: data.status,
+          date: data.date,
+        })
+        delete data.date
+      }
+    }
     return await findAndUpdate(this.model, id, data)
   }
 

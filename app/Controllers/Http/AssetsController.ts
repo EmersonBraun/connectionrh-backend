@@ -96,21 +96,40 @@ export default class AssetsController {
   async show ({ params, response }: HttpContextContract) {
     const register = await this.repository.find(params.id)
     const { data, statusCode, returnType, message, contentError } = register
-    const path = `${Application.tmpPath('uploads')}/${data.path}`
-
     return response
       .safeHeader('returnType', returnType)
       .safeHeader('message', message)
       .safeHeader('contentError', contentError)
       .status(statusCode)
-      .attachment(path)
+      .json(data)
   }
 
   async update ({ params, request, response }: HttpContextContract) {
     try {
-      await request.validate({schema: AssetSchema})
+      let url = null
+      const file = request.file('file')
+      const { asset, description } = request.all()
+      let bodyData = { asset: asset, description: description }
+      if (file) {
+        const path = `${new Date().getTime()}.${file.extname}`
+        const fileData = { asset: file.clientName, mime: file.extname, path }
+        await file.move(Application.tmpPath('uploads'), { name: path })
+        url = await this.repository.createVimeoUrl(fileData, Application.tmpPath('uploads'))
+        if (url) {
+          bodyData = { ...bodyData, vimeo_url: url }
+        }
+      }
+      const register = await this.repository.findAndUpdate(params.id, bodyData)
+      const { data, statusCode, returnType, message, contentError } = register
+      return response
+        .safeHeader('message', message)
+        .safeHeader('returnType', returnType)
+        .safeHeader('contentError', contentError)
+        .status(statusCode)
+        .json(data)
     } catch (error) {
       const msg = getErrors(error)
+      console.log(msg)
       return response
         .safeHeader('returnType', 'error')
         .safeHeader('message', 'Validation error')
@@ -118,15 +137,6 @@ export default class AssetsController {
         .status(422)
         .json({})
     }
-
-    const register = await this.repository.findAndUpdate(params.id, request.all())
-    const { data, statusCode, returnType, message, contentError } = register
-    return response
-      .safeHeader('returnType', returnType)
-      .safeHeader('message', message)
-      .safeHeader('contentError', contentError)
-      .status(statusCode)
-      .json(data)
   }
 
   async destroy ({ params, response }: HttpContextContract) {
