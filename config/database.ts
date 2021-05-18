@@ -20,7 +20,7 @@ const databaseConfig: DatabaseConfig & { orm: Partial<OrmConfig> } = {
   | file.
   |
   */
-  connection: Env.get('DB_CONNECTION'),
+  connection: 'pg',
 
   connections: {
     /*
@@ -37,11 +37,11 @@ const databaseConfig: DatabaseConfig & { orm: Partial<OrmConfig> } = {
     pg: {
       client: 'pg',
       connection: {
-        host: Env.get('PG_HOST'),
-        port: Env.get('PG_PORT'),
-        user: Env.get('PG_USER'),
-        password: Env.get('PG_PASSWORD', ''),
-        database: Env.get('PG_DB_NAME'),
+        host: Env.get('DB_HOST'),
+        port: Env.get('DB_PORT'),
+        user: Env.get('DB_USER'),
+        password: Env.get('DB_PASSWORD', ''),
+        database: Env.get('DB_NAME'),
       },
       healthCheck: false,
       debug: false,
