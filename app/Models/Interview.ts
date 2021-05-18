@@ -36,7 +36,7 @@ export default class Interview extends BaseModel {
       let company = await Company.find(application.companyId)
       if (company && user) {
         let companyUser = await User.find(company.userId)
-        let response = await axios.get(`http://localhost:3001/createRoom?roomName=${company.company}&userName=${user.name}`)
+        let response = await axios.get(`https://meetconnectionrh.com.br/createRoom?roomName=${company.company}&userName=${user.name}`)
         interview.roomId = response.data.roomId
         const content = {
           roomId: interview.roomId,
