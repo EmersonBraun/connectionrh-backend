@@ -41,7 +41,7 @@ export default class Interview extends BaseModel {
         const content = {
           roomId: interview.roomId,
           status: interview.status,
-          date: interview.date,
+          date: new Date(interview.date.valueOf()).toLocaleString(),
           companyName: company.company,
           userName: user.name,
           vacancyTitle: vacancy.title,
