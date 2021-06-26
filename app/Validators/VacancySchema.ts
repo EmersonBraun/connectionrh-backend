@@ -15,4 +15,7 @@ export const VacancySchema = schema.create({
   company_id: schema.number([
     rules.exists({ table: 'companies', column: 'id' }),
   ]),
+  city: schema.string(),
+  state: schema.string(),
+  benefit: schema.string.optional(),
 })

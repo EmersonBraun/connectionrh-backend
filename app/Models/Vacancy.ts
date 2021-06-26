@@ -19,6 +19,10 @@ export default class Vacancy extends BaseModel {
   @column() public company_id: number
   @column({ columnName: 'is_closed'}) public isClosed: boolean
 
+  @column() public city: string
+  @column() public state: string
+  @column() public benefit: string
+
   @hasOne(() => ContractType)
   public contractType: HasOne<typeof ContractType>
 
