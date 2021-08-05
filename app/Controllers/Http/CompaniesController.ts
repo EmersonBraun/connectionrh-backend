@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import User from 'App/Models/User'
+import UserContact from 'App/Models/UserContact'
 import CompaniesRepository from 'App/Repositories/CompaniesRepository'
 import { getErrors } from 'App/Services/MessageErros'
 import { CompanySchema, CompanySearchSchema } from 'App/Validators'
@@ -13,6 +15,15 @@ export default class CompaniesController {
   async index ({ response }: HttpContextContract) {
     const register = await this.repository.all()
     const { data, statusCode, returnType, message, contentError } = register
+    let u
+    let c
+    for(let i = 0; i < data.length; i++) {
+      u = await User.find(data[i]['$attributes']['userId'])
+      c = await UserContact.query().where({ user_id: data[i]['$attributes']['userId'] })
+      data[i] = JSON.parse(JSON.stringify(data[i]))
+      data[i].email = u ? u.email : null
+      data[i].contact = c[0] ? c[0].contact : null
+    }
     return response
       .safeHeader('returnType', returnType)
       .safeHeader('message', message)
