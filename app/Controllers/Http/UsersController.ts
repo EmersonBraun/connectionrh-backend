@@ -3,7 +3,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 // import { BASE_URL } from 'App/constants'
 import CompaniesRepository from 'App/Repositories/CompaniesRepository'
 import ConfirmationTokenRepository from 'App/Repositories/ConfirmationTokenRepository'
-import PhonesRepository from 'App/Repositories/PhonesRepository'
+import UserContactsRepository from 'App/Repositories/UserContactsRepository'
 import UsersRepository from 'App/Repositories/UsersRepository'
 import { createRandomToken } from 'App/Services/auth'
 import { sendMail } from 'App/Services/emails/MailService'
@@ -21,7 +21,7 @@ export default class UsersController {
     this.repository = UsersRepository
     this.repositoryConfirmationToken = ConfirmationTokenRepository
     this.repositoryCompany = CompaniesRepository
-    this.repositoryPhone = PhonesRepository
+    this.repositoryPhone = UserContactsRepository
   }
 
   async index ({ response }: HttpContextContract) {
@@ -65,7 +65,7 @@ export default class UsersController {
     await this.repositoryCompany.create({user_id: dataUser.data.id, ...company})
     // Save phone data
     const { phone } = user
-    await this.repositoryPhone.create({user_id: dataUser.data.id, phone})
+    await this.repositoryPhone.create({user_id: dataUser.data.id, contact: phone})
 
     const { name, email } = user
     const reqUser = await this.repository.findByEmail(email)
@@ -116,7 +116,7 @@ export default class UsersController {
     const userData = await this.repository.firstOrCreate(email, request.all())
     // save phone data
     const { phone } = request.all()
-    await this.repositoryPhone.create({user_id: userData.data.id, phone})
+    await this.repositoryPhone.create({user_id: userData.data.id, contact: phone})
     const reqUser = await this.repository.findByEmail(email)
     const { data, statusCode, returnType, message, contentError } = reqUser
 
