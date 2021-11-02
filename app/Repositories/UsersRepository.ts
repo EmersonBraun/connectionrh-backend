@@ -115,6 +115,30 @@ class UsersRepository {
     return mountResponse(retunData, '', 'load')
   }
 
+  async findById (id: integer) {
+    const data = await User.query()
+      .preload('company')
+      .preload('phone')
+      .preload('roles')
+      .preload('addresses')
+      .preload('assets')
+      .preload('courses')
+      .preload('experience')
+      .preload('interests')
+      .preload('meetings')
+      .preload('objective')
+      .preload('portforios')
+      .preload('posts')
+      .preload('recomends')
+      .preload('skills')
+      // .preload('strongs')
+      .where('id', id)
+      .first()
+
+    const retunData = data?.serialize ? data.serialize() : []
+    return mountResponse(retunData, '', 'load')
+  }
+
   async create (data: any) {
     return await create(this.model, data)
   }
