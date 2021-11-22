@@ -28,6 +28,7 @@ Route
   .group(() => {
     Route.post('login', 'AuthController.login')
     Route.post('loginrh', 'AuthController.loginrh')
+    Route.post('logincustomer', 'AuthController.logincustomer')
     Route.post('sign-up-company', 'UsersController.storeCompany')
     Route.post('sign-up-candidate', 'UsersController.storeCandidate')
     Route.post('logout', 'AuthController.logout')
@@ -145,6 +146,7 @@ Route
     Route.resource('users','UsersController').except(['index'])
     Route.resource('vacancies','VacanciesController').except(['index'])
     Route.resource('rh-users','RhUsersController').except(['index'])
+    Route.resource('customer-users','CustomersController')
     Route.resource('experiences','ExperiencesController').apiOnly()
     Route.resource('objectives','ObjectivesController').apiOnly()
     Route.resource('user-contacts','UserContactsController').apiOnly()

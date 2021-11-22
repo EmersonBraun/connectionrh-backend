@@ -1,9 +1,10 @@
-import { BaseModel, column, hasOne, HasOne, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, hasOne, HasOne, manyToMany, ManyToMany, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
 import Application from './Application'
 import Asset from './Asset'
 import Plan from './Plan'
 import User from './User'
+import Customer from './Customer'
 
 export default class Company extends BaseModel {
   @column({ isPrimary: true })
@@ -40,4 +41,7 @@ export default class Company extends BaseModel {
 
   @hasOne(() => Application)
   public application: HasOne<typeof Application>
+
+  @hasMany(() => Customer)
+  public customers: HasMany<typeof Customer>
 }
