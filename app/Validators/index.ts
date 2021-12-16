@@ -75,4 +75,6 @@ export * from './VacancySchema'
 export * from './VacancySearchSchema'
 export * from './InterviewSchema'
 export * from './InterviewSearchSchema'
+export * from './TestimonialSchema'
+export * from './TestimonialSearchSchema'
 
