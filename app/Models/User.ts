@@ -30,6 +30,7 @@ import Recomend from './Recomend'
 import Role from './Role'
 import Skill from './Skill'
 import StrongPoint from './StrongPoint'
+import Articles from './Articles'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true }) public id: number
@@ -109,6 +110,14 @@ export default class User extends BaseModel {
 
   @hasMany(() => StrongPoint)
   public strongs: HasMany<typeof StrongPoint>
+
+  @hasMany(() => Articles)
+  public articles: HasMany<typeof Articles>
+
+  @manyToMany(() => Articles, {
+    pivotTable: 'article_comments',
+  })
+  public articlecomments: ManyToMany<typeof Articles>
 
   @beforeSave()
   public static async hashPassword (user: User) {

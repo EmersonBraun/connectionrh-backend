@@ -157,6 +157,7 @@ Route
     Route.resource('candidate-testimonials','CandidateTestimonialsController').apiOnly()
     Route.resource('company-testimonials','CompanyTestimonialsController').apiOnly()
     Route.resource('upload','UploadsController').apiOnly()
+    Route.resource('manage-articles','ManageArticlesController').apiOnly()
   })
   .prefix('/api')
   // .middleware('auth')

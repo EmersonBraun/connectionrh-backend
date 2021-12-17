@@ -79,4 +79,6 @@ export * from './InterviewSchema'
 export * from './InterviewSearchSchema'
 export * from './TestimonialSchema'
 export * from './TestimonialSearchSchema'
+export * from './ArticleSchema'
+export * from './ArticleSearchSchema'
 
