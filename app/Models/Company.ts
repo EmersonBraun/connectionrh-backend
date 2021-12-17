@@ -3,6 +3,7 @@ import { DateTime } from 'luxon'
 import Application from './Application'
 import Asset from './Asset'
 import Plan from './Plan'
+import NewPlan from './NewPlan'
 import User from './User'
 import Customer from './Customer'
 
@@ -28,6 +29,11 @@ export default class Company extends BaseModel {
     pivotTable: 'company_has_plans',
   })
   public plans: ManyToMany<typeof Plan>
+
+  @manyToMany(() => NewPlan, {
+    pivotTable: 'company_has_new_plans',
+  })
+  public new_plans: ManyToMany<typeof NewPlan>
 
   @manyToMany(() => Asset, {
     pivotTable: 'company_has_assets',
