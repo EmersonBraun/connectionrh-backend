@@ -81,4 +81,6 @@ export * from './TestimonialSchema'
 export * from './TestimonialSearchSchema'
 export * from './ArticleSchema'
 export * from './ArticleSearchSchema'
+export * from './PartnerSchema'
+export * from './PartnerSearchSchema'
 

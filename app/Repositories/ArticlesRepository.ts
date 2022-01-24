@@ -47,6 +47,22 @@ class ArticlesRepository {
     return mountResponse(retunData, contentError, 'load')
   }
 
+  async allPublished () {
+    let data; let contentError = []
+    try {
+      data = await Database
+        .rawQuery(`
+          SELECT users.name as "author", articles.* FROM articles 
+          INNER JOIN "users" on "users"."id" = "articles"."user_id" 
+          where "articles"."published" = true
+        `)
+    } catch (error) {
+      contentError = error
+    }
+    const retunData = data.rows ? data.rows : []
+    return mountResponse(retunData, contentError, 'load')
+  }
+
   async find (id) {
     return await find(this.model, id)
   }
