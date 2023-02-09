@@ -47,7 +47,7 @@
     "@adonisjs/auth": "^5.0.1",
     "@adonisjs/core": "5.0.4-preview-rc-2.1",
     "@adonisjs/fold": "^7.0.7",
-    "@adonisjs/lucid": "^9.0.1",
+    "@adonisjs/lucid": "^18.3.0",
     "@adonisjs/mail": "^5.2.3",
     "@adonisjs/view": "^3.0.8",
     "@types/mocha": "^8.0.3",
