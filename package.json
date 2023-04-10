@@ -52,7 +52,7 @@
     "@adonisjs/view": "^3.0.8",
     "@types/mocha": "^8.0.3",
     "argon": "^2.0.21",
-    "aws-sdk": "^2.820.0",
+    "aws-sdk": "^2.1354.0",
     "axios": "^0.21.1",
     "celebrate": "^13.0.4",
     "class-transformer": "^0.3.1",
